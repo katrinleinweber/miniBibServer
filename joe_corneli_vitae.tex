@@ -1,0 +1,646 @@
+\documentclass[12pt,article]{memoir}
+\usepackage[english, american]{babel}
+\usepackage{csquotes}
+
+\setlength\parindent{0pt}
+
+\usepackage[hyperref=true,
+            url=false,
+            doi=false,
+            %style=apa,
+            sorting=nyt,            
+            isbn=false,
+            backref=true,
+            firstinits=true, 
+            minnames=13,
+            maxnames=35,
+            mincitenames=14,
+            maxcitenames=35,
+            minbibnames=10,
+            maxbibnames=100,
+            parentracker=true,
+            backend=biber]{biblatex}
+
+\DeclareLanguageMapping{american}{american-apa}
+
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{day}}
+
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished,techreport,misc]
+  {title}{\href{\thefield{url}}{#1}}
+
+\newcommand{\mkbibnodate}{n\adddot d\adddot}
+\AtEveryCitekey{\iffieldundef{labelyear}{\restorefield{labelyear}{\mkbibnodate}}{}}
+\AtEveryBibitem{\iffieldundef{labelyear}{\restorefield{year}{\mkbibnodate}}{}}
+
+\newcommand{\colorcite}[2][]{{\color{black} \parencite[#1]{#2}}}
+\let\oldtextcite\textcite
+\renewcommand*{\textcite}[2][]{{\color{black} \oldtextcite[#1]{#2}}}
+\newcommand{\citeyearpar}[2][]{{\color{black} (\citeyear[#1]{#2})}}
+\newcommand{\citeibid}[2][]{{\color{black} (\emph{ibid.} #1)}}
+\let\cite\colorcite
+
+\newcommand{\enq}[1]{\enquote*{#1}}
+
+\usepackage{filecontents}
+\begin{filecontents}{corneli-citations.bib}
+@inproceedings{wow5-creativity-commons,
+ author = {Joseph Corneli},
+ title = {{T}owards a {C}reativity {C}ommons},
+ year = {2014},
+ booktitle = {{F}ifth ``{W}orkshop on the {O}strom {W}orkshop'' (WOW5)},
+ url={http://dlc.dlib.indiana.edu/dlc/handle/10535/9388},
+ note={Presented to the working group on ``The Commons as Transformative Paradigm'' convened by Wolfgang Hoeschele and Helene Finidori},
+}
+
+@inproceedings{ginev-nnexus,
+ title = {{N}{N}exus {R}eloaded},
+ author = {Deyan Ginev and Joseph Corneli},
+ crossref = {CICM14},
+ pubs = {dginev},
+ url={http://arxiv.org/abs/1404.6548}}
+
+@PROCEEDINGS{CICM14,
+  title = {2014 {C}onferences on {I}ntelligent {C}omputer {M}athematics},
+  booktitle = {{2014 Conferences on Intelligent Computer Mathematics}},
+  key = {CICM14},
+  label = {CICM14},
+  year = 2014,
+  editor= {S.M. Watt and others},
+  series = {Lecture Notes in Artificial Intelligence},
+  volume = {8543},
+  keywords = {conference}}
+
+@inproceedings{colton-assessingprogress,
+  title={Assessing Progress in Building Autonomously Creative Systems},
+  author={Simon Colton and Pease, Alison and Corneli, Joseph and Cook, Michael and Llano, Teresa},
+  booktitle={Proceedings of the Fifth International Conference on Computational Creativity},
+  editor={Ventura, Dan and Colton, Simon and Lavrac, Nada and Cook, Michael},
+  url={http://computationalcreativity.net/iccc2014/wp-content/uploads/2014/06//8.4_Colton.pdf},
+  year={2014}
+}
+
+@inproceedings{corneli2010live,
+  title={Live annotation and content discovery in personal learning environments},
+  author={Corneli, Joseph and Mikroyannidis, Alexander},
+  booktitle={{M}{U}{P}{P}{L}{E}2010: {P}roceedings of the 3rd {E}uropean {W}orkshop on {M}ash-up {P}ersonal {L}earning {E}nvironments},
+  year={2010}
+}
+
+@inproceedings{decipher-paper,
+year={2013},
+isbn={978-3-319-02755-5},
+booktitle={Interactive Storytelling},
+volume={8230},
+series={Lecture Notes in Computer Science},
+editor={Koenitz, Hartmut and Sezen, Tonguc Ibrahim and Ferri, Gabriele and Haahr, Mads and Sezen, Digdem and \c{C}atak, G\"uven},
+doi={10.1007/978-3-319-02756-2_14},
+title={Constructing and Connecting Storylines to Tell Museum Stories},
+url={http://dx.doi.org/10.1007/978-3-319-02756-2_14},
+publisher={Springer International Publishing},
+keywords={Museum storytelling; storylines; ATMS; clustering},
+author={Mulholland, Paul and Wolff, Annika and Zdrahal, Zdenek and Li, Ning and Corneli, Joseph},
+pages={121-124}
+}
+
+@incollection{corneli2013inaction,
+ title={{Peeragogy in Action}},
+ author={Corneli, J and Keune, A and Lyons, A and Danoff, CJ},
+ booktitle={{The Open Book}},
+ editor={Braybrooke, Kaitlyn and Nissil\"a, Jussi  and Timo Vuorikivi},
+ series={\#3 in the Reaktio Series},
+ publisher={The Finnish Institute, London},
+ pages={80--87},
+ year={2013},
+ isbn={978-0-9570776-3-8},
+ url={http://peeragogy.org/peeragogy-in-action/},
+}
+
+@misc{arxana-notes,
+ author={Joseph Corneli and Raymond S. Puzio},
+ year={2013},
+ title={{A}ll {Y}esterday's {T}omorrows: {T}he report on, and of, {P}roject {A}rxana concerning word processing, electronic publishing, hypertext, etc.},
+ location={Emacs Conference 2013, London},
+}
+
+@phdthesis{corneli-thesis,
+ title = {Peer produced peer learning: {A} mathematics case study},
+ school = {The Open University (submitted)},
+ author = {Corneli, Joseph},
+ year = {2013},
+ url={http://metameso.org/~joe/docs/submitted-version.pdf},
+},
+
+@incollection{corneli-openbook,
+ author={Joseph Corneli and Anna Keune and Amanda Lyons and Charles Jeffrey Danoff},
+ year={2013},
+ title={{P}eeragogy in {A}ction},
+ editor={Kaitlyn Braybrooke and Jussi Nissil\"a and Timo Vuorikivi},
+ booktitle={{T}he {O}pen {B}ook}, 
+ series={\#3 in the Reaktio Series},
+ publisher={London, UK: The Finnish Institute},
+ isbn={978-0-9570776-3-8},
+}
+
+@inproceedings{tomlinson2012massively,
+ title={Massively distributed authorship of academic papers},
+ author={Tomlinson, B. and Ross, J. and Andr\'e, P. and Baumer, E.P.S. and Patterson, D.J. and Corneli, J. and Mahaux, M. and Nobarany, S. and Lazzari, M. and Penzenstadler, B. and Torrance, A.W. and Callele, D.J. and Olson, G.M. and Silberman, M.S. and St\"ander, M. and Palamedi, F.R. and Salah, A. and Morrill, E. and Franch, X. and Mueller, F. and Kaye, J. and Black, R.W. and Cohn, M.L. and Shih, P.C. and Brewer, J. and Goyal, N. and N\"akki, P. and Huang, J. and Baghaei, N. and Saper, C.},
+ booktitle={{CHI'12 Extended Abstracts on Human Factors in Computing Systems}},
+ pages={11--20},
+ year={2012},
+ organization={ACM},
+ url={http://altchi.org/submissions/submission_wmt_0.pdf},
+}
+
+
+@article{corneli2012paragogical,
+ title={{P}aragogical praxis},
+ author={Corneli, J.},
+ journal={E-Learning and Digital Media},
+ volume={9},
+ number={3},
+ pages={267--272},
+ year={2012},
+ url={http://paragogy.net/ParagogicalPraxisPaper},
+}
+
+@book{peeragogy-handbook,
+ title={The {P}eeragogy {H}andbook},
+ author={H. Rheingold and others},
+ year={2013},
+ publisher={Chicago: PubDomEd Press},
+ url={http://peeragogy.org},
+}
+
+@inproceedings{CorneliDumitru:OpenMathUIWiP2012,
+ title = {{P}lanet{M}ath/{P}lanetary},
+ author = {Corneli, J. and Dumitru, M.A.},
+ pages = {66--72},
+ url = {http://ceur-ws.org/Vol-921/wip-02.pdf},
+ crossref = {OpenMathUIWiP2012},
+}
+
+@proceedings{OpenMathUIWiP2012,
+ booktitle = {24\textsuperscript{th} OpenMath Workshop, 7\textsuperscript{th} Workshop on Mathematical User Interfaces (MathUI), and Intelligent Computer Mathematics Work in Progress},
+ title = {{J}oint {P}roceedings of the 24\textsuperscript{th} {OpenMath} {W}orkshop, the 7\textsuperscript{th} {W}orkshop on {M}athematical {U}ser {I}nterfaces ({MathUI}), and the {W}ork in {P}rogress {S}ection of the {C}onference on {I}ntelligent {C}omputer {M}athematics},
+ year = 2012,
+ editor = {James Davenport and Johan Jeuring and Christoph Lange and Paul Libbrecht},
+ number = 921,
+ series = {CEUR Workshop Proceedings},
+ address = {Aachen},
+ issn = {1613-0073},
+ url = {http://ceur-ws.org/Vol-921/},
+ venue = {Bremen, Germany},
+ eventdate = {2012-07-09/2012-07-13},
+}
+
+@incollection{lange2012reimplementing,
+ year={2012},
+ isbn={978-3-642-31373-8},
+ booktitle={Intelligent Computer Mathematics},
+ volume={7362},
+ series={Lecture Notes in Computer Science},
+ editor={Jeuring, Johan and Campbell, JohnA. and Carette, Jacques and Reis, Gabriel and Sojka, Petr and Wenzel, Makarius and Sorge, Volker},
+ doi={10.1007/978-3-642-31374-5_36},
+ title={Reimplementing the Mathematics Subject Classification ({MSC}) as a Linked Open Dataset},
+ url={http://dx.doi.org/10.1007/978-3-642-31374-5_36},
+ publisher={Springer Berlin Heidelberg},
+ author={Lange, Christoph and Ion, Patrick and Dimou, Anastasia and Bratsas, Charalampos and Corneli, Joseph and Sperber, Wolfram and Kohlhase, Michael and Antoniou, Ioannis},
+ pages={458-462}
+}
+
+@inproceedings{corneli-ponti,
+ title = {Detecting mathematics learning online},
+ author = {Corneli, J. and Ponti, M.},
+ booktitle = {{Proceedings of the 8th International Conference on Networked Learning 2012}},
+ editor =  {Hodgson, V. and Jones, C. and de Laat, M. and McConnell, D. and Ryberg, T. and P. Sloep},
+ year = {2012},
+ url = {http://metameso.org/~joe/docs/detecting-learning.pdf},
+}
+
+@inproceedings{paragogy-okcon,
+ title = {{Paragogy}},
+ author = {J. Corneli and Danoff, C.J.},
+ booktitle = {{Proceedings of the 6th Open Knowledge Conference}},
+ address = {Berlin, Germany},
+ url = {http://ceur-ws.org/Vol-739/paper+5.pdf},
+ year = {2011},
+ keywords = {paragogy, learning, peer learning, P2P}
+}
+
+@misc{paragogy,
+ title={{{P}aragogy: {S}ynergizing individual and organizational learning}},
+ author={Corneli, J. and Danoff, C.J.},
+ note={Published on Wikiversity},
+ url={http://en.wikiversity.org/wiki/User:Arided/ParagogyPaper},
+ year={2011},
+ keywords={peer learning}
+}
+
+@article{corneli+telmas+2011,
+ title = {{P}lanet{M}ath {R}edux: {W}eb 2.0 infrastructure for mathematical problem solving},
+ journal = {{Technology-Enhanced} Learning for Mathematics and Science {(TELMAS)} at 6th European Conference on {Technology-Enhanced} Learning {(ECTEL):} Towards Ubiquitous Learning, 21 Sept 2011, Palermo, Italy.},
+ author = {Corneli, J. and Jucovschi, C. and Mikroyannidis, A.},
+ year = {2011},
+ url={http://oro.open.ac.uk/29572/1/planetmath-redux-demo.pdf},
+}
+
+@inproceedings{corneli+planetmath+encyc,
+ title = {{The PlanetMath Encyclopedia}},
+ booktitle = {{The ITP 2011 Workshop on Mathematical Wikis (MathWikis-2011)}},
+ editor = {C. Lange and J. Urban},
+ year =  {2011},
+ author = {J. Corneli},
+ url={http://ceur-ws.org/Vol-767/paper-03.pdf},
+},
+
+@article{corneli2011personalised,
+ title={{P}ersonalised {P}eer-{S}upported {L}earning: {T}he {P}eer-to-{P}eer {L}earning {E}nvironment ({P2PLE})},
+ author={Corneli, J. and Mikroyannidis, A.},
+ journal={Digital Education Review},
+ volume={20},
+ pages={14--23},
+ year={2011},
+ url={http://greav.ub.edu/der/index.php/der/article/view/188/330},
+}
+
+@inproceedings{p2ple,
+ title = {{P}ersonalised and {P}eer-{S}upported {L}earning: {T}he {P}eer-to-{P}eer {L}earning {E}nvironment ({P}2{P}{L}{E})},
+ author = {Corneli, J. and Mikroyannidis, A.},
+ booktitle = {Proceedings of the the {P}{L}{E} {C}onference 2011},
+ year = {2011},
+ publisher = {Southampton, UK}
+}
+
+@article{Kohlhase2011598,
+ title = "The {P}lanetary {S}ystem: {W}eb 3.0 \& {A}ctive {D}ocuments for {S}{T}{E}{M}",
+ journal = "Procedia Computer Science",
+ volume = "4",
+ pages = "598--607",
+ year = "2011",
+ note = "Proceedings of the International Conference on Computational Science, ICCS 2011",
+ issn = "1877-0509",
+ url = "http://www.sciencedirect.com/science/article/pii/S1877050911001219",
+ author = "Kohlhase, M. and Corneli, J. and David, C. and Ginev, D. and Jucovschi, C. and Kohlhase, A. and Lange, C. and Matican, B. and Mirea, S. and Zholudev, V.",
+ keywords = {active documents, executable paper challenge, content commons, semantic annotation, ontologies}
+}
+
+@incollection{corneli+crowdsourcing,
+ title = {{C}rowdsourcing {E}ducation: {A} {R}ole-{B}ased {A}nalysis},
+ author = {J. Corneli and A. Mikroyannidis},
+ booktitle = {{C}ollaborative {L}earning 2.0: {O}pen {E}ducational {R}esources},
+ editor = {Alexandra Okada and Teresa Connolly and Peter Scott},
+ year = {2011},
+ publisher = {IGI Global},
+ url = {http://oro.open.ac.uk/33221/1/corneli_chap_okada_book.pdf},
+},
+
+@article{corneliUPintroduction,
+ title={Introduction to power laws},
+ author={Joseph Corneli},
+ journal={The Uncertainty Principle},
+ volume={2},
+ number={3},
+ year={2011},
+ url={http://www.theuncertaintyprinciple.danoff.org/v2i3.html}
+}
+
+@inproceedings{corneli2010gravpad ,
+ title={{G}rav{P}ad},
+ author={Corneli, J.},
+ booktitle={{Proceedings of the 6th International Symposium on Wikis and Open Collaboration (WikiSym 2010)}},
+ year={2010},
+ organization={ACM},
+ url={http://www.wikisym.org/ws2010/tiki-download_wiki_attachment.php?attId=21},
+}
+
+@inproceedings{david+emath+2010,
+ title = {{eMath 3.0: Building Blocks for a Social and Semantic Web for Online Mathematics \& eLearning}},
+ author = {C. David and D. Ginev and M. Kohlhase and J. Corneli},
+ booktitle = {{1st International Workshop on Mathematics and ICT: Education, Research and Applications}},
+ address = {Bucharest, Romania},
+ year = {2010},
+ editor = {I. Mierlus-Mazilu},
+ url = {http://buletinstiintific.utcb.ro/bs/arhiva2010/modelling_nr3_2010_special_issue.pdf},
+},
+
+@techreport{probation-report,
+ title={{Problem solving and mathematical knowledge}},
+ author={Joseph Corneli},
+ institution={Knowledge Media Institute},
+ url={http://kmi.open.ac.uk/publications/techreport/kmi-10-03},
+ year={2010},
+}
+
+@misc{free-math-poster,
+ author={Joseph Corneli},
+ title={{The Road to Free Math}},
+ note={{P}oster presentation at Free Software Day, Boston},
+ year={2009},
+ place={Boston, MA},
+ url={http://metameso.org/~joe/math/road-to-free-math.jpg}
+}
+
+@article{corneli2008double,
+ title={Double bubbles in Gauss space and spheres},
+ author={Corneli, Joe and Corwin, Ivan and Hurder, Stephanie and Sesum, Vojislav and Xu, Ya and Adams, Elizabeth and Davis, Diana and Lee, Michelle and Visocchi, R and Hoffman, Neil},
+ journal={Houston J. Math},
+ volume={34},
+ number={1},
+ pages={181--204},
+ year={2008},
+ url={http://www.math.brown.edu/~diana/math/DoubleBubbles.pdf},
+}
+
+@article{corneli2007double,
+ title={Double bubbles in {$S\sp 3$} and {$H\sp 3$}},
+ author={Corneli, Joseph and Hoffman, Neil and Holt, Paul and Lee, George and Leger, Nicholas and Moseley, Stephen and Schoenfeld, Eric},
+ journal={Journal of Geometric Analysis},
+ volume={17},
+ number={2},
+ pages={189--212},
+ year={2007},
+ url={http://www.springerlink.com/content/0721r1x1358p5771/fulltext.pdf},
+}
+
+@inproceedings{corneli+scholia-based,
+ title = {{A Scholia-based Document Model for Commons-based Peer Production}},
+ author = {J. Corneli and A. Krowne},
+ booktitle = {{F}ree {C}ulture and the {D}igital {L}ibrary {S}ymposium {P}roceedings},
+ address = {Atlanta, Georgia},
+ editor = {M. Halbert},
+ publisher = {MetaScholar Initiative at Emory University},
+ pages = {240--253},
+ year = {2005},
+ url = {http://metameso.org/~joe/docs/sbdm.html},
+},
+
+
+@article{corneli2004double,
+ title={The double bubble problem on the flat two-torus},
+ author={Corneli, Joseph and Holt, Paul and Lee, George and Leger, Nicholas and Schoenfeld, Eric and Steinhurst, Benjamin},
+ journal={Transactions of the American Mathematical Society},
+ volume={356},
+ number={9},
+ pages={3769--3820},
+ year={2004},
+ url={http://www.ams.org/tran/2004-356-09/S0002-9947-04-03551-2/S0002-9947-04-03551-2.pdf},
+}
+
+@unpublished{mathematical-semantics,
+ author={Joseph Corneli},
+ year={2004},
+ title={{S}emantics of {M}athematical {W}riting},
+ note={Term paper for \enquote{Knowledge Representation and Reasoning} taught by Bruce W. Porter at the University of Texas},
+}
+
+@misc{apmxi,
+ author={Joseph Corneli},
+ year={2003},
+ title={{A}ustin {P}roblems in {M}athematics--{C}ross {I}ndex ({{A}{P}{M}-$\Xi$})},
+ note={Unpublished},
+}
+
+@article{alvarez2003double,
+ title={Double bubbles in the three-torus},
+ author={Alvarez, Miguel Carrion and Corneli, Joseph and Walsh, Genevieve and Beheshti, Shabnam},
+ journal={Experimental Mathematics},
+ volume={12},
+ number={1},
+ pages={79--89},
+ year={2003},   
+ url={http://projecteuclid.org/DPubS/Repository/1.0/Disseminate?view=body&id=pdf_1&handle=euclid.em/1064858785},
+}
+\end{filecontents}
+
+\addbibresource{corneli-citations.bib}
+
+\usepackage{tgtermes}
+\usepackage[T1]{fontenc}
+
+\usepackage{enumitem}
+\usepackage{array}
+
+\usepackage{fancybox}
+
+\newenvironment{framedtext}{
+\def\FrameCommand{\fbox}
+\setlength{\fboxsep}{10pt}
+\MakeFramed{\advance\hsize-2\width \FrameRestore}
+}
+{\endMakeFramed}
+
+\newcommand*{\tabbox}[2][t]{
+    \vspace{0pt}\parbox[#1][3.7\baselineskip]{1cm}{\strut#2\strut}}
+
+\settrimmedsize{11in}{8.5in}{*}
+\settrims{0in}{0in}
+\settypeblocksize{9in}{6.5in}{*}
+\setlrmargins{1in}{*}{*}
+\setulmargins{1in}{*}{*}
+\setheadfoot{\onelineskip}{2\onelineskip}
+\setheaderspaces{*}{1.5\onelineskip}{*}
+
+\checkandfixthelayout
+
+\let\footruleskip\relax 
+\let\sl\ttfamily        
+
+\tightlists
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead[RO,RE]{Joseph Corneli}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\usepackage{xcolor}
+
+\definecolor{blueblack}{cmyk}{0.35, .30, 0.17, 0.95}
+
+\catcode`\_=11\relax
+\newcommand\email[1]{\_email #1\q_nil}
+\def\_email#1@#2\q_nil{
+  \href{mailto:#1@#2}
+    {{\emailfont\detokenize{#1}\emailampersat\detokenize{#2}}}
+}
+\newcommand\emailfont{\rmfamily}
+\newcommand\emailampersat{{\color{black}\small@}}
+\catcode`\_=8\relax  
+
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[breaklinks,linkbordercolor=cyan, pdfborderstyle={/S/U/W .5}]{hyperref}
+
+\usepackage{soul}
+
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+\begin{document}
+
+\thispagestyle{plain}
+
+\begin{center}
+{\Large \bfseries  Joseph Angus Corneli  \\[.1in]
+
+}
+Department of Computing \\
+Goldsmiths College \\
+New Cross, London \\
+SE14 6NW, UK \\
+
+\email{j.corneli@gold.ac.uk}
+\end{center}
+
+\section*{Education}
+
+\paragraph{The Open University}  \hspace{.1in} \\
+Doctor of Philosophy (Computing), 2014 (expected; submitted July, 2013) 
+
+\smallskip
+
+Thesis: \emph{\href{http://metameso.org/~joe/thesis-outline.html}{Peer
+    produced peer learning: A mathematics case study}} (Supervisors:
+Prof. Peter Scott and
+Dr. Alexander Mikroyannidis).
+
+\paragraph{New College of Florida}  \hspace{.1in} \\
+Bachelor of Arts (Mathematics), 2002
+\smallskip
+
+Thesis: \emph{Double bubbles in spaces of constant curvature}
+(Advisor: Prof. Patrick T. McDonald).
+
+\section*{Professional Experience}
+
+\paragraph{Goldsmiths College, University of London} \hspace{.1in} \\
+Researcher in Computational Creativity.  Working with
+partners to develop novel concept invention techniques and
+assessment methodologies.  Applying concept invention
+techniques to tasks in mathematical creativity.  Writing
+and presentation of research papers at conference and
+journal level.  (2013-2016, current position)
+
+\paragraph{Knowledge Media Institute at The Open University} \hspace{.1in} \\
+Research Assistant in the Digital Environment for Cultural
+Interfaces; Promoting Heritage, Education and Research (DECIPHER) EU
+project.  Responsibilities included PHP (Drupal) and Lisp programming,
+and contributions to Semantic Web integration. (2013)
+
+\paragraph{PlanetMath.org, Ltd.} \hspace{.1in} \\
+Member of the Board of Directors of the US-based nonprofit
+PlanetMath.org, Ltd., which runs a popular community-produced
+mathematics website serving learners at all levels.  Key
+accomplishments include strategic planning, research, and technical
+work.  (2008-ongoing)
+
+\paragraph{Cycorp, Inc.}  \hspace{.1in} \\
+Associate Member of the Technical Staff at a well-known AI firm.
+Devised programmatic methods for cleaning a large artificial
+intelligence knowledge base. (6/2003-8/2003)
+
+\section*{Teaching Experience}
+
+\paragraph{Peer-2-Peer University} \hspace{.1in} \\
+Designed and facilitated ``DIY Math''; ``Mathematics for
+Game Designers''; ``Open Governance and Learning'' (co-organized with
+Marisa Ponti); and ``Shaping P2PU''.  (10/2010--5/2011)
+
+\paragraph{University of Texas at Austin} \hspace{.1in} \\
+Teaching Assistant for Calculus I and II; Facilitated
+weekly problem sessions, graded papers, and held office
+hours. (6/2002-8/2002, 2/2003-5/2003)
+
+\section*{Contributions to Free/Open Source Software}
+
+\paragraph{Planetary}  \hspace{.1in} \\
+\url{https://github.com/KWARC/planetary} \smallskip
+
+Planetary is the software system powering PlanetMath, based
+on Drupal 7, \LaTeX ML, Virtuoso and other free/open components.  I am
+one of the main developers. (2010-ongoing)
+
+\paragraph{Arxana}  \hspace{.1in} \\
+\url{http://repo.or.cz/w/arxana.git} \smallskip
+
+Arxana is a hypertext system written in literate Emacs Lisp,
+with Common Lisp extensions.  I am the main developer. (2005-ongoing)
+
+\section*{Peer Reviewed Publications}
+
+\subsection*{Computers and Media}
+
+\begin{enumerate}
+\item[16.] \fullcite{colton-assessingprogress}. \\
+
+\item[15.] \fullcite{ginev-nnexus}. \\
+
+\item[14.] \fullcite{decipher-paper}.\\
+
+\item[13.] \fullcite{lange2012reimplementing}. \\
+
+\item[12.] \fullcite{tomlinson2012massively}. \\
+
+\item[11.] \fullcite{corneli+crowdsourcing}. \\
+
+\item[10.] \fullcite{CorneliDumitru:OpenMathUIWiP2012}.\\
+
+\item[9.] \fullcite{corneli-ponti}.\\
+
+\item[8.] \fullcite{Kohlhase2011598}.\\
+
+\item[7.] \fullcite{corneli+planetmath+encyc}.\\
+
+\item[6.] \fullcite{corneli+telmas+2011}.\\
+
+\item[5] \fullcite{corneli2011personalised}. \\
+
+% \item[5a.] \fullcite{p2ple}.\\
+
+\item[4.] \fullcite{corneli2010live}.\\
+
+\item[3.] \fullcite{david+emath+2010}.\\
+
+\item[2.] \fullcite{corneli2010gravpad}.\\
+
+\item[1.] \fullcite{corneli+scholia-based}.\\
+\end{enumerate}
+
+\subsection*{Education and Philosophy}
+
+\begin{enumerate}
+\item [4.] \fullcite{wow5-creativity-commons}.\\
+
+\item[3.] \fullcite{corneli2013inaction}. \\
+
+\item[2.] \fullcite{corneli2012paragogical}.\\
+
+\item[1.] \fullcite{paragogy-okcon}.\\
+\end{enumerate}
+
+\subsection*{Mathematics}
+
+\begin{enumerate}
+\item[4.] \fullcite{corneli2008double}.\\
+
+\item[3.] \fullcite{corneli2007double}.\\
+
+\item[2.] \fullcite{corneli2004double}.\\
+
+\item[1.] \fullcite{alvarez2003double}.\\
+\end{enumerate}
+
+\section*{Other (Non-Peer Reviewed) Publications}
+
+\begin{enumerate}
+\item[1.] Howard Rheingold, George Brett, Joseph Corneli, Charles Jeffrey Danoff,
+Kyle Larson, Charlotte Pierce, Paola Ricaurte, and Fabrizio Terzi (eds.)
+(2014). \emph{\href{http://peeragogy.org}{The Peeragogy
+    Handbook}}, Second Edition, published on {\ttfamily peeragogy.org} and available through Amazon. CC-Zero.\\
+\end{enumerate}
+
+\end{document}
+
