@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?latexml searchpaths="/Users/joe/jim/miniBibServer/test_LaTeXML"?>
+<?latexml class="article" options="12pt,article"?>
+<?latexml package="color"?>
+<?latexml package="hyperref" options="breaklinks,linkbordercolor=cyan,pdfborderstyle=/S/U/W.5"?>
+<?latexml RelaxNGSchema="LaTeXML"?>
+<document xmlns="http://dlmf.nist.gov/LaTeXML">
+  <resource src="LaTeXML.css" type="text/css"/>
+  <resource src="ltx-article.css" type="text/css"/>
+  <!-- %**** joe˙corneli˙vitae.tex Line 25 **** -->
+  <para xml:id="p1">
+    <p align="center">
+      <text fontsize="Large" font="bold">Joseph Angus Corneli</text>
+    </p>
+    <p align="center">Department of Computing</p>
+    <p align="center">Goldsmiths College</p>
+    <p align="center">New Cross, London</p>
+    <p align="center">SE14 6NW, UK</p>
+    <p align="center"><ref href="mailto:j.corneli@gold.ac.uk">j.corneli<text color="#000000" fontsize="small">@</text>gold.ac.uk</ref></p>
+  </para>
+  <section xml:id="Sx1">
+    <title>Education</title>
+    <paragraph xml:id="Sx1.SS0.SSS0.P1">
+      <title>The Open University</title>
+      <para xml:id="Sx1.SS0.SSS0.P1.p1">
+        <break/>
+        <p>Doctor of Philosophy (Computing), 2014 (expected; submitted July, 2013)</p>
+      </para>
+      <para xml:id="Sx1.SS0.SSS0.P1.p2">
+        <p>Thesis: <emph><ref href="http://metameso.org/~joe/thesis-outline.html">Peer
+produced peer learning: A mathematics case study</ref></emph> (Supervisors:
+Prof. Peter Scott and
+Dr. Alexander Mikroyannidis).</p>
+      </para>
+    </paragraph>
+    <paragraph xml:id="Sx1.SS0.SSS0.P2">
+      <title>New College of Florida</title>
+      <para xml:id="Sx1.SS0.SSS0.P2.p1">
+        <break/>
+        <p>Bachelor of Arts (Mathematics), 2002
+<!-- %**** joe˙corneli˙vitae.tex Line 50 **** --></p>
+      </para>
+      <para xml:id="Sx1.SS0.SSS0.P2.p2">
+        <p>Thesis: <emph>Double bubbles in spaces of constant curvature</emph>
+(Advisor: Prof. Patrick T. McDonald).</p>
+      </para>
+    </paragraph>
+  </section>
+  <section xml:id="Sx2">
+    <title>Professional Experience</title>
+    <paragraph xml:id="Sx2.SS0.SSS0.P3">
+      <title>Goldsmiths College, University of London</title>
+      <para xml:id="Sx2.SS0.SSS0.P3.p1">
+        <break/>
+        <p>Researcher in Computational Creativity. Working with
+partners to develop novel concept invention techniques and
+assessment methodologies. Applying concept invention
+techniques to tasks in mathematical creativity. Writing
+and presentation of research papers at conference and
+journal level. (2013-2016, current position)</p>
+      </para>
+    </paragraph>
+    <paragraph xml:id="Sx2.SS0.SSS0.P4">
+      <title>Knowledge Media Institute at The Open University</title>
+      <para xml:id="Sx2.SS0.SSS0.P4.p1">
+        <break/>
+        <p>Research Assistant in the Digital Environment for Cultural
+Interfaces; Promoting Heritage, Education and Research (DECIPHER) EU
+project. Responsibilities included PHP (Drupal) and Lisp programming,
+and contributions to Semantic Web integration. (2013)</p>
+      </para>
+    </paragraph>
+    <paragraph xml:id="Sx2.SS0.SSS0.P5">
+      <title>PlanetMath.org, Ltd.</title>
+      <para xml:id="Sx2.SS0.SSS0.P5.p1">
+        <break/>
+        <p>Member of the Board of Directors of the US-based nonprofit
+PlanetMath.org, Ltd., which runs a popular community-produced
+mathematics website serving learners at all levels. Key
+<!-- %**** joe˙corneli˙vitae.tex Line 75 **** -->accomplishments include strategic planning, research, and technical
+work. (2008-ongoing)</p>
+      </para>
+    </paragraph>
+    <paragraph xml:id="Sx2.SS0.SSS0.P6">
+      <title>Cycorp, Inc.</title>
+      <para xml:id="Sx2.SS0.SSS0.P6.p1">
+        <break/>
+        <p>Associate Member of the Technical Staff at a well-known AI firm.
+Devised programmatic methods for cleaning a large artificial
+intelligence knowledge base. (6/2003-8/2003)</p>
+      </para>
+    </paragraph>
+  </section>
+  <section xml:id="Sx3">
+    <title>Teaching Experience</title>
+    <paragraph xml:id="Sx3.SS0.SSS0.P7">
+      <title>Peer-2-Peer University</title>
+      <para xml:id="Sx3.SS0.SSS0.P7.p1">
+        <break/>
+        <p>Designed and facilitated “DIY Math”; “Mathematics for
+Game Designers”; “Open Governance and Learning” (co-organized with
+Marisa Ponti); and “Shaping P2PU”. (10/2010–5/2011)</p>
+      </para>
+    </paragraph>
+    <paragraph xml:id="Sx3.SS0.SSS0.P8">
+      <title>University of Texas at Austin</title>
+      <para xml:id="Sx3.SS0.SSS0.P8.p1">
+        <break/>
+        <p>Teaching Assistant for Calculus I and II; Facilitated
+weekly problem sessions, graded papers, and held office
+hours. (6/2002-8/2002, 2/2003-5/2003)</p>
+      </para>
+    </paragraph>
+  </section>
+  <section xml:id="Sx4">
+    <title>Contributions to Free/Open Source Software</title>
+    <paragraph xml:id="Sx4.SS0.SSS0.P9">
+      <title>Planetary</title>
+      <para xml:id="Sx4.SS0.SSS0.P9.p1">
+        <break/>
+        <p><ref class="ltx_url" href="https://github.com/KWARC/planetary"><text font="typewriter">https://github.com/KWARC/planetary</text></ref></p>
+      </para>
+      <!-- %**** joe˙corneli˙vitae.tex Line 100 **** -->
+      <para xml:id="Sx4.SS0.SSS0.P9.p2">
+        <p>Planetary is the software system powering PlanetMath, based
+on Drupal 7, LaTeXML, Virtuoso and other free/open components. I am
+one of the main developers. (2010-ongoing)</p>
+      </para>
+    </paragraph>
+    <paragraph xml:id="Sx4.SS0.SSS0.P10">
+      <title>Arxana</title>
+      <para xml:id="Sx4.SS0.SSS0.P10.p1">
+        <break/>
+        <p><ref class="ltx_url" href="http://repo.or.cz/w/arxana.git"><text font="typewriter">http://repo.or.cz/w/arxana.git</text></ref></p>
+      </para>
+      <para xml:id="Sx4.SS0.SSS0.P10.p2">
+        <p>Arxana is a hypertext system written in literate Emacs Lisp,
+with Common Lisp extensions. I am the main developer. (2005-ongoing)</p>
+      </para>
+      <para xml:id="Sx4.SS0.SSS0.P10.p3">
+        <p><cite><bibref bibrefs="*" show="nothing"/></cite></p>
+      </para>
+    </paragraph>
+  </section>
+  <section xml:id="Sx5">
+    <title>Peer Reviewed Publications</title>
+  </section>
+  <bibliography bibstyle="unsrt" citestyle="numbers" files="corneli-citations" xml:id="bib">
+    <title>References</title>
+  </bibliography>
+</document>

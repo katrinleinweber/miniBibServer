@@ -1,0 +1,1390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?latexml searchpaths="/Users/joe/jim/miniBibServer/test_LaTeXML"?>
+<!-- %Some control structure from latex.ltx -->
+<!-- %(amazing that it actually works!) -->
+<!-- %How much of this control struture will I need? -->
+<!-- %**** String Line 50 **** -->
+<!-- %**** String Line 75 **** -->
+<?latexml RelaxNGSchema="LaTeXML"?>
+<document xmlns="http://dlmf.nist.gov/LaTeXML">
+  <resource src="LaTeXML.css" type="text/css"/>
+  <bibliography citestyle="numbers" xml:id="bib">
+    <title/>
+    <biblist>
+      <bibentry key="wow5-creativity-commons" type="inproceedings" xml:id="bib.bib1">
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-title>Towards a Creativity Commons</bib-title>
+        <bib-date role="publication">2014</bib-date>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Fifth “Workshop on the Ostrom Workshop” (WOW5)</bib-title>
+        </bib-related>
+        <bib-url href="http://dlc.dlib.indiana.edu/dlc/handle/10535/9388">Link</bib-url>
+        <bib-note role="annotation">Presented to the working group on “The Commons as Transformative Paradigm” convened by Wolfgang Hoeschele and Helene Finidori</bib-note>
+        <bib-data role="self" type="BibTeX">@inproceedings{wow5-creativity-commons,
+    author = {Joseph Corneli},
+     title = {{T}owards a {C}reativity {C}ommons},
+      year = {2014},
+ booktitle = {{F}ifth ``{W}orkshop on the {O}strom {W}orkshop'' (WOW5)},
+       url = {http://dlc.dlib.indiana.edu/dlc/handle/10535/9388},
+      note = {Presented to the working group on ``The Commons as Transformative Paradigm'' convened by Wolfgang Hoeschele and Helene Finidori}}
+</bib-data>
+      </bibentry>
+      <bibentry key="ginev-nnexus" type="inproceedings" xml:id="bib.bib2">
+        <bib-title>NNexus Reloaded</bib-title>
+        <bib-name role="author">
+          <surname>Ginev</surname>
+          <givenname>Deyan</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-related bibrefs="CICM14" role="host"/>
+        <bib-data role="pubs">dginev</bib-data>
+        <bib-url href="http://arxiv.org/abs/1404.6548">Link</bib-url>
+        <bib-related role="host" type="proceedings">
+          <bib-title>2014 Conferences on Intelligent Computer Mathematics</bib-title>
+        </bib-related>
+        <bib-date role="publication">2014</bib-date>
+        <bib-data role="self" type="BibTeX">@inproceedings{ginev-nnexus,
+     title = {{N}{N}exus {R}eloaded},
+    author = {Deyan Ginev and Joseph Corneli},
+  crossref = {CICM14},
+      pubs = {dginev},
+       url = {http://arxiv.org/abs/1404.6548},
+ booktitle = {{2014 Conferences on Intelligent Computer Mathematics}},
+      year = {2014}}
+</bib-data>
+      </bibentry>
+      <bibentry key="CICM14" type="proceedings" xml:id="bib.bib3">
+        <bib-title>2014 Conferences on Intelligent Computer Mathematics</bib-title>
+        <bib-key>CICM14</bib-key>
+        <bib-data role="label">CICM14</bib-data>
+        <bib-date role="publication">2014</bib-date>
+        <bib-name role="editor">
+          <surname>Watt</surname>
+          <givenname>S.M.</givenname>
+        </bib-name>
+        <bib-part role="series">Lecture Notes in Artificial Intelligence</bib-part>
+        <bib-part role="volume">8543</bib-part>
+        <bib-extract role="keywords">conference</bib-extract>
+        <bib-data role="self" type="BibTeX">@proceedings{CICM14,
+     title = {2014 {C}onferences on {I}ntelligent {C}omputer {M}athematics},
+ booktitle = {{2014 Conferences on Intelligent Computer Mathematics}},
+       key = {CICM14},
+     label = {CICM14},
+      year = {2014},
+    editor = {S.M. Watt and others},
+    series = {Lecture Notes in Artificial Intelligence},
+    volume = {8543},
+  keywords = {conference}}
+</bib-data>
+      </bibentry>
+      <bibentry key="colton-assessingprogress" type="inproceedings" xml:id="bib.bib4">
+        <bib-title>Assessing progress in building autonomously creative systems</bib-title>
+        <bib-name role="author">
+          <surname>Colton</surname>
+          <givenname>Simon</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Pease</surname>
+          <givenname>Alison</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Cook</surname>
+          <givenname>Michael</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Llano</surname>
+          <givenname>Teresa</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Proceedings of the Fifth International Conference on Computational Creativity</bib-title>
+          <bib-name role="editor">
+            <surname>Ventura</surname>
+            <givenname>Dan</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Colton</surname>
+            <givenname>Simon</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Lavrac</surname>
+            <givenname>Nada</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Cook</surname>
+            <givenname>Michael</givenname>
+          </bib-name>
+        </bib-related>
+        <bib-url href="http://computationalcreativity.net/iccc2014/wp-content/uploads/2014/06//8.4_Colton.pdf">Link</bib-url>
+        <bib-date role="publication">2014</bib-date>
+        <bib-data role="self" type="BibTeX">@inproceedings{colton-assessingprogress,
+     title = {Assessing Progress in Building Autonomously Creative Systems},
+    author = {Simon Colton and Pease, Alison and Corneli, Joseph and Cook, Michael and Llano, Teresa},
+ booktitle = {Proceedings of the Fifth International Conference on Computational Creativity},
+    editor = {Ventura, Dan and Colton, Simon and Lavrac, Nada and Cook, Michael},
+       url = {http://computationalcreativity.net/iccc2014/wp-content/uploads/2014/06//8.4_Colton.pdf},
+      year = {2014}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2010live" type="inproceedings" xml:id="bib.bib5">
+        <bib-title>Live annotation and content discovery in personal learning environments</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mikroyannidis</surname>
+          <givenname>Alexander</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>MUPPLE2010: Proceedings of the 3rd European Workshop on Mash-up Personal Learning Environments</bib-title>
+        </bib-related>
+        <bib-date role="publication">2010</bib-date>
+        <bib-data role="self" type="BibTeX">@inproceedings{corneli2010live,
+     title = {Live annotation and content discovery in personal learning environments},
+    author = {Corneli, Joseph and Mikroyannidis, Alexander},
+ booktitle = {{M}{U}{P}{P}{L}{E}2010: {P}roceedings of the 3rd {E}uropean {W}orkshop on {M}ash-up {P}ersonal {L}earning {E}nvironments},
+      year = {2010}}
+</bib-data>
+      </bibentry>
+      <bibentry key="decipher-paper" type="inproceedings" xml:id="bib.bib6">
+        <bib-date role="publication">2013</bib-date>
+        <bib-identifier id="978-3-319-02755-5" scheme="isbn">ISBN 978-3-319-02755-5</bib-identifier>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Interactive Storytelling</bib-title>
+          <bib-part role="volume">8230</bib-part>
+          <bib-part role="series">Lecture Notes in Computer Science</bib-part>
+          <bib-name role="editor">
+            <surname>Koenitz</surname>
+            <givenname>Hartmut</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Sezen</surname>
+            <givenname>Tonguc Ibrahim</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Ferri</surname>
+            <givenname>Gabriele</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Haahr</surname>
+            <givenname>Mads</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Sezen</surname>
+            <givenname>Digdem</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Çatak</surname>
+            <givenname>Güven</givenname>
+          </bib-name>
+          <bib-publisher>Springer International Publishing</bib-publisher>
+        </bib-related>
+        <bib-identifier href="http://dx.doi.org/10.1007/978-3-319-02756-2_14" id="10.1007/978-3-319-02756-2_14" scheme="doi">Document</bib-identifier>
+        <bib-title>Constructing and connecting storylines to tell museum stories</bib-title>
+        <bib-url href="http://dx.doi.org/10.1007/978-3-319-02756-2_14">Link</bib-url>
+        <bib-extract role="keywords">Museum storytelling; storylines; ATMS; clustering</bib-extract>
+        <bib-name role="author">
+          <surname>Mulholland</surname>
+          <givenname>Paul</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Wolff</surname>
+          <givenname>Annika</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Zdrahal</surname>
+          <givenname>Zdenek</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Li</surname>
+          <givenname>Ning</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-part role="pages">121–124</bib-part>
+        <bib-data role="self" type="BibTeX">@inproceedings{decipher-paper,
+      year = {2013},
+      isbn = {978-3-319-02755-5},
+ booktitle = {Interactive Storytelling},
+    volume = {8230},
+    series = {Lecture Notes in Computer Science},
+    editor = {Koenitz, Hartmut and Sezen, Tonguc Ibrahim and Ferri, Gabriele and Haahr, Mads and Sezen, Digdem and \c{C}atak, G\"uven},
+       doi = {10.1007/978-3-319-02756-2_14},
+     title = {Constructing and Connecting Storylines to Tell Museum Stories},
+       url = {http://dx.doi.org/10.1007/978-3-319-02756-2_14},
+ publisher = {Springer International Publishing},
+  keywords = {Museum storytelling; storylines; ATMS; clustering},
+    author = {Mulholland, Paul and Wolff, Annika and Zdrahal, Zdenek and Li, Ning and Corneli, Joseph},
+     pages = {121-124}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2013inaction" type="incollection" xml:id="bib.bib7">
+        <bib-title>Peeragogy in Action</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Keune</surname>
+          <givenname>A</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Lyons</surname>
+          <givenname>A</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Danoff</surname>
+          <givenname>CJ</givenname>
+        </bib-name>
+        <bib-related role="host" type="book">
+          <bib-title>The Open Book</bib-title>
+          <bib-name role="editor">
+            <surname>Braybrooke</surname>
+            <givenname>Kaitlyn</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Nissilä</surname>
+            <givenname>Jussi</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Vuorikivi</surname>
+            <givenname>Timo</givenname>
+          </bib-name>
+          <bib-part role="series">#3 in the Reaktio Series</bib-part>
+          <bib-publisher>The Finnish Institute, London</bib-publisher>
+        </bib-related>
+        <bib-part role="pages">80–87</bib-part>
+        <bib-date role="publication">2013</bib-date>
+        <bib-identifier id="978-0-9570776-3-8" scheme="isbn">ISBN 978-0-9570776-3-8</bib-identifier>
+        <bib-url href="http://peeragogy.org/peeragogy-in-action/">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@incollection{corneli2013inaction,
+     title = {{Peeragogy in Action}},
+    author = {Corneli, J and Keune, A and Lyons, A and Danoff, CJ},
+ booktitle = {{The Open Book}},
+    editor = {Braybrooke, Kaitlyn and Nissil\"a, Jussi  and Timo Vuorikivi},
+    series = {\#3 in the Reaktio Series},
+ publisher = {The Finnish Institute, London},
+     pages = {80–87},
+      year = {2013},
+      isbn = {978-0-9570776-3-8},
+       url = {http://peeragogy.org/peeragogy-in-action/}}
+</bib-data>
+      </bibentry>
+      <bibentry key="arxana-notes" type="misc" xml:id="bib.bib8">
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Puzio</surname>
+          <givenname>Raymond S.</givenname>
+        </bib-name>
+        <bib-date role="publication">2013</bib-date>
+        <bib-title>All Yesterday’s Tomorrows: The report on, and of, Project Arxana concerning word processing, electronic publishing, hypertext, etc.</bib-title>
+        <bib-data role="location">Emacs Conference 2013, London</bib-data>
+        <bib-data role="self" type="BibTeX">@misc{arxana-notes,
+    author = {Joseph Corneli and Raymond S. Puzio},
+      year = {2013},
+     title = {{A}ll {Y}esterday's {T}omorrows: {T}he report on, and of, {P}roject {A}rxana concerning word processing, electronic publishing, hypertext, etc.},
+  location = {Emacs Conference 2013, London}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli-thesis" type="thesis" xml:id="bib.bib9">
+        <bib-title>Peer produced peer learning: A mathematics case study</bib-title>
+        <bib-organization>The Open University (submitted)</bib-organization>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-date role="publication">2013</bib-date>
+        <bib-url href="http://metameso.org/~joe/docs/submitted-version.pdf">Link</bib-url>
+        <bib-type>Ph.D. Thesis</bib-type>
+        <bib-data role="self" type="BibTeX">@phdthesis{corneli-thesis,
+     title = {Peer produced peer learning: {A} mathematics case study},
+    school = {The Open University (submitted)},
+    author = {Corneli, Joseph},
+      year = {2013},
+       url = {http://metameso.org/~joe/docs/submitted-version.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli-openbook" type="incollection" xml:id="bib.bib10">
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Keune</surname>
+          <givenname>Anna</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Lyons</surname>
+          <givenname>Amanda</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Danoff</surname>
+          <givenname>Charles Jeffrey</givenname>
+        </bib-name>
+        <bib-date role="publication">2013</bib-date>
+        <bib-title>Peeragogy in Action</bib-title>
+        <bib-related role="host" type="book">
+          <bib-name role="editor">
+            <surname>Braybrooke</surname>
+            <givenname>Kaitlyn</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Nissilä</surname>
+            <givenname>Jussi</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Vuorikivi</surname>
+            <givenname>Timo</givenname>
+          </bib-name>
+          <bib-title>The Open Book</bib-title>
+          <bib-part role="series">#3 in the Reaktio Series</bib-part>
+          <bib-publisher>London, UK: The Finnish Institute</bib-publisher>
+        </bib-related>
+        <bib-identifier id="978-0-9570776-3-8" scheme="isbn">ISBN 978-0-9570776-3-8</bib-identifier>
+        <bib-data role="self" type="BibTeX">@incollection{corneli-openbook,
+    author = {Joseph Corneli and Anna Keune and Amanda Lyons and Charles Jeffrey Danoff},
+      year = {2013},
+     title = {{P}eeragogy in {A}ction},
+    editor = {Kaitlyn Braybrooke and Jussi Nissil\"a and Timo Vuorikivi},
+ booktitle = {{T}he {O}pen {B}ook},
+    series = {\#3 in the Reaktio Series},
+ publisher = {London, UK: The Finnish Institute},
+      isbn = {978-0-9570776-3-8}}
+</bib-data>
+      </bibentry>
+      <bibentry key="tomlinson2012massively" type="inproceedings" xml:id="bib.bib11">
+        <bib-title>Massively distributed authorship of academic papers</bib-title>
+        <bib-name role="author">
+          <surname>Tomlinson</surname>
+          <givenname>B.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Ross</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>André</surname>
+          <givenname>P.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Baumer</surname>
+          <givenname>E.P.S.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Patterson</surname>
+          <givenname>D.J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mahaux</surname>
+          <givenname>M.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Nobarany</surname>
+          <givenname>S.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Lazzari</surname>
+          <givenname>M.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Penzenstadler</surname>
+          <givenname>B.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Torrance</surname>
+          <givenname>A.W.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Callele</surname>
+          <givenname>D.J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Olson</surname>
+          <givenname>G.M.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Silberman</surname>
+          <givenname>M.S.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Ständer</surname>
+          <givenname>M.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Palamedi</surname>
+          <givenname>F.R.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Salah</surname>
+          <givenname>A.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Morrill</surname>
+          <givenname>E.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Franch</surname>
+          <givenname>X.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mueller</surname>
+          <givenname>F.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Kaye</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Black</surname>
+          <givenname>R.W.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Cohn</surname>
+          <givenname>M.L.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Shih</surname>
+          <givenname>P.C.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Brewer</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Goyal</surname>
+          <givenname>N.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Näkki</surname>
+          <givenname>P.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Huang</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Baghaei</surname>
+          <givenname>N.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Saper</surname>
+          <givenname>C.</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>CHI’12 Extended Abstracts on Human Factors in Computing Systems</bib-title>
+          <bib-organization>ACM</bib-organization>
+        </bib-related>
+        <bib-part role="pages">11–20</bib-part>
+        <bib-date role="publication">2012</bib-date>
+        <bib-url href="http://altchi.org/submissions/submission_wmt_0.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@inproceedings{tomlinson2012massively,
+     title = {Massively distributed authorship of academic papers},
+    author = {Tomlinson, B. and Ross, J. and Andr\'e, P. and Baumer, E.P.S. and Patterson, D.J. and Corneli, J. and Mahaux, M. and Nobarany, S. and Lazzari, M. and Penzenstadler, B. and Torrance, A.W. and Callele, D.J. and Olson, G.M. and Silberman, M.S. and St\"ander, M. and Palamedi, F.R. and Salah, A. and Morrill, E. and Franch, X. and Mueller, F. and Kaye, J. and Black, R.W. and Cohn, M.L. and Shih, P.C. and Brewer, J. and Goyal, N. and N\"akki, P. and Huang, J. and Baghaei, N. and Saper, C.},
+ booktitle = {{CHI'12 Extended Abstracts on Human Factors in Computing Systems}},
+     pages = {11–20},
+      year = {2012},
+organization = {ACM},
+       url = {http://altchi.org/submissions/submission_wmt_0.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2012paragogical" type="article" xml:id="bib.bib12">
+        <bib-title>Paragogical praxis</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-related role="host" type="journal">
+          <bib-title>E-Learning and Digital Media</bib-title>
+        </bib-related>
+        <bib-part role="volume">9</bib-part>
+        <bib-part role="number">3</bib-part>
+        <bib-part role="pages">267–272</bib-part>
+        <bib-date role="publication">2012</bib-date>
+        <bib-url href="http://paragogy.net/ParagogicalPraxisPaper">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{corneli2012paragogical,
+     title = {{P}aragogical praxis},
+    author = {Corneli, J.},
+   journal = {E-Learning and Digital Media},
+    volume = {9},
+    number = {3},
+     pages = {267–272},
+      year = {2012},
+       url = {http://paragogy.net/ParagogicalPraxisPaper}}
+</bib-data>
+      </bibentry>
+      <bibentry key="peeragogy-handbook" type="book" xml:id="bib.bib13">
+        <bib-title>The Peeragogy Handbook</bib-title>
+        <bib-name role="author">
+          <surname>Rheingold</surname>
+          <givenname>H.</givenname>
+        </bib-name>
+        <bib-date role="publication">2013</bib-date>
+        <bib-publisher>Chicago: PubDomEd Press</bib-publisher>
+        <bib-url href="http://peeragogy.org">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@book{peeragogy-handbook,
+     title = {The {P}eeragogy {H}andbook},
+    author = {H. Rheingold and others},
+      year = {2013},
+ publisher = {Chicago: PubDomEd Press},
+       url = {http://peeragogy.org}}
+</bib-data>
+      </bibentry>
+      <bibentry key="CorneliDumitru:OpenMathUIWiP2012" type="inproceedings" xml:id="bib.bib14">
+        <bib-title>PlanetMath/Planetary</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Dumitru</surname>
+          <givenname>M.A.</givenname>
+        </bib-name>
+        <bib-part role="pages">66–72</bib-part>
+        <bib-url href="http://ceur-ws.org/Vol-921/wip-02.pdf">Link</bib-url>
+        <bib-related bibrefs="OpenMathUIWiP2012" role="host"/>
+        <bib-related role="host" type="proceedings">
+          <bib-title>24<sup>th</sup> OpenMath Workshop, 7<sup>th</sup> Workshop on Mathematical User Interfaces (MathUI), and Intelligent Computer Mathematics Work in Progress</bib-title>
+        </bib-related>
+        <bib-date role="publication">2012</bib-date>
+        <bib-data role="self" type="BibTeX">@inproceedings{CorneliDumitru:OpenMathUIWiP2012,
+     title = {{P}lanet{M}ath/{P}lanetary},
+    author = {Corneli, J. and Dumitru, M.A.},
+     pages = {66–72},
+       url = {http://ceur-ws.org/Vol-921/wip-02.pdf},
+  crossref = {OpenMathUIWiP2012},
+ booktitle = {24\textsuperscript{th} OpenMath Workshop, 7\textsuperscript{th} Workshop on Mathematical User Interfaces (MathUI), and Intelligent Computer Mathematics Work in Progress},
+      year = {2012}}
+</bib-data>
+      </bibentry>
+      <bibentry key="OpenMathUIWiP2012" type="proceedings" xml:id="bib.bib15">
+        <bib-title>Joint Proceedings of the 24<sup>th</sup> OpenMath Workshop, the 7<sup>th</sup> Workshop on Mathematical User Interfaces (MathUI), and the Work in Progress Section of the Conference on Intelligent Computer Mathematics</bib-title>
+        <bib-date role="publication">2012</bib-date>
+        <bib-name role="editor">
+          <surname>Davenport</surname>
+          <givenname>James</givenname>
+        </bib-name>
+        <bib-name role="editor">
+          <surname>Jeuring</surname>
+          <givenname>Johan</givenname>
+        </bib-name>
+        <bib-name role="editor">
+          <surname>Lange</surname>
+          <givenname>Christoph</givenname>
+        </bib-name>
+        <bib-name role="editor">
+          <surname>Libbrecht</surname>
+          <givenname>Paul</givenname>
+        </bib-name>
+        <bib-part role="number">921</bib-part>
+        <bib-part role="series">CEUR Workshop Proceedings</bib-part>
+        <bib-place>Aachen</bib-place>
+        <bib-identifier id="1613-0073" scheme="issn">ISSN 1613-0073</bib-identifier>
+        <bib-url href="http://ceur-ws.org/Vol-921/">Link</bib-url>
+        <bib-data role="venue">Bremen, Germany</bib-data>
+        <bib-data role="eventdate">2012-07-09/2012-07-13</bib-data>
+        <bib-data role="self" type="BibTeX">@proceedings{OpenMathUIWiP2012,
+ booktitle = {24\textsuperscript{th} OpenMath Workshop, 7\textsuperscript{th} Workshop on Mathematical User Interfaces (MathUI), and Intelligent Computer Mathematics Work in Progress},
+     title = {{J}oint {P}roceedings of the 24\textsuperscript{th} {OpenMath} {W}orkshop, the 7\textsuperscript{th} {W}orkshop on {M}athematical {U}ser {I}nterfaces ({MathUI}), and the {W}ork in {P}rogress {S}ection of the {C}onference on {I}ntelligent {C}omputer {M}athematics},
+      year = {2012},
+    editor = {James Davenport and Johan Jeuring and Christoph Lange and Paul Libbrecht},
+    number = {921},
+    series = {CEUR Workshop Proceedings},
+   address = {Aachen},
+      issn = {1613-0073},
+       url = {http://ceur-ws.org/Vol-921/},
+     venue = {Bremen, Germany},
+ eventdate = {2012-07-09/2012-07-13}}
+</bib-data>
+      </bibentry>
+      <bibentry key="lange2012reimplementing" type="incollection" xml:id="bib.bib16">
+        <bib-date role="publication">2012</bib-date>
+        <bib-identifier id="978-3-642-31373-8" scheme="isbn">ISBN 978-3-642-31373-8</bib-identifier>
+        <bib-related role="host" type="book">
+          <bib-title>Intelligent Computer Mathematics</bib-title>
+          <bib-part role="volume">7362</bib-part>
+          <bib-part role="series">Lecture Notes in Computer Science</bib-part>
+          <bib-name role="editor">
+            <surname>Jeuring</surname>
+            <givenname>Johan</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Campbell</surname>
+            <givenname>JohnA.</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Carette</surname>
+            <givenname>Jacques</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Reis</surname>
+            <givenname>Gabriel</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Sojka</surname>
+            <givenname>Petr</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Wenzel</surname>
+            <givenname>Makarius</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Sorge</surname>
+            <givenname>Volker</givenname>
+          </bib-name>
+          <bib-publisher>Springer Berlin Heidelberg</bib-publisher>
+        </bib-related>
+        <bib-identifier href="http://dx.doi.org/10.1007/978-3-642-31374-5_36" id="10.1007/978-3-642-31374-5_36" scheme="doi">Document</bib-identifier>
+        <bib-title>Reimplementing the mathematics subject classification (MSC) as a linked open dataset</bib-title>
+        <bib-url href="http://dx.doi.org/10.1007/978-3-642-31374-5_36">Link</bib-url>
+        <bib-name role="author">
+          <surname>Lange</surname>
+          <givenname>Christoph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Ion</surname>
+          <givenname>Patrick</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Dimou</surname>
+          <givenname>Anastasia</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Bratsas</surname>
+          <givenname>Charalampos</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Sperber</surname>
+          <givenname>Wolfram</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Kohlhase</surname>
+          <givenname>Michael</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Antoniou</surname>
+          <givenname>Ioannis</givenname>
+        </bib-name>
+        <bib-part role="pages">458–462</bib-part>
+        <bib-data role="self" type="BibTeX">@incollection{lange2012reimplementing,
+      year = {2012},
+      isbn = {978-3-642-31373-8},
+ booktitle = {Intelligent Computer Mathematics},
+    volume = {7362},
+    series = {Lecture Notes in Computer Science},
+    editor = {Jeuring, Johan and Campbell, JohnA. and Carette, Jacques and Reis, Gabriel and Sojka, Petr and Wenzel, Makarius and Sorge, Volker},
+       doi = {10.1007/978-3-642-31374-5_36},
+     title = {Reimplementing the Mathematics Subject Classification ({MSC}) as a Linked Open Dataset},
+       url = {http://dx.doi.org/10.1007/978-3-642-31374-5_36},
+ publisher = {Springer Berlin Heidelberg},
+    author = {Lange, Christoph and Ion, Patrick and Dimou, Anastasia and Bratsas, Charalampos and Corneli, Joseph and Sperber, Wolfram and Kohlhase, Michael and Antoniou, Ioannis},
+     pages = {458-462}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli-ponti" type="inproceedings" xml:id="bib.bib17">
+        <bib-title>Detecting mathematics learning online</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Ponti</surname>
+          <givenname>M.</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Proceedings of the 8th International Conference on Networked Learning 2012</bib-title>
+          <bib-name role="editor">
+            <surname>Hodgson</surname>
+            <givenname>V.</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Jones</surname>
+            <givenname>C.</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>de Laat</surname>
+            <givenname>M.</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>McConnell</surname>
+            <givenname>D.</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Ryberg</surname>
+            <givenname>T.</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Sloep</surname>
+            <givenname>P.</givenname>
+          </bib-name>
+        </bib-related>
+        <bib-date role="publication">2012</bib-date>
+        <bib-url href="http://metameso.org/~joe/docs/detecting-learning.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@inproceedings{corneli-ponti,
+     title = {Detecting mathematics learning online},
+    author = {Corneli, J. and Ponti, M.},
+ booktitle = {{Proceedings of the 8th International Conference on Networked Learning 2012}},
+    editor = {Hodgson, V. and Jones, C. and de Laat, M. and McConnell, D. and Ryberg, T. and P. Sloep},
+      year = {2012},
+       url = {http://metameso.org/~joe/docs/detecting-learning.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="paragogy-okcon" type="inproceedings" xml:id="bib.bib18">
+        <bib-title>Paragogy</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Danoff</surname>
+          <givenname>C.J.</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Proceedings of the 6th Open Knowledge Conference</bib-title>
+        </bib-related>
+        <bib-place>Berlin, Germany</bib-place>
+        <bib-url href="http://ceur-ws.org/Vol-739/paper+5.pdf">Link</bib-url>
+        <bib-date role="publication">2011</bib-date>
+        <bib-extract role="keywords">paragogy, learning, peer learning, P2P</bib-extract>
+        <bib-data role="self" type="BibTeX">@inproceedings{paragogy-okcon,
+     title = {{Paragogy}},
+    author = {J. Corneli and Danoff, C.J.},
+ booktitle = {{Proceedings of the 6th Open Knowledge Conference}},
+   address = {Berlin, Germany},
+       url = {http://ceur-ws.org/Vol-739/paper+5.pdf},
+      year = {2011},
+  keywords = {paragogy, learning, peer learning, P2P}}
+</bib-data>
+      </bibentry>
+      <bibentry key="paragogy" type="misc" xml:id="bib.bib19">
+        <bib-title>Paragogy: Synergizing individual and organizational learning</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Danoff</surname>
+          <givenname>C.J.</givenname>
+        </bib-name>
+        <bib-note role="annotation">Published on Wikiversity</bib-note>
+        <bib-url href="http://en.wikiversity.org/wiki/User:Arided/ParagogyPaper">Link</bib-url>
+        <bib-date role="publication">2011</bib-date>
+        <bib-extract role="keywords">peer learning</bib-extract>
+        <bib-data role="self" type="BibTeX">@misc{paragogy,
+     title = {{{P}aragogy: {S}ynergizing individual and organizational learning}},
+    author = {Corneli, J. and Danoff, C.J.},
+      note = {Published on Wikiversity},
+       url = {http://en.wikiversity.org/wiki/User:Arided/ParagogyPaper},
+      year = {2011},
+  keywords = {peer learning}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli+telmas+2011" type="article" xml:id="bib.bib20">
+        <bib-title>PlanetMath Redux: Web 2.0 infrastructure for mathematical problem solving</bib-title>
+        <bib-related role="host" type="journal">
+          <bib-title>Technology-Enhanced Learning for Mathematics and Science (TELMAS) at 6th European Conference on Technology-Enhanced Learning (ECTEL): Towards Ubiquitous Learning, 21 Sept 2011, Palermo, Italy.</bib-title>
+        </bib-related>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Jucovschi</surname>
+          <givenname>C.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mikroyannidis</surname>
+          <givenname>A.</givenname>
+        </bib-name>
+        <bib-date role="publication">2011</bib-date>
+        <bib-url href="http://oro.open.ac.uk/29572/1/planetmath-redux-demo.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{corneli+telmas+2011,
+     title = {{P}lanet{M}ath {R}edux: {W}eb 2.0 infrastructure for mathematical problem solving},
+   journal = {{Technology-Enhanced} Learning for Mathematics and Science {(TELMAS)} at 6th European Conference on {Technology-Enhanced} Learning {(ECTEL):} Towards Ubiquitous Learning, 21 Sept 2011, Palermo, Italy.},
+    author = {Corneli, J. and Jucovschi, C. and Mikroyannidis, A.},
+      year = {2011},
+       url = {http://oro.open.ac.uk/29572/1/planetmath-redux-demo.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli+planetmath+encyc" type="inproceedings" xml:id="bib.bib21">
+        <bib-title>The PlanetMath Encyclopedia</bib-title>
+        <bib-related role="host" type="proceedings">
+          <bib-title>The ITP 2011 Workshop on Mathematical Wikis (MathWikis-2011)</bib-title>
+          <bib-name role="editor">
+            <surname>Lange</surname>
+            <givenname>C.</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Urban</surname>
+            <givenname>J.</givenname>
+          </bib-name>
+        </bib-related>
+        <bib-date role="publication">2011</bib-date>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-url href="http://ceur-ws.org/Vol-767/paper-03.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@inproceedings{corneli+planetmath+encyc,
+     title = {{The PlanetMath Encyclopedia}},
+ booktitle = {{The ITP 2011 Workshop on Mathematical Wikis (MathWikis-2011)}},
+    editor = {C. Lange and J. Urban},
+      year = {2011},
+    author = {J. Corneli},
+       url = {http://ceur-ws.org/Vol-767/paper-03.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2011personalised" type="article" xml:id="bib.bib22">
+        <bib-title>Personalised Peer-Supported Learning: The Peer-to-Peer Learning Environment (P2PLE)</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mikroyannidis</surname>
+          <givenname>A.</givenname>
+        </bib-name>
+        <bib-related role="host" type="journal">
+          <bib-title>Digital Education Review</bib-title>
+        </bib-related>
+        <bib-part role="volume">20</bib-part>
+        <bib-part role="pages">14–23</bib-part>
+        <bib-date role="publication">2011</bib-date>
+        <bib-url href="http://greav.ub.edu/der/index.php/der/article/view/188/330">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{corneli2011personalised,
+     title = {{P}ersonalised {P}eer-{S}upported {L}earning: {T}he {P}eer-to-{P}eer {L}earning {E}nvironment ({P2PLE})},
+    author = {Corneli, J. and Mikroyannidis, A.},
+   journal = {Digital Education Review},
+    volume = {20},
+     pages = {14–23},
+      year = {2011},
+       url = {http://greav.ub.edu/der/index.php/der/article/view/188/330}}
+</bib-data>
+      </bibentry>
+      <bibentry key="p2ple" type="inproceedings" xml:id="bib.bib23">
+        <bib-title>Personalised and Peer-Supported Learning: The Peer-to-Peer Learning Environment (P2PLE)</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mikroyannidis</surname>
+          <givenname>A.</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Proceedings of the the PLE Conference 2011</bib-title>
+          <bib-publisher>Southampton, UK</bib-publisher>
+        </bib-related>
+        <bib-date role="publication">2011</bib-date>
+        <bib-data role="self" type="BibTeX">@inproceedings{p2ple,
+     title = {{P}ersonalised and {P}eer-{S}upported {L}earning: {T}he {P}eer-to-{P}eer {L}earning {E}nvironment ({P}2{P}{L}{E})},
+    author = {Corneli, J. and Mikroyannidis, A.},
+ booktitle = {Proceedings of the the {P}{L}{E} {C}onference 2011},
+      year = {2011},
+ publisher = {Southampton, UK}}
+</bib-data>
+      </bibentry>
+      <!-- %**** String Line 25 **** -->
+      <bibentry key="Kohlhase2011598" type="article" xml:id="bib.bib24">
+        <bib-title>The Planetary System: Web 3.0 &amp; Active Documents for STEM</bib-title>
+        <bib-related role="host" type="journal">
+          <bib-title>Procedia Computer Science</bib-title>
+        </bib-related>
+        <bib-part role="volume">4</bib-part>
+        <bib-part role="pages">598–607</bib-part>
+        <bib-date role="publication">2011</bib-date>
+        <bib-note role="annotation">Proceedings of the International Conference on Computational Science, ICCS 2011</bib-note>
+        <bib-identifier id="1877-0509" scheme="issn">ISSN 1877-0509</bib-identifier>
+        <bib-url href="http://www.sciencedirect.com/science/article/pii/S1877050911001219">Link</bib-url>
+        <bib-name role="author">
+          <surname>Kohlhase</surname>
+          <givenname>M.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>David</surname>
+          <givenname>C.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Ginev</surname>
+          <givenname>D.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Jucovschi</surname>
+          <givenname>C.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Kohlhase</surname>
+          <givenname>A.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Lange</surname>
+          <givenname>C.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Matican</surname>
+          <givenname>B.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mirea</surname>
+          <givenname>S.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Zholudev</surname>
+          <givenname>V.</givenname>
+        </bib-name>
+        <bib-extract role="keywords">active documents, executable paper challenge, content commons, semantic annotation, ontologies</bib-extract>
+        <bib-data role="self" type="BibTeX">@article{Kohlhase2011598,
+     title = {The {P}lanetary {S}ystem: {W}eb 3.0 \&amp; {A}ctive {D}ocuments for {S}{T}{E}{M}},
+   journal = {Procedia Computer Science},
+    volume = {4},
+     pages = {598–607},
+      year = {2011},
+      note = {Proceedings of the International Conference on Computational Science, ICCS 2011},
+      issn = {1877-0509},
+       url = {http://www.sciencedirect.com/science/article/pii/S1877050911001219},
+    author = {Kohlhase, M. and Corneli, J. and David, C. and Ginev, D. and Jucovschi, C. and Kohlhase, A. and Lange, C. and Matican, B. and Mirea, S. and Zholudev, V.},
+  keywords = {active documents, executable paper challenge, content commons, semantic annotation, ontologies}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli+crowdsourcing" type="incollection" xml:id="bib.bib25">
+        <bib-title>Crowdsourcing Education: A Role-Based Analysis</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Mikroyannidis</surname>
+          <givenname>A.</givenname>
+        </bib-name>
+        <bib-related role="host" type="book">
+          <bib-title>Collaborative Learning 2.0: Open Educational Resources</bib-title>
+          <bib-name role="editor">
+            <surname>Okada</surname>
+            <givenname>Alexandra</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Connolly</surname>
+            <givenname>Teresa</givenname>
+          </bib-name>
+          <bib-name role="editor">
+            <surname>Scott</surname>
+            <givenname>Peter</givenname>
+          </bib-name>
+          <bib-publisher>IGI Global</bib-publisher>
+        </bib-related>
+        <bib-date role="publication">2011</bib-date>
+        <bib-url href="http://oro.open.ac.uk/33221/1/corneli_chap_okada_book.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@incollection{corneli+crowdsourcing,
+     title = {{C}rowdsourcing {E}ducation: {A} {R}ole-{B}ased {A}nalysis},
+    author = {J. Corneli and A. Mikroyannidis},
+ booktitle = {{C}ollaborative {L}earning 2.0: {O}pen {E}ducational {R}esources},
+    editor = {Alexandra Okada and Teresa Connolly and Peter Scott},
+      year = {2011},
+ publisher = {IGI Global},
+       url = {http://oro.open.ac.uk/33221/1/corneli_chap_okada_book.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneliUPintroduction" type="article" xml:id="bib.bib26">
+        <bib-title>Introduction to power laws</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-related role="host" type="journal">
+          <bib-title>The Uncertainty Principle</bib-title>
+        </bib-related>
+        <bib-part role="volume">2</bib-part>
+        <bib-part role="number">3</bib-part>
+        <bib-date role="publication">2011</bib-date>
+        <bib-url href="http://www.theuncertaintyprinciple.danoff.org/v2i3.html">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{corneliUPintroduction,
+     title = {Introduction to power laws},
+    author = {Joseph Corneli},
+   journal = {The Uncertainty Principle},
+    volume = {2},
+    number = {3},
+      year = {2011},
+       url = {http://www.theuncertaintyprinciple.danoff.org/v2i3.html}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2010gravpad" type="inproceedings" xml:id="bib.bib27">
+        <bib-title>GravPad</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Proceedings of the 6th International Symposium on Wikis and Open Collaboration (WikiSym 2010)</bib-title>
+          <bib-organization>ACM</bib-organization>
+        </bib-related>
+        <bib-date role="publication">2010</bib-date>
+        <bib-url href="http://www.wikisym.org/ws2010/tiki-download_wiki_attachment.php?attId=21">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@inproceedings{corneli2010gravpad,
+     title = {{G}rav{P}ad},
+    author = {Corneli, J.},
+ booktitle = {{Proceedings of the 6th International Symposium on Wikis and Open Collaboration (WikiSym 2010)}},
+      year = {2010},
+organization = {ACM},
+       url = {http://www.wikisym.org/ws2010/tiki-download_wiki_attachment.php?attId=21}}
+</bib-data>
+      </bibentry>
+      <bibentry key="david+emath+2010" type="inproceedings" xml:id="bib.bib28">
+        <bib-title>eMath 3.0: Building Blocks for a Social and Semantic Web for Online Mathematics &amp; eLearning</bib-title>
+        <bib-name role="author">
+          <surname>David</surname>
+          <givenname>C.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Ginev</surname>
+          <givenname>D.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Kohlhase</surname>
+          <givenname>M.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>1st International Workshop on Mathematics and ICT: Education, Research and Applications</bib-title>
+          <bib-name role="editor">
+            <surname>Mierlus-Mazilu</surname>
+            <givenname>I.</givenname>
+          </bib-name>
+        </bib-related>
+        <bib-place>Bucharest, Romania</bib-place>
+        <bib-date role="publication">2010</bib-date>
+        <bib-url href="http://buletinstiintific.utcb.ro/bs/arhiva2010/modelling_nr3_2010_special_issue.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@inproceedings{david+emath+2010,
+     title = {{eMath 3.0: Building Blocks for a Social and Semantic Web for Online Mathematics \&amp; eLearning}},
+    author = {C. David and D. Ginev and M. Kohlhase and J. Corneli},
+ booktitle = {{1st International Workshop on Mathematics and ICT: Education, Research and Applications}},
+   address = {Bucharest, Romania},
+      year = {2010},
+    editor = {I. Mierlus-Mazilu},
+       url = {http://buletinstiintific.utcb.ro/bs/arhiva2010/modelling_nr3_2010_special_issue.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="probation-report" type="report" xml:id="bib.bib29">
+        <bib-title>Problem solving and mathematical knowledge</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-organization>Knowledge Media Institute</bib-organization>
+        <bib-url href="http://kmi.open.ac.uk/publications/techreport/kmi-10-03">Link</bib-url>
+        <bib-date role="publication">2010</bib-date>
+        <bib-type>Technical report</bib-type>
+        <bib-data role="self" type="BibTeX">@techreport{probation-report,
+     title = {{Problem solving and mathematical knowledge}},
+    author = {Joseph Corneli},
+institution = {Knowledge Media Institute},
+       url = {http://kmi.open.ac.uk/publications/techreport/kmi-10-03},
+      year = {2010}}
+</bib-data>
+      </bibentry>
+      <bibentry key="free-math-poster" type="misc" xml:id="bib.bib30">
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-title>The Road to Free Math</bib-title>
+        <bib-note role="annotation">Poster presentation at Free Software Day, Boston</bib-note>
+        <bib-date role="publication">2009</bib-date>
+        <bib-data role="place">Boston, MA</bib-data>
+        <bib-url href="http://metameso.org/~joe/math/road-to-free-math.jpg">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@misc{free-math-poster,
+    author = {Joseph Corneli},
+     title = {{The Road to Free Math}},
+      note = {{P}oster presentation at Free Software Day, Boston},
+      year = {2009},
+     place = {Boston, MA},
+       url = {http://metameso.org/~joe/math/road-to-free-math.jpg}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2008double" type="article" xml:id="bib.bib31">
+        <bib-title>Double bubbles in gauss space and spheres</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joe</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corwin</surname>
+          <givenname>Ivan</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Hurder</surname>
+          <givenname>Stephanie</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Sesum</surname>
+          <givenname>Vojislav</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Xu</surname>
+          <givenname>Ya</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Adams</surname>
+          <givenname>Elizabeth</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Davis</surname>
+          <givenname>Diana</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Lee</surname>
+          <givenname>Michelle</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Visocchi</surname>
+          <givenname>R</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Hoffman</surname>
+          <givenname>Neil</givenname>
+        </bib-name>
+        <bib-related role="host" type="journal">
+          <bib-title>Houston J. Math</bib-title>
+        </bib-related>
+        <bib-part role="volume">34</bib-part>
+        <bib-part role="number">1</bib-part>
+        <bib-part role="pages">181–204</bib-part>
+        <bib-date role="publication">2008</bib-date>
+        <bib-url href="http://www.math.brown.edu/~diana/math/DoubleBubbles.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{corneli2008double,
+     title = {Double bubbles in Gauss space and spheres},
+    author = {Corneli, Joe and Corwin, Ivan and Hurder, Stephanie and Sesum, Vojislav and Xu, Ya and Adams, Elizabeth and Davis, Diana and Lee, Michelle and Visocchi, R and Hoffman, Neil},
+   journal = {Houston J. Math},
+    volume = {34},
+    number = {1},
+     pages = {181–204},
+      year = {2008},
+       url = {http://www.math.brown.edu/~diana/math/DoubleBubbles.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2007double" type="article" xml:id="bib.bib32">
+        <bib-title>Double bubbles in <Math mode="inline" xml:id="bib.bib32.m1" tex="S^{3}" text="S ^ 3"><XMath><XMApp><XMTok role="SUPERSCRIPTOP" scriptpos="post5"/><XMTok role="UNKNOWN" font="italic">S</XMTok><XMTok meaning="3" role="NUMBER">3</XMTok></XMApp></XMath></Math> and <Math mode="inline" xml:id="bib.bib32.m2" tex="H^{3}" text="H ^ 3"><XMath><XMApp><XMTok role="SUPERSCRIPTOP" scriptpos="post5"/><XMTok role="UNKNOWN" font="italic">H</XMTok><XMTok meaning="3" role="NUMBER">3</XMTok></XMApp></XMath></Math></bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Hoffman</surname>
+          <givenname>Neil</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Holt</surname>
+          <givenname>Paul</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Lee</surname>
+          <givenname>George</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Leger</surname>
+          <givenname>Nicholas</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Moseley</surname>
+          <givenname>Stephen</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Schoenfeld</surname>
+          <givenname>Eric</givenname>
+        </bib-name>
+        <bib-related role="host" type="journal">
+          <bib-title>Journal of Geometric Analysis</bib-title>
+        </bib-related>
+        <bib-part role="volume">17</bib-part>
+        <bib-part role="number">2</bib-part>
+        <bib-part role="pages">189–212</bib-part>
+        <bib-date role="publication">2007</bib-date>
+        <bib-url href="http://www.springerlink.com/content/0721r1x1358p5771/fulltext.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{corneli2007double,
+     title = {Double bubbles in {$S\sp 3$} and {$H\sp 3$}},
+    author = {Corneli, Joseph and Hoffman, Neil and Holt, Paul and Lee, George and Leger, Nicholas and Moseley, Stephen and Schoenfeld, Eric},
+   journal = {Journal of Geometric Analysis},
+    volume = {17},
+    number = {2},
+     pages = {189–212},
+      year = {2007},
+       url = {http://www.springerlink.com/content/0721r1x1358p5771/fulltext.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli+scholia-based" type="inproceedings" xml:id="bib.bib33">
+        <bib-title>A Scholia-based Document Model for Commons-based Peer Production</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>J.</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Krowne</surname>
+          <givenname>A.</givenname>
+        </bib-name>
+        <bib-related role="host" type="proceedings">
+          <bib-title>Free Culture and the Digital Library Symposium Proceedings</bib-title>
+          <bib-name role="editor">
+            <surname>Halbert</surname>
+            <givenname>M.</givenname>
+          </bib-name>
+          <bib-publisher>MetaScholar Initiative at Emory University</bib-publisher>
+        </bib-related>
+        <bib-place>Atlanta, Georgia</bib-place>
+        <bib-part role="pages">240–253</bib-part>
+        <bib-date role="publication">2005</bib-date>
+        <bib-url href="http://metameso.org/~joe/docs/sbdm.html">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@inproceedings{corneli+scholia-based,
+     title = {{A Scholia-based Document Model for Commons-based Peer Production}},
+    author = {J. Corneli and A. Krowne},
+ booktitle = {{F}ree {C}ulture and the {D}igital {L}ibrary {S}ymposium {P}roceedings},
+   address = {Atlanta, Georgia},
+    editor = {M. Halbert},
+ publisher = {MetaScholar Initiative at Emory University},
+     pages = {240–253},
+      year = {2005},
+       url = {http://metameso.org/~joe/docs/sbdm.html}}
+</bib-data>
+      </bibentry>
+      <bibentry key="corneli2004double" type="article" xml:id="bib.bib34">
+        <bib-title>The double bubble problem on the flat two-torus</bib-title>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Holt</surname>
+          <givenname>Paul</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Lee</surname>
+          <givenname>George</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Leger</surname>
+          <givenname>Nicholas</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Schoenfeld</surname>
+          <givenname>Eric</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Steinhurst</surname>
+          <givenname>Benjamin</givenname>
+        </bib-name>
+        <bib-related role="host" type="journal">
+          <bib-title>Transactions of the American Mathematical Society</bib-title>
+        </bib-related>
+        <bib-part role="volume">356</bib-part>
+        <bib-part role="number">9</bib-part>
+        <bib-part role="pages">3769–3820</bib-part>
+        <bib-date role="publication">2004</bib-date>
+        <bib-url href="http://www.ams.org/tran/2004-356-09/S0002-9947-04-03551-2/S0002-9947-04-03551-2.pdf">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{corneli2004double,
+     title = {The double bubble problem on the flat two-torus},
+    author = {Corneli, Joseph and Holt, Paul and Lee, George and Leger, Nicholas and Schoenfeld, Eric and Steinhurst, Benjamin},
+   journal = {Transactions of the American Mathematical Society},
+    volume = {356},
+    number = {9},
+     pages = {3769–3820},
+      year = {2004},
+       url = {http://www.ams.org/tran/2004-356-09/S0002-9947-04-03551-2/S0002-9947-04-03551-2.pdf}}
+</bib-data>
+      </bibentry>
+      <bibentry key="mathematical-semantics" type="unpublished" xml:id="bib.bib35">
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-date role="publication">2004</bib-date>
+        <bib-title>Semantics of Mathematical Writing</bib-title>
+        <bib-note role="annotation">Term paper for “Knowledge Representation and Reasoning” taught by Bruce W. Porter at the University of Texas</bib-note>
+        <bib-data role="self" type="BibTeX">@unpublished{mathematical-semantics,
+    author = {Joseph Corneli},
+      year = {2004},
+     title = {{S}emantics of {M}athematical {W}riting},
+      note = {Term paper for {``}Knowledge Representation and Reasoning{''} taught by Bruce W. Porter at the University of Texas}}
+</bib-data>
+      </bibentry>
+      <bibentry key="apmxi" type="misc" xml:id="bib.bib36">
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-date role="publication">2003</bib-date>
+        <bib-title>Austin Problems in Mathematics–Cross Index (APM-<Math mode="inline" xml:id="bib.bib36.m1" tex="\Xi" text="Xi"><XMath><XMTok name="Xi" role="UNKNOWN">Ξ</XMTok></XMath></Math>)</bib-title>
+        <bib-note role="annotation">Unpublished</bib-note>
+        <bib-data role="self" type="BibTeX">@misc{apmxi,
+    author = {Joseph Corneli},
+      year = {2003},
+     title = {{A}ustin {P}roblems in {M}athematics–{C}ross {I}ndex ({{A}{P}{M}-$\Xi$})},
+      note = {Unpublished}}
+</bib-data>
+      </bibentry>
+      <bibentry key="alvarez2003double" type="article" xml:id="bib.bib37">
+        <bib-title>Double bubbles in the three-torus</bib-title>
+        <bib-name role="author">
+          <surname>Alvarez</surname>
+          <givenname>Miguel Carrion</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Corneli</surname>
+          <givenname>Joseph</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Walsh</surname>
+          <givenname>Genevieve</givenname>
+        </bib-name>
+        <bib-name role="author">
+          <surname>Beheshti</surname>
+          <givenname>Shabnam</givenname>
+        </bib-name>
+        <bib-related role="host" type="journal">
+          <bib-title>Experimental Mathematics</bib-title>
+        </bib-related>
+        <bib-part role="volume">12</bib-part>
+        <bib-part role="number">1</bib-part>
+        <bib-part role="pages">79–89</bib-part>
+        <bib-date role="publication">2003</bib-date>
+        <bib-url href="http://projecteuclid.org/DPubS/Repository/1.0/Disseminate?view=body&amp;id=pdf_1&amp;handle=euclid.em/1064858785">Link</bib-url>
+        <bib-data role="self" type="BibTeX">@article{alvarez2003double,
+     title = {Double bubbles in the three-torus},
+    author = {Alvarez, Miguel Carrion and Corneli, Joseph and Walsh, Genevieve and Beheshti, Shabnam},
+   journal = {Experimental Mathematics},
+    volume = {12},
+    number = {1},
+     pages = {79–89},
+      year = {2003},
+       url = {http://projecteuclid.org/DPubS/Repository/1.0/Disseminate?view=body&amp;id=pdf_1&amp;handle=euclid.em/1064858785}}
+</bib-data>
+      </bibentry>
+    </biblist>
+  </bibliography>
+</document>

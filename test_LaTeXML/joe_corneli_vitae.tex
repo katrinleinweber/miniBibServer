@@ -1,0 +1,120 @@
+\documentclass[12pt,article]{article}
+
+\usepackage{color}
+
+\catcode`\_=11\relax
+\newcommand\email[1]{\_email #1\q_nil}
+\def\_email#1@#2\q_nil{
+  \href{mailto:#1@#2}
+    {{\emailfont\detokenize{#1}\emailampersat\detokenize{#2}}}
+}
+\newcommand\emailfont{\rmfamily}
+\newcommand\emailampersat{{\color{black}\small@}}
+\catcode`\_=8\relax  
+
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[breaklinks,linkbordercolor=cyan, pdfborderstyle={/S/U/W .5}]{hyperref}
+
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+\begin{document}
+
+\thispagestyle{plain}
+
+\begin{center}
+{\Large \bfseries  Joseph Angus Corneli \\}
+Department of Computing \\
+Goldsmiths College \\
+New Cross, London \\
+SE14 6NW, UK \\
+
+\email{j.corneli@gold.ac.uk}
+\end{center}
+
+\section*{Education}
+
+\paragraph{The Open University}  \hspace{.1in} \\
+Doctor of Philosophy (Computing), 2014 (expected; submitted July, 2013) 
+
+\smallskip
+
+Thesis: \emph{\href{http://metameso.org/~joe/thesis-outline.html}{Peer
+    produced peer learning: A mathematics case study}} (Supervisors:
+Prof. Peter Scott and
+Dr. Alexander Mikroyannidis).
+
+\paragraph{New College of Florida}  \hspace{.1in} \\
+Bachelor of Arts (Mathematics), 2002
+\smallskip
+
+Thesis: \emph{Double bubbles in spaces of constant curvature}
+(Advisor: Prof. Patrick T. McDonald).
+
+\section*{Professional Experience}
+
+\paragraph{Goldsmiths College, University of London} \hspace{.1in} \\
+Researcher in Computational Creativity.  Working with
+partners to develop novel concept invention techniques and
+assessment methodologies.  Applying concept invention
+techniques to tasks in mathematical creativity.  Writing
+and presentation of research papers at conference and
+journal level.  (2013-2016, current position)
+
+\paragraph{Knowledge Media Institute at The Open University} \hspace{.1in} \\
+Research Assistant in the Digital Environment for Cultural
+Interfaces; Promoting Heritage, Education and Research (DECIPHER) EU
+project.  Responsibilities included PHP (Drupal) and Lisp programming,
+and contributions to Semantic Web integration. (2013)
+
+\paragraph{PlanetMath.org, Ltd.} \hspace{.1in} \\
+Member of the Board of Directors of the US-based nonprofit
+PlanetMath.org, Ltd., which runs a popular community-produced
+mathematics website serving learners at all levels.  Key
+accomplishments include strategic planning, research, and technical
+work.  (2008-ongoing)
+
+\paragraph{Cycorp, Inc.}  \hspace{.1in} \\
+Associate Member of the Technical Staff at a well-known AI firm.
+Devised programmatic methods for cleaning a large artificial
+intelligence knowledge base. (6/2003-8/2003)
+
+\section*{Teaching Experience}
+
+\paragraph{Peer-2-Peer University} \hspace{.1in} \\
+Designed and facilitated ``DIY Math''; ``Mathematics for
+Game Designers''; ``Open Governance and Learning'' (co-organized with
+Marisa Ponti); and ``Shaping P2PU''.  (10/2010--5/2011)
+
+\paragraph{University of Texas at Austin} \hspace{.1in} \\
+Teaching Assistant for Calculus I and II; Facilitated
+weekly problem sessions, graded papers, and held office
+hours. (6/2002-8/2002, 2/2003-5/2003)
+
+\section*{Contributions to Free/Open Source Software}
+
+\paragraph{Planetary}  \hspace{.1in} \\
+\url{https://github.com/KWARC/planetary} \smallskip
+
+Planetary is the software system powering PlanetMath, based
+on Drupal 7, \LaTeX ML, Virtuoso and other free/open components.  I am
+one of the main developers. (2010-ongoing)
+
+\paragraph{Arxana}  \hspace{.1in} \\
+\url{http://repo.or.cz/w/arxana.git} \smallskip
+
+Arxana is a hypertext system written in literate Emacs Lisp,
+with Common Lisp extensions.  I am the main developer. (2005-ongoing)
+
+\nocite{*}
+
+\section*{Peer Reviewed Publications}
+\begingroup
+\renewcommand{\section}[2]{}%
+\bibliographystyle{unsrt}
+\bibliography{corneli-citations}
+\endgroup
+
+\end{document}
+
