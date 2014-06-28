@@ -42,37 +42,24 @@
           <surname>Corneli</surname>
           <givenname>Joseph</givenname>
         </bib-name>
-        <bib-related bibrefs="CICM14" role="host"/>
         <bib-data role="pubs">dginev</bib-data>
-        <bib-url href="http://arxiv.org/abs/1404.6548">Link</bib-url>
         <bib-related role="host" type="proceedings">
           <bib-title>2014 Conferences on Intelligent Computer Mathematics</bib-title>
+          <bib-name role="editor">
+            <surname>Watt</surname>
+            <givenname>S.M.</givenname>
+          </bib-name>
+          <bib-part role="series">Lecture Notes in Artificial Intelligence</bib-part>
+          <bib-part role="volume">8543</bib-part>
         </bib-related>
-        <bib-date role="publication">2014</bib-date>
-        <bib-data role="self" type="BibTeX">@inproceedings{ginev-nnexus,
-     title = {{N}{N}exus {R}eloaded},
-    author = {Deyan Ginev and Joseph Corneli},
-  crossref = {CICM14},
-      pubs = {dginev},
-       url = {http://arxiv.org/abs/1404.6548},
- booktitle = {{2014 Conferences on Intelligent Computer Mathematics}},
-      year = {2014}}
-</bib-data>
-      </bibentry>
-      <bibentry key="CICM14" type="proceedings" xml:id="bib.bib3">
-        <bib-title>2014 Conferences on Intelligent Computer Mathematics</bib-title>
         <bib-key>CICM14</bib-key>
         <bib-data role="label">CICM14</bib-data>
         <bib-date role="publication">2014</bib-date>
-        <bib-name role="editor">
-          <surname>Watt</surname>
-          <givenname>S.M.</givenname>
-        </bib-name>
-        <bib-part role="series">Lecture Notes in Artificial Intelligence</bib-part>
-        <bib-part role="volume">8543</bib-part>
         <bib-extract role="keywords">conference</bib-extract>
-        <bib-data role="self" type="BibTeX">@proceedings{CICM14,
-     title = {2014 {C}onferences on {I}ntelligent {C}omputer {M}athematics},
+        <bib-data role="self" type="BibTeX">@inproceedings{ginev-nnexus,
+     title = {{N}{N}exus {R}eloaded},
+    author = {Deyan Ginev and Joseph Corneli},
+      pubs = {dginev},
  booktitle = {{2014 Conferences on Intelligent Computer Mathematics}},
        key = {CICM14},
      label = {CICM14},
@@ -83,7 +70,7 @@
   keywords = {conference}}
 </bib-data>
       </bibentry>
-      <bibentry key="colton-assessingprogress" type="inproceedings" xml:id="bib.bib4">
+      <bibentry key="colton-assessingprogress" type="inproceedings" xml:id="bib.bib3">
         <bib-title>Assessing progress in building autonomously creative systems</bib-title>
         <bib-name role="author">
           <surname>Colton</surname>
@@ -135,7 +122,7 @@
       year = {2014}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli2010live" type="inproceedings" xml:id="bib.bib5">
+      <bibentry key="corneli2010live" type="inproceedings" xml:id="bib.bib4">
         <bib-title>Live annotation and content discovery in personal learning environments</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -156,7 +143,7 @@
       year = {2010}}
 </bib-data>
       </bibentry>
-      <bibentry key="decipher-paper" type="inproceedings" xml:id="bib.bib6">
+      <bibentry key="decipher-paper" type="inproceedings" xml:id="bib.bib5">
         <bib-date role="publication">2013</bib-date>
         <bib-identifier id="978-3-319-02755-5" scheme="isbn">ISBN 978-3-319-02755-5</bib-identifier>
         <bib-related role="host" type="proceedings">
@@ -230,7 +217,7 @@
      pages = {121-124}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli2013inaction" type="incollection" xml:id="bib.bib7">
+      <bibentry key="corneli2013inaction" type="incollection" xml:id="bib.bib6">
         <bib-title>Peeragogy in Action</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -282,92 +269,7 @@
        url = {http://peeragogy.org/peeragogy-in-action/}}
 </bib-data>
       </bibentry>
-      <bibentry key="arxana-notes" type="misc" xml:id="bib.bib8">
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-name role="author">
-          <surname>Puzio</surname>
-          <givenname>Raymond S.</givenname>
-        </bib-name>
-        <bib-date role="publication">2013</bib-date>
-        <bib-title>All Yesterday’s Tomorrows: The report on, and of, Project Arxana concerning word processing, electronic publishing, hypertext, etc.</bib-title>
-        <bib-data role="location">Emacs Conference 2013, London</bib-data>
-        <bib-data role="self" type="BibTeX">@misc{arxana-notes,
-    author = {Joseph Corneli and Raymond S. Puzio},
-      year = {2013},
-     title = {{A}ll {Y}esterday's {T}omorrows: {T}he report on, and of, {P}roject {A}rxana concerning word processing, electronic publishing, hypertext, etc.},
-  location = {Emacs Conference 2013, London}}
-</bib-data>
-      </bibentry>
-      <bibentry key="corneli-thesis" type="thesis" xml:id="bib.bib9">
-        <bib-title>Peer produced peer learning: A mathematics case study</bib-title>
-        <bib-organization>The Open University (submitted)</bib-organization>
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-date role="publication">2013</bib-date>
-        <bib-url href="http://metameso.org/~joe/docs/submitted-version.pdf">Link</bib-url>
-        <bib-type>Ph.D. Thesis</bib-type>
-        <bib-data role="self" type="BibTeX">@phdthesis{corneli-thesis,
-     title = {Peer produced peer learning: {A} mathematics case study},
-    school = {The Open University (submitted)},
-    author = {Corneli, Joseph},
-      year = {2013},
-       url = {http://metameso.org/~joe/docs/submitted-version.pdf}}
-</bib-data>
-      </bibentry>
-      <bibentry key="corneli-openbook" type="incollection" xml:id="bib.bib10">
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-name role="author">
-          <surname>Keune</surname>
-          <givenname>Anna</givenname>
-        </bib-name>
-        <bib-name role="author">
-          <surname>Lyons</surname>
-          <givenname>Amanda</givenname>
-        </bib-name>
-        <bib-name role="author">
-          <surname>Danoff</surname>
-          <givenname>Charles Jeffrey</givenname>
-        </bib-name>
-        <bib-date role="publication">2013</bib-date>
-        <bib-title>Peeragogy in Action</bib-title>
-        <bib-related role="host" type="book">
-          <bib-name role="editor">
-            <surname>Braybrooke</surname>
-            <givenname>Kaitlyn</givenname>
-          </bib-name>
-          <bib-name role="editor">
-            <surname>Nissilä</surname>
-            <givenname>Jussi</givenname>
-          </bib-name>
-          <bib-name role="editor">
-            <surname>Vuorikivi</surname>
-            <givenname>Timo</givenname>
-          </bib-name>
-          <bib-title>The Open Book</bib-title>
-          <bib-part role="series">#3 in the Reaktio Series</bib-part>
-          <bib-publisher>London, UK: The Finnish Institute</bib-publisher>
-        </bib-related>
-        <bib-identifier id="978-0-9570776-3-8" scheme="isbn">ISBN 978-0-9570776-3-8</bib-identifier>
-        <bib-data role="self" type="BibTeX">@incollection{corneli-openbook,
-    author = {Joseph Corneli and Anna Keune and Amanda Lyons and Charles Jeffrey Danoff},
-      year = {2013},
-     title = {{P}eeragogy in {A}ction},
-    editor = {Kaitlyn Braybrooke and Jussi Nissil\"a and Timo Vuorikivi},
- booktitle = {{T}he {O}pen {B}ook},
-    series = {\#3 in the Reaktio Series},
- publisher = {London, UK: The Finnish Institute},
-      isbn = {978-0-9570776-3-8}}
-</bib-data>
-      </bibentry>
-      <bibentry key="tomlinson2012massively" type="inproceedings" xml:id="bib.bib11">
+      <bibentry key="tomlinson2012massively" type="inproceedings" xml:id="bib.bib7">
         <bib-title>Massively distributed authorship of academic papers</bib-title>
         <bib-name role="author">
           <surname>Tomlinson</surname>
@@ -506,7 +408,7 @@ organization = {ACM},
        url = {http://altchi.org/submissions/submission_wmt_0.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli2012paragogical" type="article" xml:id="bib.bib12">
+      <bibentry key="corneli2012paragogical" type="article" xml:id="bib.bib8">
         <bib-title>Paragogical praxis</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -531,24 +433,7 @@ organization = {ACM},
        url = {http://paragogy.net/ParagogicalPraxisPaper}}
 </bib-data>
       </bibentry>
-      <bibentry key="peeragogy-handbook" type="book" xml:id="bib.bib13">
-        <bib-title>The Peeragogy Handbook</bib-title>
-        <bib-name role="author">
-          <surname>Rheingold</surname>
-          <givenname>H.</givenname>
-        </bib-name>
-        <bib-date role="publication">2013</bib-date>
-        <bib-publisher>Chicago: PubDomEd Press</bib-publisher>
-        <bib-url href="http://peeragogy.org">Link</bib-url>
-        <bib-data role="self" type="BibTeX">@book{peeragogy-handbook,
-     title = {The {P}eeragogy {H}andbook},
-    author = {H. Rheingold and others},
-      year = {2013},
- publisher = {Chicago: PubDomEd Press},
-       url = {http://peeragogy.org}}
-</bib-data>
-      </bibentry>
-      <bibentry key="CorneliDumitru:OpenMathUIWiP2012" type="inproceedings" xml:id="bib.bib14">
+      <bibentry key="CorneliDumitru:OpenMathUIWiP2012" type="inproceedings" xml:id="bib.bib9">
         <bib-title>PlanetMath/Planetary</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -575,7 +460,7 @@ organization = {ACM},
       year = {2012}}
 </bib-data>
       </bibentry>
-      <bibentry key="OpenMathUIWiP2012" type="proceedings" xml:id="bib.bib15">
+      <bibentry key="OpenMathUIWiP2012" type="proceedings" xml:id="bib.bib10">
         <bib-title>Joint Proceedings of the 24<sup>th</sup> OpenMath Workshop, the 7<sup>th</sup> Workshop on Mathematical User Interfaces (MathUI), and the Work in Progress Section of the Conference on Intelligent Computer Mathematics</bib-title>
         <bib-date role="publication">2012</bib-date>
         <bib-name role="editor">
@@ -615,7 +500,7 @@ organization = {ACM},
  eventdate = {2012-07-09/2012-07-13}}
 </bib-data>
       </bibentry>
-      <bibentry key="lange2012reimplementing" type="incollection" xml:id="bib.bib16">
+      <bibentry key="lange2012reimplementing" type="incollection" xml:id="bib.bib11">
         <bib-date role="publication">2012</bib-date>
         <bib-identifier id="978-3-642-31373-8" scheme="isbn">ISBN 978-3-642-31373-8</bib-identifier>
         <bib-related role="host" type="book">
@@ -703,7 +588,7 @@ organization = {ACM},
      pages = {458-462}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli-ponti" type="inproceedings" xml:id="bib.bib17">
+      <bibentry key="corneli-ponti" type="inproceedings" xml:id="bib.bib12">
         <bib-title>Detecting mathematics learning online</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -751,7 +636,7 @@ organization = {ACM},
        url = {http://metameso.org/~joe/docs/detecting-learning.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="paragogy-okcon" type="inproceedings" xml:id="bib.bib18">
+      <bibentry key="paragogy-okcon" type="inproceedings" xml:id="bib.bib13">
         <bib-title>Paragogy</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -778,30 +663,7 @@ organization = {ACM},
   keywords = {paragogy, learning, peer learning, P2P}}
 </bib-data>
       </bibentry>
-      <bibentry key="paragogy" type="misc" xml:id="bib.bib19">
-        <bib-title>Paragogy: Synergizing individual and organizational learning</bib-title>
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>J.</givenname>
-        </bib-name>
-        <bib-name role="author">
-          <surname>Danoff</surname>
-          <givenname>C.J.</givenname>
-        </bib-name>
-        <bib-note role="annotation">Published on Wikiversity</bib-note>
-        <bib-url href="http://en.wikiversity.org/wiki/User:Arided/ParagogyPaper">Link</bib-url>
-        <bib-date role="publication">2011</bib-date>
-        <bib-extract role="keywords">peer learning</bib-extract>
-        <bib-data role="self" type="BibTeX">@misc{paragogy,
-     title = {{{P}aragogy: {S}ynergizing individual and organizational learning}},
-    author = {Corneli, J. and Danoff, C.J.},
-      note = {Published on Wikiversity},
-       url = {http://en.wikiversity.org/wiki/User:Arided/ParagogyPaper},
-      year = {2011},
-  keywords = {peer learning}}
-</bib-data>
-      </bibentry>
-      <bibentry key="corneli+telmas+2011" type="article" xml:id="bib.bib20">
+      <bibentry key="corneli+telmas+2011" type="article" xml:id="bib.bib14">
         <bib-title>PlanetMath Redux: Web 2.0 infrastructure for mathematical problem solving</bib-title>
         <bib-related role="host" type="journal">
           <bib-title>Technology-Enhanced Learning for Mathematics and Science (TELMAS) at 6th European Conference on Technology-Enhanced Learning (ECTEL): Towards Ubiquitous Learning, 21 Sept 2011, Palermo, Italy.</bib-title>
@@ -828,7 +690,7 @@ organization = {ACM},
        url = {http://oro.open.ac.uk/29572/1/planetmath-redux-demo.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli+planetmath+encyc" type="inproceedings" xml:id="bib.bib21">
+      <bibentry key="corneli+planetmath+encyc" type="inproceedings" xml:id="bib.bib15">
         <bib-title>The PlanetMath Encyclopedia</bib-title>
         <bib-related role="host" type="proceedings">
           <bib-title>The ITP 2011 Workshop on Mathematical Wikis (MathWikis-2011)</bib-title>
@@ -856,7 +718,7 @@ organization = {ACM},
        url = {http://ceur-ws.org/Vol-767/paper-03.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli2011personalised" type="article" xml:id="bib.bib22">
+      <bibentry key="corneli2011personalised" type="article" xml:id="bib.bib16">
         <bib-title>Personalised Peer-Supported Learning: The Peer-to-Peer Learning Environment (P2PLE)</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -883,31 +745,7 @@ organization = {ACM},
        url = {http://greav.ub.edu/der/index.php/der/article/view/188/330}}
 </bib-data>
       </bibentry>
-      <bibentry key="p2ple" type="inproceedings" xml:id="bib.bib23">
-        <bib-title>Personalised and Peer-Supported Learning: The Peer-to-Peer Learning Environment (P2PLE)</bib-title>
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>J.</givenname>
-        </bib-name>
-        <bib-name role="author">
-          <surname>Mikroyannidis</surname>
-          <givenname>A.</givenname>
-        </bib-name>
-        <bib-related role="host" type="proceedings">
-          <bib-title>Proceedings of the the PLE Conference 2011</bib-title>
-          <bib-publisher>Southampton, UK</bib-publisher>
-        </bib-related>
-        <bib-date role="publication">2011</bib-date>
-        <bib-data role="self" type="BibTeX">@inproceedings{p2ple,
-     title = {{P}ersonalised and {P}eer-{S}upported {L}earning: {T}he {P}eer-to-{P}eer {L}earning {E}nvironment ({P}2{P}{L}{E})},
-    author = {Corneli, J. and Mikroyannidis, A.},
- booktitle = {Proceedings of the the {P}{L}{E} {C}onference 2011},
-      year = {2011},
- publisher = {Southampton, UK}}
-</bib-data>
-      </bibentry>
-      <!-- %**** String Line 25 **** -->
-      <bibentry key="Kohlhase2011598" type="article" xml:id="bib.bib24">
+      <bibentry key="Kohlhase2011598" type="article" xml:id="bib.bib17">
         <bib-title>The Planetary System: Web 3.0 &amp; Active Documents for STEM</bib-title>
         <bib-related role="host" type="journal">
           <bib-title>Procedia Computer Science</bib-title>
@@ -972,7 +810,7 @@ organization = {ACM},
   keywords = {active documents, executable paper challenge, content commons, semantic annotation, ontologies}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli+crowdsourcing" type="incollection" xml:id="bib.bib25">
+      <bibentry key="corneli+crowdsourcing" type="incollection" xml:id="bib.bib18">
         <bib-title>Crowdsourcing Education: A Role-Based Analysis</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -1010,30 +848,7 @@ organization = {ACM},
        url = {http://oro.open.ac.uk/33221/1/corneli_chap_okada_book.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneliUPintroduction" type="article" xml:id="bib.bib26">
-        <bib-title>Introduction to power laws</bib-title>
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-related role="host" type="journal">
-          <bib-title>The Uncertainty Principle</bib-title>
-        </bib-related>
-        <bib-part role="volume">2</bib-part>
-        <bib-part role="number">3</bib-part>
-        <bib-date role="publication">2011</bib-date>
-        <bib-url href="http://www.theuncertaintyprinciple.danoff.org/v2i3.html">Link</bib-url>
-        <bib-data role="self" type="BibTeX">@article{corneliUPintroduction,
-     title = {Introduction to power laws},
-    author = {Joseph Corneli},
-   journal = {The Uncertainty Principle},
-    volume = {2},
-    number = {3},
-      year = {2011},
-       url = {http://www.theuncertaintyprinciple.danoff.org/v2i3.html}}
-</bib-data>
-      </bibentry>
-      <bibentry key="corneli2010gravpad" type="inproceedings" xml:id="bib.bib27">
+      <bibentry key="corneli2010gravpad" type="inproceedings" xml:id="bib.bib19">
         <bib-title>GravPad</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -1054,7 +869,7 @@ organization = {ACM},
        url = {http://www.wikisym.org/ws2010/tiki-download_wiki_attachment.php?attId=21}}
 </bib-data>
       </bibentry>
-      <bibentry key="david+emath+2010" type="inproceedings" xml:id="bib.bib28">
+      <bibentry key="david+emath+2010" type="inproceedings" xml:id="bib.bib20">
         <bib-title>eMath 3.0: Building Blocks for a Social and Semantic Web for Online Mathematics &amp; eLearning</bib-title>
         <bib-name role="author">
           <surname>David</surname>
@@ -1092,44 +907,7 @@ organization = {ACM},
        url = {http://buletinstiintific.utcb.ro/bs/arhiva2010/modelling_nr3_2010_special_issue.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="probation-report" type="report" xml:id="bib.bib29">
-        <bib-title>Problem solving and mathematical knowledge</bib-title>
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-organization>Knowledge Media Institute</bib-organization>
-        <bib-url href="http://kmi.open.ac.uk/publications/techreport/kmi-10-03">Link</bib-url>
-        <bib-date role="publication">2010</bib-date>
-        <bib-type>Technical report</bib-type>
-        <bib-data role="self" type="BibTeX">@techreport{probation-report,
-     title = {{Problem solving and mathematical knowledge}},
-    author = {Joseph Corneli},
-institution = {Knowledge Media Institute},
-       url = {http://kmi.open.ac.uk/publications/techreport/kmi-10-03},
-      year = {2010}}
-</bib-data>
-      </bibentry>
-      <bibentry key="free-math-poster" type="misc" xml:id="bib.bib30">
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-title>The Road to Free Math</bib-title>
-        <bib-note role="annotation">Poster presentation at Free Software Day, Boston</bib-note>
-        <bib-date role="publication">2009</bib-date>
-        <bib-data role="place">Boston, MA</bib-data>
-        <bib-url href="http://metameso.org/~joe/math/road-to-free-math.jpg">Link</bib-url>
-        <bib-data role="self" type="BibTeX">@misc{free-math-poster,
-    author = {Joseph Corneli},
-     title = {{The Road to Free Math}},
-      note = {{P}oster presentation at Free Software Day, Boston},
-      year = {2009},
-     place = {Boston, MA},
-       url = {http://metameso.org/~joe/math/road-to-free-math.jpg}}
-</bib-data>
-      </bibentry>
-      <bibentry key="corneli2008double" type="article" xml:id="bib.bib31">
+      <bibentry key="corneli2008double" type="article" xml:id="bib.bib21">
         <bib-title>Double bubbles in gauss space and spheres</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -1190,8 +968,8 @@ institution = {Knowledge Media Institute},
        url = {http://www.math.brown.edu/~diana/math/DoubleBubbles.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli2007double" type="article" xml:id="bib.bib32">
-        <bib-title>Double bubbles in <Math mode="inline" xml:id="bib.bib32.m1" tex="S^{3}" text="S ^ 3"><XMath><XMApp><XMTok role="SUPERSCRIPTOP" scriptpos="post5"/><XMTok role="UNKNOWN" font="italic">S</XMTok><XMTok meaning="3" role="NUMBER">3</XMTok></XMApp></XMath></Math> and <Math mode="inline" xml:id="bib.bib32.m2" tex="H^{3}" text="H ^ 3"><XMath><XMApp><XMTok role="SUPERSCRIPTOP" scriptpos="post5"/><XMTok role="UNKNOWN" font="italic">H</XMTok><XMTok meaning="3" role="NUMBER">3</XMTok></XMApp></XMath></Math></bib-title>
+      <bibentry key="corneli2007double" type="article" xml:id="bib.bib22">
+        <bib-title>Double bubbles in <Math mode="inline" xml:id="bib.bib22.m1" tex="S^{3}" text="S ^ 3"><XMath><XMApp><XMTok role="SUPERSCRIPTOP" scriptpos="post5"/><XMTok role="UNKNOWN" font="italic">S</XMTok><XMTok meaning="3" role="NUMBER">3</XMTok></XMApp></XMath></Math> and <Math mode="inline" xml:id="bib.bib22.m2" tex="H^{3}" text="H ^ 3"><XMath><XMApp><XMTok role="SUPERSCRIPTOP" scriptpos="post5"/><XMTok role="UNKNOWN" font="italic">H</XMTok><XMTok meaning="3" role="NUMBER">3</XMTok></XMApp></XMath></Math></bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
           <givenname>Joseph</givenname>
@@ -1239,7 +1017,7 @@ institution = {Knowledge Media Institute},
        url = {http://www.springerlink.com/content/0721r1x1358p5771/fulltext.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli+scholia-based" type="inproceedings" xml:id="bib.bib33">
+      <bibentry key="corneli+scholia-based" type="inproceedings" xml:id="bib.bib23">
         <bib-title>A Scholia-based Document Model for Commons-based Peer Production</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -1273,7 +1051,8 @@ institution = {Knowledge Media Institute},
        url = {http://metameso.org/~joe/docs/sbdm.html}}
 </bib-data>
       </bibentry>
-      <bibentry key="corneli2004double" type="article" xml:id="bib.bib34">
+      <!-- %**** String Line 25 **** -->
+      <bibentry key="corneli2004double" type="article" xml:id="bib.bib24">
         <bib-title>The double bubble problem on the flat two-torus</bib-title>
         <bib-name role="author">
           <surname>Corneli</surname>
@@ -1318,37 +1097,7 @@ institution = {Knowledge Media Institute},
        url = {http://www.ams.org/tran/2004-356-09/S0002-9947-04-03551-2/S0002-9947-04-03551-2.pdf}}
 </bib-data>
       </bibentry>
-      <bibentry key="mathematical-semantics" type="unpublished" xml:id="bib.bib35">
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-date role="publication">2004</bib-date>
-        <bib-title>Semantics of Mathematical Writing</bib-title>
-        <bib-note role="annotation">Term paper for “Knowledge Representation and Reasoning” taught by Bruce W. Porter at the University of Texas</bib-note>
-        <bib-data role="self" type="BibTeX">@unpublished{mathematical-semantics,
-    author = {Joseph Corneli},
-      year = {2004},
-     title = {{S}emantics of {M}athematical {W}riting},
-      note = {Term paper for {``}Knowledge Representation and Reasoning{''} taught by Bruce W. Porter at the University of Texas}}
-</bib-data>
-      </bibentry>
-      <bibentry key="apmxi" type="misc" xml:id="bib.bib36">
-        <bib-name role="author">
-          <surname>Corneli</surname>
-          <givenname>Joseph</givenname>
-        </bib-name>
-        <bib-date role="publication">2003</bib-date>
-        <bib-title>Austin Problems in Mathematics–Cross Index (APM-<Math mode="inline" xml:id="bib.bib36.m1" tex="\Xi" text="Xi"><XMath><XMTok name="Xi" role="UNKNOWN">Ξ</XMTok></XMath></Math>)</bib-title>
-        <bib-note role="annotation">Unpublished</bib-note>
-        <bib-data role="self" type="BibTeX">@misc{apmxi,
-    author = {Joseph Corneli},
-      year = {2003},
-     title = {{A}ustin {P}roblems in {M}athematics–{C}ross {I}ndex ({{A}{P}{M}-$\Xi$})},
-      note = {Unpublished}}
-</bib-data>
-      </bibentry>
-      <bibentry key="alvarez2003double" type="article" xml:id="bib.bib37">
+      <bibentry key="alvarez2003double" type="article" xml:id="bib.bib25">
         <bib-title>Double bubbles in the three-torus</bib-title>
         <bib-name role="author">
           <surname>Alvarez</surname>

@@ -148,4 +148,11 @@ with Common Lisp extensions. I am the main developer. (2005-ongoing)</p>
   <bibliography bibstyle="unsrt" citestyle="numbers" files="corneli-citations" xml:id="bib">
     <title>References</title>
   </bibliography>
+  <!-- %“section*–Books˝ 
+     %“begingroup
+     %“renewcommand–“section˝[2]–˝%
+     %“bibliographystyle–unsrt˝
+     %“bibliography–corneli-books˝
+     %“endgroup
+     %**** joe˙corneli˙vitae.tex Line 125 ****-->
 </document>
