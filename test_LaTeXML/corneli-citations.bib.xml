@@ -56,6 +56,7 @@
         <bib-data role="label">CICM14</bib-data>
         <bib-date role="publication">2014</bib-date>
         <bib-extract role="keywords">conference</bib-extract>
+        <bib-url href="http://arxiv.org/abs/1404.6548">Link</bib-url>
         <bib-data role="self" type="BibTeX">@inproceedings{ginev-nnexus,
      title = {{N}{N}exus {R}eloaded},
     author = {Deyan Ginev and Joseph Corneli},
@@ -67,7 +68,8 @@
     editor = {S.M. Watt and others},
     series = {Lecture Notes in Artificial Intelligence},
     volume = {8543},
-  keywords = {conference}}
+  keywords = {conference},
+       url = {http://arxiv.org/abs/1404.6548}}
 </bib-data>
       </bibentry>
       <bibentry key="colton-assessingprogress" type="inproceedings" xml:id="bib.bib3">
@@ -513,7 +515,7 @@ organization = {ACM},
           </bib-name>
           <bib-name role="editor">
             <surname>Campbell</surname>
-            <givenname>JohnA.</givenname>
+            <givenname>John A.</givenname>
           </bib-name>
           <bib-name role="editor">
             <surname>Carette</surname>
@@ -579,7 +581,7 @@ organization = {ACM},
  booktitle = {Intelligent Computer Mathematics},
     volume = {7362},
     series = {Lecture Notes in Computer Science},
-    editor = {Jeuring, Johan and Campbell, JohnA. and Carette, Jacques and Reis, Gabriel and Sojka, Petr and Wenzel, Makarius and Sorge, Volker},
+    editor = {Jeuring, Johan and Campbell, John A. and Carette, Jacques and Reis, Gabriel and Sojka, Petr and Wenzel, Makarius and Sorge, Volker},
        doi = {10.1007/978-3-642-31374-5_36},
      title = {Reimplementing the Mathematics Subject Classification ({MSC}) as a Linked Open Dataset},
        url = {http://dx.doi.org/10.1007/978-3-642-31374-5_36},
