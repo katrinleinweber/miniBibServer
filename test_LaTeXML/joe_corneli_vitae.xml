@@ -37,8 +37,8 @@ Dr. Alexander Mikroyannidis).</p>
       <title>New College of Florida</title>
       <para xml:id="Sx1.SS0.SSS0.P2.p1">
         <break/>
-        <p>Bachelor of Arts (Mathematics), 2002
-<!-- %**** joe˙corneli˙vitae.tex Line 50 **** --></p>
+        <!-- %**** joe˙corneli˙vitae.tex Line 50 **** -->
+        <p>Bachelor of Arts (Mathematics), 2002</p>
       </para>
       <para xml:id="Sx1.SS0.SSS0.P2.p2">
         <p>Thesis: <emph>Double bubbles in spaces of constant curvature</emph>
@@ -76,8 +76,8 @@ and contributions to Semantic Web integration. (2013)</p>
         <break/>
         <p>Member of the Board of Directors of the US-based nonprofit
 PlanetMath.org, Ltd., which runs a popular community-produced
-mathematics website serving learners at all levels. Key
-<!-- %**** joe˙corneli˙vitae.tex Line 75 **** -->accomplishments include strategic planning, research, and technical
+<!-- %**** joe˙corneli˙vitae.tex Line 75 **** -->mathematics website serving learners at all levels. Key
+accomplishments include strategic planning, research, and technical
 work. (2008-ongoing)</p>
       </para>
     </paragraph>
@@ -118,9 +118,8 @@ hours. (6/2002-8/2002, 2/2003-5/2003)</p>
       <title>Planetary</title>
       <para xml:id="Sx4.SS0.SSS0.P9.p1">
         <break/>
-        <p><ref class="ltx_url" href="https://github.com/KWARC/planetary"><text font="typewriter">https://github.com/KWARC/planetary</text></ref></p>
+        <p><ref class="ltx_url" href="https://github.com/KWARC/planetary"><text font="typewriter">https://github.com/KWARC/planetary</text></ref> <!-- %**** joe˙corneli˙vitae.tex Line 100 **** --></p>
       </para>
-      <!-- %**** joe˙corneli˙vitae.tex Line 100 **** -->
       <para xml:id="Sx4.SS0.SSS0.P9.p2">
         <p>Planetary is the software system powering PlanetMath, based
 on Drupal 7, LaTeXML, Virtuoso and other free/open components. I am
@@ -146,7 +145,7 @@ with Common Lisp extensions. I am the main developer. (2005-ongoing)</p>
     <title>Peer Reviewed Publications</title>
   </section>
   <bibliography bibstyle="unsrt" citestyle="numbers" files="corneli-citations" xml:id="bib">
-    <title>References</title>
+    <title/>
   </bibliography>
   <!-- %“section*–Books˝ 
      %“begingroup
