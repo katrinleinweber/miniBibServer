@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?latexml searchpaths="/Users/joe/jim/miniBibServer/test_LaTeXML"?>
 <?latexml class="article" options="12pt,article"?>
-<?latexml package="color"?>
+<?latexml package="xcolor"?>
 <?latexml package="hyperref" options="breaklinks,linkbordercolor=cyan,pdfborderstyle=/S/U/W.5"?>
 <?latexml RelaxNGSchema="LaTeXML"?>
 <document xmlns="http://dlmf.nist.gov/LaTeXML">
@@ -20,27 +20,27 @@
   </para>
   <section xml:id="Sx1">
     <title>Education</title>
-    <paragraph xml:id="Sx1.SS0.SSS0.P1">
+    <paragraph xml:id="Sx1.SS0.SSS0.Px1">
       <title>The Open University</title>
-      <para xml:id="Sx1.SS0.SSS0.P1.p1">
+      <para xml:id="Sx1.SS0.SSS0.Px1.p1">
         <break/>
         <p>Doctor of Philosophy (Computing), 2014 (expected; submitted July, 2013)</p>
       </para>
-      <para xml:id="Sx1.SS0.SSS0.P1.p2">
+      <para xml:id="Sx1.SS0.SSS0.Px1.p2">
         <p>Thesis: <emph><ref href="http://metameso.org/~joe/thesis-outline.html">Peer
 produced peer learning: A mathematics case study</ref></emph> (Supervisors:
 Prof. Peter Scott and
 Dr. Alexander Mikroyannidis).</p>
       </para>
     </paragraph>
-    <paragraph xml:id="Sx1.SS0.SSS0.P2">
+    <paragraph xml:id="Sx1.SS0.SSS0.Px2">
       <title>New College of Florida</title>
-      <para xml:id="Sx1.SS0.SSS0.P2.p1">
+      <para xml:id="Sx1.SS0.SSS0.Px2.p1">
         <break/>
         <!-- %**** joe˙corneli˙vitae.tex Line 50 **** -->
         <p>Bachelor of Arts (Mathematics), 2002</p>
       </para>
-      <para xml:id="Sx1.SS0.SSS0.P2.p2">
+      <para xml:id="Sx1.SS0.SSS0.Px2.p2">
         <p>Thesis: <emph>Double bubbles in spaces of constant curvature</emph>
 (Advisor: Prof. Patrick T. McDonald).</p>
       </para>
@@ -48,9 +48,9 @@ Dr. Alexander Mikroyannidis).</p>
   </section>
   <section xml:id="Sx2">
     <title>Professional Experience</title>
-    <paragraph xml:id="Sx2.SS0.SSS0.P3">
+    <paragraph xml:id="Sx2.SS0.SSS0.Px1">
       <title>Goldsmiths College, University of London</title>
-      <para xml:id="Sx2.SS0.SSS0.P3.p1">
+      <para xml:id="Sx2.SS0.SSS0.Px1.p1">
         <break/>
         <p>Researcher in Computational Creativity. Working with
 partners to develop novel concept invention techniques and
@@ -60,9 +60,9 @@ and presentation of research papers at conference and
 journal level. (2013-2016, current position)</p>
       </para>
     </paragraph>
-    <paragraph xml:id="Sx2.SS0.SSS0.P4">
+    <paragraph xml:id="Sx2.SS0.SSS0.Px2">
       <title>Knowledge Media Institute at The Open University</title>
-      <para xml:id="Sx2.SS0.SSS0.P4.p1">
+      <para xml:id="Sx2.SS0.SSS0.Px2.p1">
         <break/>
         <p>Research Assistant in the Digital Environment for Cultural
 Interfaces; Promoting Heritage, Education and Research (DECIPHER) EU
@@ -70,9 +70,9 @@ project. Responsibilities included PHP (Drupal) and Lisp programming,
 and contributions to Semantic Web integration. (2013)</p>
       </para>
     </paragraph>
-    <paragraph xml:id="Sx2.SS0.SSS0.P5">
+    <paragraph xml:id="Sx2.SS0.SSS0.Px3">
       <title>PlanetMath.org, Ltd.</title>
-      <para xml:id="Sx2.SS0.SSS0.P5.p1">
+      <para xml:id="Sx2.SS0.SSS0.Px3.p1">
         <break/>
         <p>Member of the Board of Directors of the US-based nonprofit
 PlanetMath.org, Ltd., which runs a popular community-produced
@@ -81,9 +81,9 @@ accomplishments include strategic planning, research, and technical
 work. (2008-ongoing)</p>
       </para>
     </paragraph>
-    <paragraph xml:id="Sx2.SS0.SSS0.P6">
+    <paragraph xml:id="Sx2.SS0.SSS0.Px4">
       <title>Cycorp, Inc.</title>
-      <para xml:id="Sx2.SS0.SSS0.P6.p1">
+      <para xml:id="Sx2.SS0.SSS0.Px4.p1">
         <break/>
         <p>Associate Member of the Technical Staff at a well-known AI firm.
 Devised programmatic methods for cleaning a large artificial
@@ -93,18 +93,18 @@ intelligence knowledge base. (6/2003-8/2003)</p>
   </section>
   <section xml:id="Sx3">
     <title>Teaching Experience</title>
-    <paragraph xml:id="Sx3.SS0.SSS0.P7">
+    <paragraph xml:id="Sx3.SS0.SSS0.Px1">
       <title>Peer-2-Peer University</title>
-      <para xml:id="Sx3.SS0.SSS0.P7.p1">
+      <para xml:id="Sx3.SS0.SSS0.Px1.p1">
         <break/>
         <p>Designed and facilitated “DIY Math”; “Mathematics for
 Game Designers”; “Open Governance and Learning” (co-organized with
 Marisa Ponti); and “Shaping P2PU”. (10/2010–5/2011)</p>
       </para>
     </paragraph>
-    <paragraph xml:id="Sx3.SS0.SSS0.P8">
+    <paragraph xml:id="Sx3.SS0.SSS0.Px2">
       <title>University of Texas at Austin</title>
-      <para xml:id="Sx3.SS0.SSS0.P8.p1">
+      <para xml:id="Sx3.SS0.SSS0.Px2.p1">
         <break/>
         <p>Teaching Assistant for Calculus I and II; Facilitated
 weekly problem sessions, graded papers, and held office
@@ -114,29 +114,29 @@ hours. (6/2002-8/2002, 2/2003-5/2003)</p>
   </section>
   <section xml:id="Sx4">
     <title>Contributions to Free/Open Source Software</title>
-    <paragraph xml:id="Sx4.SS0.SSS0.P9">
+    <paragraph xml:id="Sx4.SS0.SSS0.Px1">
       <title>Planetary</title>
-      <para xml:id="Sx4.SS0.SSS0.P9.p1">
+      <para xml:id="Sx4.SS0.SSS0.Px1.p1">
         <break/>
         <p><ref class="ltx_url" href="https://github.com/KWARC/planetary"><text font="typewriter">https://github.com/KWARC/planetary</text></ref> <!-- %**** joe˙corneli˙vitae.tex Line 100 **** --></p>
       </para>
-      <para xml:id="Sx4.SS0.SSS0.P9.p2">
+      <para xml:id="Sx4.SS0.SSS0.Px1.p2">
         <p>Planetary is the software system powering PlanetMath, based
 on Drupal 7, LaTeXML, Virtuoso and other free/open components. I am
 one of the main developers. (2010-ongoing)</p>
       </para>
     </paragraph>
-    <paragraph xml:id="Sx4.SS0.SSS0.P10">
+    <paragraph xml:id="Sx4.SS0.SSS0.Px2">
       <title>Arxana</title>
-      <para xml:id="Sx4.SS0.SSS0.P10.p1">
+      <para xml:id="Sx4.SS0.SSS0.Px2.p1">
         <break/>
         <p><ref class="ltx_url" href="http://repo.or.cz/w/arxana.git"><text font="typewriter">http://repo.or.cz/w/arxana.git</text></ref></p>
       </para>
-      <para xml:id="Sx4.SS0.SSS0.P10.p2">
+      <para xml:id="Sx4.SS0.SSS0.Px2.p2">
         <p>Arxana is a hypertext system written in literate Emacs Lisp,
 with Common Lisp extensions. I am the main developer. (2005-ongoing)</p>
       </para>
-      <para xml:id="Sx4.SS0.SSS0.P10.p3">
+      <para xml:id="Sx4.SS0.SSS0.Px2.p3">
         <p><cite><bibref bibrefs="*" show="nothing"/></cite></p>
       </para>
     </paragraph>
