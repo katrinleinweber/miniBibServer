@@ -1,0 +1,160 @@
+% July 1, 2014 - an initial treatment of the IMS legacy format
+
+% This package defines some commands for formatting CVs.
+% Bibliographic data is handled with bibtex format (and processed with Biber+BibLaTeX)
+
+\usepackage[url=false,citestyle=verbose]{biblatex}
+
+%
+% START OF BIBLATEX CONFIGURATION
+%
+
+% A quick hack to make years show up at the start of bibliographic citations,
+% (And not in the usual place.)
+\renewbibmacro{author}{\emph{(\printfield{year})} \printnames{author}}
+\renewbibmacro{date}{}
+
+% We also need to get rid of parenthesis around the (elided) year
+% Cf. http://tex.stackexchange.com/questions/66161/biblatex-remove-parentheses-around-year-for-articles
+\renewbibmacro*{issue+date}{%
+  \setunit{\addcomma\space}% NEW
+%  \printtext[parens]{% DELETED
+    \iffieldundef{issue}
+      {\usebibmacro{date}}
+      {\printfield{issue}%
+       \setunit*{\addspace}%
+%       \usebibmacro{date}}}% DELETED
+       \usebibmacro{date}}% NEW
+  \newunit}
+
+% Format the URL as markup for the title
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished,techreport,misc]
+  {title}{\href{\thefield{url}}{#1}}
+
+%
+% END OF BIBLATEX CONFIGURATION
+%
+
+\setlength\parindent{0pt}
+
+\usepackage[show]{ed}
+\ednotelabel{Editor's Note}
+\usepackage{hyperref}
+
+\newcommand{\UnderscoreCommands}{\do\Id \do\AltId}
+\usepackage[strings]{underscore}
+
+% These are useful for internal bookkeeping
+\newcommand{\ID}[1]{IMS ID: #1}
+\newcommand{\AltID}[1]{IMS Alternate Id: #1}
+
+% Ref is a pointer to a publication of some kind, usually it goes along with
+% Biography, Memoir, Archive, or some other text, as the HTML formatted citation.
+% Ideally, it would be a BibTeX item, I think, which makes a good amount of sense...
+% \newcommand{\Ref}[1]{#1}
+
+% References to things that will be found elsewhere - given the biblatex formatting above,
+% this seems to do it
+\newcommand{\Biography}[1]{\cite{#1}\newline}
+\newcommand{\Archive}[1]{\cite{#1}\newline}
+\newcommand{\InMemoriam}[1]{\cite{#1}\newline}
+\newcommand{\Memoir}[1]{\cite{#1}\newline}
+\newcommand{\Obituary}[1]{\cite{#1}\newline}
+\newcommand{\OralHistory}[1]{\cite{#1}\newline}
+\newcommand{\ArtExhibition}[1]{\cite{#1}\newline}
+\newcommand{\Autobiography}[1]{\cite{#1}\newline}
+\newcommand{\DVD}[1]{\cite{#1}\newline}
+\newcommand{\DeathNotice}[1]{\cite{#1}\newline}
+\newcommand{\CollectedWorks}[1]{\cite{#1}\newline}
+\newcommand{\SelectedWorks}[1]{\cite{#1}\newline}
+\newcommand{\Symposium}[1]{\cite{#1}\newline}
+\newcommand{\Endowment}[1]{\cite{#1}\newline}
+\newcommand{\Festschrift}[1]{\cite{#1}\newline}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Things that are referenced by URL
+\newcommand{\Image}[1]{\url{#1}}
+\newcommand{\ImageExclude}[1]{\url{#1}}
+\newcommand{\Concept}[1]{\url{#1}}
+% they are present as a "default" after ::person in legacy format,
+% Let's include a link text, since that's how they seem to be used
+\newcommand{\Profile}[2]{\textbf{Profile}: \href{#1}{#2}\newline}
+
+% Email address handling - first a trick to create a mailto: command
+\catcode`\_=11\relax
+\newcommand\emailfont{\rmfamily}
+\newcommand\emailampersat{{\color{black}\small@}}
+\newcommand\email[1]{\_email #1\q_nil}
+\def\_email#1@#2\q_nil{
+  \href{mailto:#1@#2}
+    {{\emailfont\detokenize{#1}\emailampersat\detokenize{#2}}}
+}
+\catcode`\_=8\relax  
+
+% Consistent with the other uppercased commands, this is the command for users
+\newcommand{\Email}[1]{\email{#1}}
+
+% Basic data
+\newcommand{\DOB}[1]{\paragraph{Date of birth}\textit{#1}}
+\newcommand{\DOD}[1]{\paragraph{Date of death}\textit{#1}}
+
+% This should be improved to parse the argument and display \textbf{Deceased}
+% if needed
+\newcommand{\Deceased}[1]{#1}
+\newcommand{\Name}[1]{{\Large #1}}
+\newcommand{\DisplayName}[1]{\paragraph{Short name} #1}
+\newcommand{\AltName}[1]{\paragraph{AKA} #1}
+\newcommand{\BirthPlace}[1]{\paragraph{Place of Birth} #1}
+
+\newcommand{\Homepage}[2]{\textbf{Homepage} \href{#1}{#2}}
+
+% YEAR, NAME-OF-INSTITUTION
+\newcommand{\Education}[2]{(\emph{#1}) #2\newline}
+
+\newcommand{\Member}[1]{\paragraph{Member} #1}
+% YEAR, ROLE, INSTITUTION
+\newcommand{\Position}[3]{(\emph{#1}) #2, #3\newline}
+\newcommand{\Service}[3]{(\emph{#1}) #2, #3\newline}
+
+\newcommand{\EN}[1]{\ednote{#1}}
+
+% Useful for some of the items that have an optional aspect
+\usepackage{xparse}
+
+% YEAR, NAME-OF-DEGREE, NAME-OF-INSTITUTION are mandatory,
+% math geneology url and thesis title are optional
+% NOTE: it might be more convenient to have separate commands per degree, but
+% let's follow the legacy format for now
+\DeclareDocumentCommand\Degree{ m m m g g }{%
+(\emph{#1}) \emph{#2} #3\newline%
+\IfNoValueF {#4} {Thesis: \emph{#4}%
+                  \IfNoValueT {#5} {\newline}%
+                  \IfNoValueF {#5} { (\href{#5}{Math. Geneology})\newline }%
+                }%
+}
+
+% name of institution required
+% url optional
+\DeclareDocumentCommand\Affiliation{ m g }{%
+\paragraph{Affiliation} #1%
+\IfNoValueF {#2} {\newline link: \url{#2}}%
+}
+
+% YEAR and INSTITUTION/NAME-OF-HONOR are mandatory
+% CITATION is optional
+% NOTE: it might be more convenient to separate out things like "1964 IMS Fellow"
+% from the more complex "HonoraryDegree", but we can do that later
+\DeclareDocumentCommand\Honor{ m m g}{%
+(\emph{#1}) #2\newline%
+\IfNoValueF {#3} {\emph{#3}\newline }%
+}
+
+\DeclareDocumentCommand\HonoraryDegree{ m m m g}{%
+(\emph{#1}) \emph{#2} (honorary) #3\newline%
+\IfNoValueF {#4} {\emph{#4}\newline}%
+}
+
+
+
