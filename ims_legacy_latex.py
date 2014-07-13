@@ -549,7 +549,7 @@ def make_xml_person(d):
     except: 
         print 'Unable to make first_first for :' ,name
     passd['last_name'] = name.split(',')[0]
-    passd['html'] = d['covertext_html']
+    #passd['html'] = d['covertext_html']
     for k in passd.keys():
         xml = xml.replace('$' + k + '$',passd[k])
     return xml
@@ -1148,12 +1148,12 @@ def educ_latex(person):
     if not educ: return ''
     #educ.sort(year_cmp)
     h = ''
-    heading = '\\subsection*{Education}\n'
+    heading = '\n\n\\subsection*{Education}\n'
     rows = ''
     for d in educ:
         if d['category'] == 'degree':
             award_kind = '\\Degree'
-            award_type = '{' + d.get('type','') + '}'
+            award_type = '{' + d['type'] + '}'
         #don't need type for education rows
         elif d['category'] == "education":
             award_kind = '\\Education'
@@ -1163,10 +1163,14 @@ def educ_latex(person):
         rows += award_kind + '{' + d.get('year','') + '}' + award_type + '{' + d.get('school','') + '}'
         #print optional elements (e.g. thesis title)
         if d.get('thesis_title','').strip():
-            rows += '{' + d.get('thesis_title', '') + '}'
-        if d.get('link_ls',''):
-            rows += '{' + d.get('link_ls', '') + '}'
-    return heading + dl_template.replace('$rows$',rows)
+            rows += '{' + d['thesis_title'] + '}'
+        #if d.get('link_ls',''):
+            #rows += '{' + d.get['link_ls'] + '}'
+        for link in d['link_ls']:
+            if link['href'].find('genealogy') >= 0:
+                rows += '{' + link['href'] + '}'
+    print heading + rows
+    return heading + rows
 
 #temporary (?) make row function to replace make_row in/to html
 def make_row_latex(d): 
@@ -1384,7 +1388,7 @@ def add_latex(d):
         #content += bio_html(d)
         #content += biblio_html(d)
         #content += source_data_html(d)
-        #d['body_html'] = content
+        d['latex'] = content
         #d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
         #d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
         return d
@@ -1413,7 +1417,7 @@ def make_all():
     for d in records:
         content = ''
         name = d['complete_name']
-        #content += d['html']
+        content += d['latex']
         filename = name + '.tex'
         f = open(filename, 'w')
         f.write(content.encode('utf-8'))
