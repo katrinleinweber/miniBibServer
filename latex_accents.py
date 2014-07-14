@@ -213,10 +213,11 @@ def printmatch(match):
 def replace_latex_accents (text):
     return re.sub (match_latex_accents, lambda match: printmatch(match) , text)
 
-# sample_text = r"\Degree{1926}{Ph.D.}{E&ouml;tv&ouml;s Lor&aacute;nd University}{Az &aacute;ltal&aacute;nos halmazelm&eacute;let axiomatikus fel&eacute;p&iacute;t&eacute;se [Die Axiomatisierung der Mengenlehre, Mathematische Zeitschrift 27, 669-752 (1928)]}{http://genealogy.math.ndsu.nodak.edu/id.php?id=53213}"
+"""
+Debugging with the following example shows we can round-trip content without a problem
 
-#sample_text= "\Degree{1926}{Ph.D.}{E\"{o}tv\"{o}s Lor\'{a}nd University}{Az \'{a}ltal\'{a}nos halmazelm\'{e}let axiomatikus fel\'{e}p\'{\i}t\'{e}se [Die Axiomatisierung der Mengenlehre, Mathematische Zeitschrift 27, 669-752 (1928)]}{http://genealogy.math.ndsu.nodak.edu/id.php?id=53213}"
-
+sample_text = r"\Degree{1926}{Ph.D.}{E&ouml;tv&ouml;s Lor&aacute;nd University}{Az &aacute;ltal&aacute;nos halmazelm&eacute;let axiomatikus fel&eacute;p&iacute;t&eacute;se [Die Axiomatisierung der Mengenlehre, Mathematische Zeitschrift 27, 669-752 (1928)]}{http://genealogy.math.ndsu.nodak.edu/id.php?id=53213}"
+print sample_text
 print replace_html_accents(sample_text)
 print replace_latex_accents(replace_html_accents(sample_text))
-
+"""
