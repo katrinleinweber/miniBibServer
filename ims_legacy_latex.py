@@ -1147,7 +1147,6 @@ def educ_latex(person):
     educ = person.get('Education',[]) + person.get('Degree',[])
     if not educ: return ''
     #educ.sort(year_cmp)
-    h = ''
     heading = '\n\n\\subsection*{Education}\n'
     rows = ''
     for d in educ:
@@ -1169,7 +1168,56 @@ def educ_latex(person):
         for link in d['link_ls']:
             if link['href'].find('genealogy') >= 0:
                 rows += '{' + link['href'] + '}'
-    print heading + rows
+        rows += '\n'
+    #print heading + rows
+    return heading + rows
+
+def career_latex(person):
+    #[{'category': 'position', 'text': u'Department of Statistics, University of Melbourne', 'year': u'19??-1982', 'link_ls': []}]
+    career = person.get('Position',[])
+    if not career: return ''
+    heading = '\n\n\\subsection*{Career}\n'
+    rows = ''
+    for d in career:
+        text = d['text'].split(',',1)
+        #links???
+        rows +='\\Position{' + d['year'] + '}{' + text[0] + '}{' + text[-1] + '}\n'
+    return heading + rows
+
+def honors_latex(person):
+    #[{'category': 'honor', 'text': u'IMS Fellow', 'year': u'before 1943', 'link_ls': []}]
+    honors = person.get('Honor',[])
+    #either Honor or Honorary Degree, Honorary Degree indicated by presence of (honorary)
+    if not honors: return ''
+    heading = '\n\n\\subsection*{Honors}\n'
+    rows = ''
+    for d in honors:
+        text = d['text']
+        if '(Honorary)' in text:
+            text1 = text.split('(')
+            text2 = text.split(')')
+            rows += '\\HonoraryDegree{' + d['year'] + '}{' + text1[0] + '}{' + text2[-1].strip() + '}\n'
+        else:
+            rows += '\\Honor{' + d['year'] + '}{' + d['text'] + '}\n'
+    return heading + rows
+
+def service_latex(person):
+    service = person.get('Service',[])
+    if not service: return ''
+    heading = '\n\n\\subsection*{Professional Service}\n'
+    rows = ''
+    for d in service:
+        text = d['text'].split(',')
+        rows += '\\Service{' + d['year'] + '}{' + text[0] + '}{' + text[-1].strip() + '}\n'
+    return heading + rows
+
+def member_latex(person):
+    member = person.get('Member',[])
+    if not member: return ''
+    heading = '\n\n\\subsection*{Membership}\n'
+    rows = ''
+    for d in member:
+        rows += '\\Member{' + d['text'] + '}\n'
     return heading + rows
 
 #temporary (?) make row function to replace make_row in/to html
@@ -1381,13 +1429,14 @@ def add_latex(d):
         #d['top_links_html'] = top_links_html(d)
         content = '' 
         content += educ_latex(d)
-        #content += career_html(d)
-        #content += honors_html(d)
-        #content += service_html(d)
-        #content += member_html(d)
+        content += career_latex(d)
+        content += honors_latex(d)
+        content += service_latex(d)
+        content += member_latex(d)
+        
+        #JOE
         #content += bio_html(d)
         #content += biblio_html(d)
-        #content += source_data_html(d)
         d['latex'] = content
         #d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
         #d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
