@@ -67,7 +67,7 @@ def publish_json(name):
 def format_career_json(year, text, n):
     #can combine some/all of these lines??
     n.write("\t\t{\n")
-    n.write("\t\t\t\"category\": :\"service\",\n")
+    n.write("\t\t\t\"category\": :\"position\",\n")
     n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
     n.write("\t\t\t\"year\":" + " \"" + year + "\"" + ",\n\t\t},\n")
     #don't need a comma on the last one.. fix that
