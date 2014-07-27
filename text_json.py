@@ -5,6 +5,8 @@ import time
 import datetime
 time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8')   
 import random
+import latex_accents
+import re
 
 def make_all():
     #runs publish_json on all .tex files in a directory
@@ -147,82 +149,59 @@ def format_member_json(text, n):
     n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
     
 def read_latex(name):
-    filename = name + ".tex"
     d = {}
+    filename = name + ".tex"
     #open .tex file
     f = open(filename)
+    
+    #JOE to add: bibdata part
+    
+    #end of bib part
+    
     #\\(DOB\|DOD\|Profile\|Education\|Degree\|Position\|Honor\|HonoraryDegree\|Service\|Member\|Biography)
     with open(filename, "r") as f:
         for line in f:
             if line.startswith("\subsection*{Professional Service}"):
                 line = f.next()
+                latex_accents.replace_latex_accents(line)
                 while line.startswith("\Service"):
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
                     #dictionaries w/in dictionaries?
+                    p = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
+                    match = p.match(line)
+                    if match:
+                        print match.group(1)
                     d['category'] = "service"
                     d['year'] = year
-                    d['text'] = text
-                    print text
-                    line = f.next()
-'''
+                    #d['position'] = match.group(1)
+                    #d['organization'] = match.group(2)
+                    if not line:
+                        break
+                    else:
+                        line = f.next()
+                    latex_accents.replace_latex_accents(line)
+                    
             elif line.startswith("\subsection*{Membership}"):
                 line = f.next()
+                latex_accents.replace_latex_accents(line)
                 while line.startswith("\Member"):
-                    text = line[line.find("{")+1:line.find("}")]
-                    d['category'] = "service"
-                    d['text']
-                    if f.next():
-                        line = f.next() #it reaches the end of the file, so else stop iterations
-                n.write("Symposium, Homepage, id, display_name\n")
-                
-                #degrees???? not in .tex file (oh, that i generated, joe i think is doing this)
-                
-            elif line.startswith("\subsection*{Education}"):
-                n.write("\t\"Education\": [\n")
-                line = f.next()
-                while line.startswith("\Education"):
-                    #easier way to do this: read until first } bracket, then read until next one, etc.
-                    print "something"
-                    #difference btwn Degree and Education??
-                    #these categories are different in .tex and .json..?
-                    line = f.next()
-                n.write("\t],\n")
-                
-                n.write("Memoir, Honor, complete_name, Selected_Works, Oral_History, In_Memoriam, public_record.txt, Art_Exhibition\n")
-                
-            elif line.startswith("\subsection*{Career}"):
-                n.write("\t\"Postition\": [\n")
-                line = f.next()
-                while line.startswith("\Position"):
-                    #easier way to do this: read until first } bracket, then read until next one, etc.
-                    year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
-                    #text = position (optional), organization
-                    format_career_json(year, text, n)
-                    line = f.next()
-                n.write("\t],\n")
-                
-                n.write("record_txt\n")
-                
-            elif line.startswith("\subsection*{Honors}"):
-                #write "Sevice": [ header to file
-                n.write("\t\"Honor\": [")
-                line = f.next() #necessary??
-                while line.startswith("\Honor"):
-                    list = line.split("}")
-                    if line.startswith("\Honorary"):
-                        honor_type = 0
-                        text = str(list[1]).strip() + " (Honorary)\t" + str(list[2]).strip()
+                    #dictionaries w/in dictionaries?
+                    match = re.match(r'{([^}]*)}{([^}]*)}{([^}]*)}', text)  # then do stuff with match.group(1) etc
+                    if match:
+                        print match.group(1)
+                    d['category'] = "service"
+                    d['year'] = year
+                    #d['position'] = match.group(0)
+                    #d['organization'] = match.group(1)
+                    if not line:
+                        break
                     else:
-                        honor_type = 1
-                        text = str(list[1]).strip()
-                    year = line[line.find("{")+1:line.find("}")]
-                    format_honors_json(year, text, n)
-                    line = f.next()
-'''
+                        line = f.next()
+                    latex_accents.replace_latex_accents(line)
     f.close()
     print name + " read"
     print d
