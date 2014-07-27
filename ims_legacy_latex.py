@@ -1,15 +1,23 @@
+# coding=utf-8
+import re
 import json 
 import glob
 import time
 import datetime
 time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8')   
 import random
+import latex_accents
+import pprint
 
+pp = pprint.PrettyPrinter(indent=4)
 
 ## set some global variables for convenience of use
 global_vars = {}
 global_vars['published_files_directory'] = './published_files/'
 
+global_vars['latex_beg'] = '\\documentclass[letterpaper]{article}\n\\usepackage{imscv}\n\\addbibresource{imsBooks.bib}\n\\addbibresource{\\jobname.bib}\n\\usepackage{filecontents}\n\\begin{filecontents}{\\jobname.bib}\n'
+global_vars['latex_med'] = '\n\\end{filecontents}\n\n\\begin{document}'
+global_vars['latex_end'] = '\\end{document}'
 
 ### tool for breaking long lines nicely
 txt = '''   :citation For developing new statistical methods for diffusion and other stochastic processes, for identifying and opening new fields of applications of statistics including nonparametric inference and testing to the analysis and pricing of financial instruments, and for his conscientious professional service'''
@@ -181,9 +189,7 @@ def getf(d,k):
     if len(dd) > 0: return dd[0]
     else: return ''
 
-
-
-    
+# Create a global variable describing categories of published works    
 bio_cat_plurals = '''
     Biography       Biographies
     Symposium       Symposia
@@ -212,33 +218,37 @@ for line in lines:
     except: pass
 
 
-
+# Note: this function has been adjusted from the HTML version in a very hacky way,
+# it should really be cleaned up and replaced when we're ready to ship.
+#
+# Notes on this format:  <rel> is a reference 
 def make_tag_map():
     tag_map_lines = '''
-    <author>    <span class="bib-author">
+    <au>    author
+    <author>    author
     <cit>    <span class="bib-citation">
-    <au>    <span class="bib-author">
-    <ed>    <span class="bib-editor">
-    <year>      <span class="bib-year">
+    <ed>    editor
+    <year>      year
     <rel>      <span class="bib-relation">
-    <y>      <span class="bib-year">
-    <journal>      <span class="bib-journal">
-    <j>      <span class="bib-journal">
-    <title>      <span class="bib-title">
-    <t>      <span class="bib-title">
+    <y>      year
+    <journal>      journal
+    <j>      journal
+    <title>      title
+    <t>      title
     <bt>      <span class="bib-title">
-    <booktitle>    <span class="bib-booktitle">
-    <webcollection>    <span class="bib-booktitle">
-    <v>      <span class="bib-jvolume">
-    <vol>      <span class="bib-jvolume">
-    <volume>      <span class="bib-jvolume">
+    <booktitle>    booktitle
+    <webcollection>    booktitle
+    <v>      volume
+    <vol>      volume
+    <volume>      volume
     <howpublished>      <span class="bib-howpublished">
     <howpub>      <span class="bib-howpublished">
-    <pages>      <span class="bib-pages">
-    <pp>      <span class="bib-pages">
-    <series>      <span class="bib-series">
-    <publisher>      <span class="bib-publisher">
-    <address>      <span class="bib-address">
+    <pages>      pages
+    <pp>      pages
+    <series>      series
+    <pub>      publisher
+    <publisher>      publisher
+    <address>      address
     '''
     tag_map = {}
     lines = tag_map_lines.split('\n')
@@ -252,7 +262,7 @@ def make_tag_map():
         except:
             pass
     for tag in tag_map.keys():
-        tag_map[tag.replace('<','</')] = '</span>'
+        tag_map[tag.replace('<','</')] = '}\n'
     return tag_map
 
 tag_map = make_tag_map()
@@ -428,7 +438,6 @@ def read_ims_legacy(f='ims_legacy'):
         d['Image'] = [ read_image(x) for x in d.get('Image',[]) ]
         d['Homepage'] = [ read_homepage(x) for x in d.get('Homepage',[]) ]
         for k in bio_cat_order:
-            #d['Biography'] = [ read_bio(x) for x in d.get('Biography',[]) ]
             d[k] = [ read_bio(x) for x in d.get(k,[]) ]
         dls += [d]
     links_txt = instring.split('::links',1)[1].split('\n::')[0]
@@ -647,7 +656,7 @@ def display_data(passd):
 
 
 table_template = '''
-        <!-- begin segm container -->
+        <!-- begin table segm container -->
         <div  >
         <!-- begin segm content -->
         <div>
@@ -665,7 +674,7 @@ table_template = '''
         <!-- end segm container ===================== -->
         '''
 dl_template = '''
-        <!-- begin segm container -->
+        <!-- begin template segm container -->
         <div  >
         <!-- begin segm content -->
         <div>
@@ -682,10 +691,6 @@ dl_template = '''
         </section>
         <!-- end segm container ===================== -->
         '''
-        #<dt>1930</dt>
-        #<dd>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec id elit non mi porta gravida at eget metus.</dd>
-        #<dt>1930&ndash;1967</dt>
-        #<dd>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non >
 
 def make_honor_rows(honor):
     d = honor
@@ -718,11 +723,14 @@ def make_biblio_rows(b):
 
 def make_bio_rows(b): 
     title = b.get('title','').strip()
+    # Untitled works simply get NO TITLE
     if title == 'Untitled': title = ''
     author = b.get('author','').strip()
+    # Anonymous works simply get NO AUTHOR
     if author == 'Anonymous': author = ''
     howpub  = b.get('howpublished','')
     year = b.get('year','')
+    # Unknown dates are indicated as UNDATED
     if year == 'year?': year = 'Undated'
     ref = ''
     if title:  
@@ -730,19 +738,20 @@ def make_bio_rows(b):
         ref += '<t>' + title + '</t> '
     if author: ref += '<au>' + author + '</au>. '
     ref += howpub
+    # Enhance globally interesting books
     book_link_ls = []
     books = global_vars['books']
     for bkey in books.keys():
         if ref.find(bkey) >= 0:
             ref = ref.replace(bkey,books[bkey]['ref'])
             book_link_ls = books[bkey].get('link_ls',[])
-    for t in tag_map.keys():
-        ref = ref.replace(t,tag_map[t])
+    #for t in tag_map.keys():
+    #    ref = ref.replace(t,tag_map[t])
     ref += ' '
     for link in b.get('link_ls',[]) + book_link_ls:
             link = enhance_link(link)
             ref += link2html(link)
-    return '<dt>' + year + '</dt><dd>' + ref + '</dd>\n'
+    return 'year={' + year + '}\n' + ref + '\n'
 
 
 def honor_cmp(h,k):
@@ -780,8 +789,6 @@ def link_honor(h):
     #            return link2html(link) + ',' + post
     #    except: pass
     #return h['text']
-
-
 
 def linkify(text):
     text1 = ' '.join(text.split())
@@ -1067,81 +1074,21 @@ def enhance_link(link):
                 link['anchor'] = link['href'].split('/')[2]
         return link
 
+"""
+This collection of functions adds the individual subsections of the LaTeX doc.
 
-#def read_bio(person):
-#    bios = []
-#    for link in person.get('link_ls',[]):
-#        rel = link.get('rel','')
-#        if link['href'].find('wikipedia') >= 0:
-#            link['anchor'] = 'Wikipedia'
-#            bios += [link]
-#    return bios
+Main sections are:
+  Education, Career, Honors, Professional Service, Membership, and Bibliography.
 
-def honors_html(person):
-        honors = person['Honor']
-        h = ''
-        if len(honors) == 1: heading = '<h4>Honor</h4>\n'
-        else:                heading = '<h4>Honors</h4>\n'
-        rows = ''
-        honors.sort(year_cmp)
-        for h in honors:
-            rows += make_honor_rows(h)
-        return heading + dl_template.replace('$rows$',rows)
+There are additional sections for publication-like data:
+  Biographies, Symposia, Archives, Art_Exhibitions, Collected_Works, Selected_Works, DVDs,
+  Endowments, Festschriften, Memoirs, Oral_History, Death_Notices, Obituaries, Memorials
 
-def career_html(person):
-        positions = person['Position']
-        if not positions: return ''
-        heading = '<h4>Career</h4>\n'
-        positions.sort(year_cmp)
-        rows = ''
-        for h in positions:
-            rows += make_row(h)
-        return heading + dl_template.replace('$rows$',rows)
+This part is handled by  bio_latex  and  biblio_latex,  which
+generate both BibTeX to include via filecontents, and
+in-line references to these bibliographic items.
+"""
 
-def service_html(person):
-        positions = person['Service']
-        if not positions: return ''
-        heading = '<h4>Professional Service</h4>\n'
-        positions.sort(year_cmp)
-        rows = ''
-        for h in positions:
-            rows += make_row(h)
-        return heading + dl_template.replace('$rows$',rows)
-
-def member_html(person):
-        positions = person['Member']
-        if not positions: return ''
-        heading = '<h4>Membership</h4>\n'
-        rows = ''
-        for h in positions:
-            rows += make_row(h)
-        return heading + dl_template.replace('$rows$',rows)
-
-def educ_html(person):
-        educ = person.get('Education',[]) + person.get('Degree',[])
-        if not educ: return ''
-        #educ.sort(year_cmp)
-        h = ''
-        heading = '<h4>Education</h4>\n'
-        rows = ''
-        for d in educ:
-            if d['category'] == 'degree':
-                d['text'] = d.get('type','')  + ', ' + d.get('school','')  + ' '  ## could hyperlink here
-                for link in d.get('link_ls',[]):
-                    link = enhance_link(link)
-                    d['text'] += link2html(link)
-                rows += make_row(d)
-                if d.get('thesis_title','').strip():
-                    e = {}
-                    e['year'] = ''
-                    #e['text'] = '<em>Thesis:  </em>' + 
-                    e['text'] = '&quot;' + d['thesis_title'] + '&quot'
-                    rows += make_row(e)
-            else: 
-                rows += make_row(d)
-                
-        return heading + dl_template.replace('$rows$',rows)
-    
 #encode education as latex
 def educ_latex(person):
     educ = person.get('Education',[]) + person.get('Degree',[])
@@ -1157,12 +1104,14 @@ def educ_latex(person):
         elif d['category'] == "education":
             award_kind = '\\Education'
             award_type = ''
+            d['school'] = d['text']
             
         d['text'] = d.get('type','')  + ', ' + d.get('school','')  + ' '  ## could hyperlink here
-        rows += award_kind + '{' + d.get('year','') + '}' + award_type + '{' + d.get('school','') + '}'
+        rows += award_kind + '{' + d['year'].replace(u'–','--') + '}' + award_type + '{' + sanitize_latex(d.get('school','')) + '}'
+
         #print optional elements (e.g. thesis title)
         if d.get('thesis_title','').strip():
-            rows += '{' + d['thesis_title'] + '}'
+            rows += '{' + sanitize_latex(d['thesis_title']) + '}'
         #if d.get('link_ls',''):
             #rows += '{' + d.get['link_ls'] + '}'
         for link in d['link_ls']:
@@ -1181,7 +1130,7 @@ def career_latex(person):
     for d in career:
         text = d['text'].split(',',1)
         #links???
-        rows +='\\Position{' + d['year'] + '}{' + text[0] + '}{' + text[-1] + '}\n'
+        rows +='\\Position{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(text[0]) + '}{' + sanitize_latex(text[-1]) + '}\n'
     return heading + rows
 
 def honors_latex(person):
@@ -1196,9 +1145,9 @@ def honors_latex(person):
         if '(Honorary)' in text:
             text1 = text.split('(')
             text2 = text.split(')')
-            rows += '\\HonoraryDegree{' + d['year'] + '}{' + text1[0] + '}{' + text2[-1].strip() + '}\n'
+            rows += '\\HonoraryDegree{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(text1[0]) + '}{' + sanitize_latex(text2[-1].strip()) + '}\n'
         else:
-            rows += '\\Honor{' + d['year'] + '}{' + d['text'] + '}\n'
+            rows += '\\Honor{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(d['text']) + '}\n'
     return heading + rows
 
 def service_latex(person):
@@ -1208,7 +1157,7 @@ def service_latex(person):
     rows = ''
     for d in service:
         text = d['text'].split(',')
-        rows += '\\Service{' + d['year'] + '}{' + text[0] + '}{' + text[-1].strip() + '}\n'
+        rows += '\\Service{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(text[0]) + '}{' + sanitize_latex(text[-1].strip()) + '}\n'
     return heading + rows
 
 def member_latex(person):
@@ -1217,23 +1166,18 @@ def member_latex(person):
     heading = '\n\n\\subsection*{Membership}\n'
     rows = ''
     for d in member:
-        rows += '\\Member{' + d['text'] + '}\n'
+        rows += '\\Member{' + sanitize_latex(d['text']) + '}\n'
     return heading + rows
 
-#temporary (?) make row function to replace make_row in/to html
-def make_row_latex(d): 
-    text = d.get('text','')
-    #text = add_links(text, global_vars['link_ls'])
-    return '{' + d.get('year','') + '}{' + text + '}\n'
-
-def biblio_html(person):
-        heading = '<h4>Bibliography</h4>\n'
+# Still to fix
+def biblio_latex(person):
+        heading = '\n\n\\subsection*{Bibliography}\n'
         rows = ''
         for b in person.get('link_ls',[]):
             bb = enhance_link(b)
             if bb.get('rel','') == 'biblio':
                 rows += make_biblio_rows(bb)
-        return heading + dl_template.replace('$rows$',rows)
+        return rows
 
 def source_data_html(person):
     templ = '''<h4 class="alt js-collapse js-collapseoff">Source Data</h4>
@@ -1243,25 +1187,95 @@ def source_data_html(person):
     h = templ.replace('$text$',person['public_record_txt'])
     return h
 
-
-def bio_html(person):
-    p = ''
+# The fact that we're getting unicode here is perhaps a bit of a problem
+# TO FIX
+def bio_latex(person):
+    citations = ''
+    name = person['complete_name']
+    localized = open("./bibfiles/" + name + '.bib', 'w')
+    comment = "%% BibTeX file for " + name
+    localized.write(comment.encode('utf-8'))
+    localized.close()
     for c in bio_cat_order[0:]:
         bios = person.get(c,[])
         if not bios: continue
         elif len(bios) == 1:
-            heading = '<h4>' + c.replace('_',' ') + '</h4>\n'
+            heading = '\n\n\\subsection*{' + c.replace('_',' ') + '}\n'
         elif len(bios) > 1:
-            heading = '<h4>' + bio_cat_plural[c].replace('_',' ') + '</h4>\n'
+            heading = '\n\n\\subsection*{' + bio_cat_plural[c].replace('_',' ') + '}\n'
         rows = ''
+        cites = ''
         bios.sort(year_cmp)
         for b in bios:
-                rows += make_bio_rows(b)
-        p += heading + dl_template.replace('$rows$',rows)
-    return p
-    
+            #print b
+            if b['bibtype'] == "webcollection":
+                btype = collection
+            else:
+                btype=b['bibtype']
+            rows += '\n\n@' + btype + '{' + b['id'] + ',\n'
+            rows += 'year={' + b['year'] + '},\n'
+            rows += 'author={' + sanitize_latex(b['author']) + '},\n'
+            rows += 'title={' + sanitize_bibtex(sanitize_latex(b['title'])) + '},\n'
+            # we've need to read the howpublished field and refactor the entries
+            rows += read_howpublished(b['howpublished'])
+            rows += '}'
+            cites += "\\" + c.replace('_','') + '{' + b['id'] + '}\n'
+        citations += heading + cites
+        # Write out bibtex to a file we will reuse later
+        name = person['complete_name']
+        localized = open("./bibfiles/" + name + '.bib', 'a')
+        localized.write(rows.encode('utf-8'))
+        localized.close()
+        print "added to bib file: " + name.encode('utf-8') + ".bib"
+        # And just for ease of checking, append ALL the bibtex here
+        unified=open("allbib.bib", "a")
+        unified.write(rows.encode('utf-8'))
+        unified.close()
+    return citations
 
-
+# Note: it's problematic to introduce title AGAIN if we already have one, what to do?
+def read_howpublished(howpubinfo):
+    keytag= [["address", "address"],
+             ["au", "author"],
+             ["author",  "author"],
+             ["booktitle", "booktitle"],
+             ["bt", "BIB-TITLE"],        # These are not in bibtex but rather are references
+             ["cit", "BIB-CITATION"],    # to something else - but none appear in output, so...
+             ["ed", "editor"],
+             ["howpub", "note"],         # nested howpubs are dealt with as notes
+             ["howpublished", "note"],   #
+             ["note", "note"],   
+             ["j", "journal"],
+             ["journal", "journal"],
+             ["pages", "pages"],
+             ["pp", "pages"],
+             ["pub", "publisher"],
+             ["publisher", "publisher"],
+             ["se", "series"],
+             ["series", "series"],
+             ["t", "title"],
+             ["title", "title"],
+             ["v", "volume"],
+             ["vol", "volume"],
+             ["volume", "volume"],
+             ["n", "number"],
+             ["number", "number"],
+             ["webcollection", "booktitle"],
+             ["y", "year"],
+             ["year", "year"]]
+    retval=''
+    for elt in keytag:
+        bounded_expression = re.compile("<" + elt[0] + ">(.+?)</" + elt[0] +">" )
+        match = re.search(bounded_expression,howpubinfo)
+        if match :
+            retval += elt[1] + "={" + sanitize_latex(match.group(1).strip()) + "},\n"
+            if (elt[1]=="title" or elt[1]=="booktitle") :
+                retval = sanitize_bibtex(retval)
+    # deal with cross-references to items collected in imsBooks.bib
+    match= re.search("<rel>In </rel><inc>(.+?)</inc>",howpubinfo)
+    if match :
+        retval += "crossref={" + match.group(1).strip() + "},\n"
+    return retval
 
 def make_mg_data(data):
     p = ''
@@ -1394,7 +1408,6 @@ def add_bio_data():
     outfile.close()
     #print p
 
-
 def make_dates_html(d):
     templ = '<p id="lifespan">DOB&thinsp;&ndash;&thinsp;DOD</p>'
     if d.has_key('DOB') and d.has_key('DOD'):
@@ -1422,11 +1435,6 @@ def first_first(name):
     return first.strip() + ' ' + last.strip()
 
 def add_latex(d):
-        #d['heading_html'] = '<h2>' + first_first(d['complete_name']) + '</h2>'
-        #d['photo_html'] = make_images_html(d) 
-        #d['dates_html']  = make_dates_html(d)
-        #d['dates_plain_html']  = make_dates_plain_html(d)
-        #d['top_links_html'] = top_links_html(d)
         content = '' 
         content += educ_latex(d)
         content += career_latex(d)
@@ -1435,23 +1443,21 @@ def add_latex(d):
         content += member_latex(d)
         
         #JOE
-        #content += bio_html(d)
-        #content += biblio_html(d)
+        content += bio_latex(d)
+        #content += biblio_latex(d)
         d['latex'] = content
-        #d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
-        #d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
         return d
 
-
-
 def make_all():
-    #infile = open('celebratio_cv.html')
-    #infile = open('/accounts/projects/jpopen/apache/htdocs/tmp/imslegacy/celebratio_cv_template.html')
+    # For testing purposes, I'm creating a file with all of the bib data
+    unified=open("allbib.bib", "w")
+    unified.write("%% COMMENT This is a collection of all the bibliographic data\n\n")
+    unified.close()
     out_dir = global_vars['published_files_directory'] 
     infile = open('./celebratio_cv_template.html')
     html = infile.read()
     html = unicode(html,'utf-8')
-    #Xh2topX Xh3topX XbodytitleX XtestdisplayX XasideX XcontentX
+
     data = read_ims_legacy('ims_legacy')
     print 'Read ' + str(len(data['records'])) + ' records from ims_legacy.txt'
     global_vars['link_ls'] = data['link_ls']
@@ -1460,28 +1466,57 @@ def make_all():
     tot = len(records)
     print 'Making xml for ' + str(tot) + ' records'
     make_xml( records)
-    #content = ''
-    #finish = False
-    
+
     for d in records:
         content = ''
         name = d['complete_name']
-        content += d['latex']
+
+        bibcontent = ''
+        try:
+            bibfile = open("./bibfiles/" + name + '.bib', 'r')
+            bibcontent = unicode(bibfile.read(),'utf-8')
+            bibfile.close()
+        except: continue
+
+        content +=  global_vars['latex_beg'] + bibcontent + global_vars['latex_med'] + d['latex'] + global_vars['latex_end']
+
         filename = name + '.tex'
-        f = open(filename, 'w')
+        f = open("./texfiles/" + filename, 'w')
         f.write(content.encode('utf-8'))
         f.close()
-        print "made new latex file: " + filename
-'''
-    html = html.replace('$covertext$',content)
-    html = html.replace('$title$','IMS Scientific Legacy')
-    #tmpfname = 'tmp/imslegacy/html/test_images.html'
-    #tmpfname = 'tmp/imslegacy/celebratio.html'
-    tmpfname = out_dir + 'celebratio_three.html'
-    outfile = open(tmpfname , 'w')
-    outfile.write(html.encode('utf-8'))
-    outfile.close()
-'''
+        print "made new latex file: " + filename.encode('utf-8')
+
+# This will fix the typical characters that cause errors in LaTeX articles
+# Should double check that this is always what's wanted, e.g. in the case of underscores
+# which could be used in mathematical expressions to denote subscripts
+def sanitize_latex(txt):
+    # Replace accent marks
+    char_array = list(latex_accents.replace_html_accents(txt).decode('utf-8'))
+    # Replace common ASCII-isms with corresponding LaTeX-isms
+    i = 0
+    while i < len(char_array):
+        if re.match("(&|#|_)",char_array[i]) and (i == 0 or char_array[i-1] != "\\") :
+            char_array[i] = "\\" + char_array[i] 
+        elif char_array[i] == u"‘":
+            char_array[i] = u'`'
+        elif char_array[i] == u"’":
+            char_array[i] = u"'"
+        i=i+1
+        # print char_array[i].encode("utf-8")
+    return "".join(char_array)
+
+# Replace every Capital Letter Except The First with a Bracketed Version!
+# Replace every {C}apital {L}etter {E}xcept {T}he {F}irst with a {B}racketed {V}ersion!
+def sanitize_bibtex(txt):
+    char_array = list(txt)
+    i = 0
+    while i < len(char_array) :
+        if re.match("[A-Z`']",char_array[i]) and (i == 0 or char_array[i-1] != "{") and (i == len(char_array) -1 or char_array[i+1] != "}"):
+            char_array[i] = "{" + char_array[i] + "}"
+        i=i+1
+#    if (char_array[len(char_array)-1] == "`" or char_array[len(char_array)-1] == "`")
+#        char_array[len(char_array)-1] = "{" + char_array[len(char_array)-1] + "}"
+    return "".join(char_array)
 
 def enhance_bio(d):
     ref = d['ref']
