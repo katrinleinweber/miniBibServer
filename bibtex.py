@@ -12,11 +12,13 @@
 #2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
 # disclaimer in the documentation and/or other materials provided with the distribution.
 #
-#THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
-#INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-#IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+
+#THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+#INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+#IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EX
 #OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
-#LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+
+#LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 #STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
 #EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
@@ -26,8 +28,6 @@
 
 from string import replace
 import cgi,os, re, string, urllib, string, copy, sys, time, glob, StringIO
-
-
 
 import accents
 
@@ -154,13 +154,13 @@ def string_subst(instring):
 
 keys_dict = {}
 """ Dictionary of keys and their substitutions """
-keys_dict['KEYW'] = 'SUBJECTS'
-keys_dict['AUTHORS'] = 'AUTHOR'
-keys_dict['BIBTEX'] = 'URL_BIB'
+keys_dict['keyw'] = 'subjects'
+keys_dict['authors'] = 'author'
+keys_dict['bibtex'] = 'url_bib'
 
 def add_key(key):
-	""" Add upper-cased key to keys dictionary """
-	key = up(key)
+	""" Add NOT upper-cased key to keys dictionary """
+	key = key.strip()
 	if key in keys_dict.keys():
 		return keys_dict[key]
 	else: return key
@@ -178,13 +178,13 @@ def add_val(instring):
 def read_bibitem(item):     ### returns a python dict
 		d = {} 
 		type_rest = string.split(item, '{' ,1)
-		d['BIBTYPE'] = up(type_rest[0])
+		d['bibtype'] = type_rest[0]
 		try:
 			rest = type_rest[1]
 		except IndexError:
 			d['ERROR'] = 'IndexError: nothing after first { in @' + item
 			rest = ''
-		if d['BIBTYPE'] == 'STRING':
+		if d['bibtype'] == 'STRING':
 		###### Example:   @string{AnnAP = "Ann. Appl. Probab."}
 			try:
 				key_val = string.split(rest,'=')
@@ -201,8 +201,8 @@ def read_bibitem(item):     ### returns a python dict
 			
 		else:
 			comma_split = string.split(rest,',',1)
-			d['CITEKEY'] = string.strip(comma_split[0])
-			d['BIBTEX'] = '@' + item
+			d['citekey'] = string.strip(comma_split[0])
+			# d['BIBTEX'] = '@' + item
 			try:
 				rest = comma_split[1]
 			except IndexError:
@@ -274,8 +274,6 @@ def read_bibitem(item):     ### returns a python dict
 			if yy[0] in ['0']: d['YEAR'] = '20' + yy   ### year 2010 problem!!
 			elif yy[0] in ['9']: d['YEAR'] = '19' + yy
 		return d
-
-
 
 def read_bibstring(instring):  ###parses a bibtex string into a list of dictionaries
     """ Main function 

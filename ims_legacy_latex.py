@@ -453,6 +453,7 @@ def read_ims_legacy(f='ims_legacy'):
     data['books'] = book_dict
     links_txt = instring.split('::links',1)[1].split('\n::')[0]
     data['link_ls'] = links_txt2ls(links_txt)
+    # print data['records'][4]
     return data
 
 def publish_ims_legacy(f='ims_legacy'):

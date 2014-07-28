@@ -7,6 +7,13 @@ time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8'
 import random
 import latex_accents
 import re
+import bibtex
+import display_function
+
+import aitken_sample_d
+import pprint
+
+pp = pprint.PrettyPrinter(indent=4)
 
 def make_all():
     #runs publish_json on all .tex files in a directory
@@ -147,19 +154,69 @@ def format_member_json(text, n):
     n.write("\t\t{\n")
     n.write("\t\t\t\"category\": :\"member\",\n")
     n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
-    
+
+
+
+def make_ref_for_record(r): 
+    title = r.get('title','').strip()
+    if title == 'Untitled': title = ''
+    author = r.get('author','').strip()
+    if author == 'Anonymous': author = ''
+    howpub  = r.get('howpublished','')
+    year = r.get('year','')
+    if year == 'year?': year = 'Undated'
+    ref = ''
+    if title:  
+        if not title[-1] in '?.!': title += '.'
+        ref += '<t>' + title + '</t> '
+    if author: ref += '<au>' + author + '</au>. '
+    ref += howpub
+    #
+    # Need to deal with enhancements for books somehow
+    # but commenting this out for now until book processing
+    # is complete.
+    #
+    """
+    book_link_ls = []
+    books = global_vars['books']
+    for bkey in books.keys():
+        if ref.find(bkey) >= 0:
+            ref = ref.replace(bkey,books[bkey]['ref'])
+            book_link_ls = books[bkey].get('link_ls',[])
+    """
+    #
+    # for t in tag_map.keys():
+    #    ref = ref.replace(t,tag_map[t])
+    # ref += ' '
+    # for link in r.get('link_ls',[]) + book_link_ls:
+    #        link = enhance_link(link)
+    #        ref += link2html(link)
+    return ref
+
+"""
+read_latex will build up a large dictionary "d" with similar structure to the
+dictionary returned by  read_ims_legacy  from the original code
+"""
+
 def read_latex(name):
     d = {}
     filename = name + ".tex"
-    #open .tex file
-    f = open(filename)
-    
-    #JOE to add: bibdata part
-    
-    #end of bib part
-    
+    #open .tex file        
     #\\(DOB\|DOD\|Profile\|Education\|Degree\|Position\|Honor\|HonoraryDegree\|Service\|Member\|Biography)
     with open(filename, "r") as f:
+        #JOE to add: bibdata part
+        filestring = f.read()
+        bibpart = re.split(r"\\end{filecontents}",re.split(r"\\begin{filecontents}{\\jobname.bib}", filestring)[1])[0]
+        allbib=bibtex.read_bibstring(bibpart)
+        # Refactor the individual bibliographic elements
+        for bib in allbib:
+            bib[u'id'] = bib.pop('citekey')
+            bib[u'howpublished'] = display_function.howpublished_tagged(allbib[1])
+            bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
+            bib[u'ref'] = make_ref_for_record(bib)
+        # note that the individual elements of allbib still need to be added in the
+        # correct section for Memoir, Biography etc., which should
+        #end of bib part
         for line in f:
             if line.startswith("\subsection*{Professional Service}"):
                 line = f.next()
