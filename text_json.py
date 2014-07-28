@@ -150,9 +150,13 @@ def format_member_json(text, n):
     
 def read_latex(name):
     d = {}
+    dict = {}
+    records = {}
     filename = name + ".tex"
+    p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
+    p2 = re.compile(r'{([^}]*)}{([^}]*)}')
+    p1 = re.compile(r'{([^}]*)}')
     #open .tex file
-    f = open(filename)
     
     #JOE to add: bibdata part
     
@@ -164,46 +168,82 @@ def read_latex(name):
             if line.startswith("\subsection*{Professional Service}"):
                 line = f.next()
                 latex_accents.replace_latex_accents(line)
-                while line.startswith("\Service"):
+                service_list = []
+                while line.startswith("\Service") and f.next():
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
                     #dictionaries w/in dictionaries?
-                    p = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
-                    match = p.match(line)
-                    if match:
-                        print match.group(1)
+                    match = p2.match(text)
                     d['category'] = "service"
                     d['year'] = year
-                    #d['position'] = match.group(1)
-                    #d['organization'] = match.group(2)
-                    if not line:
-                        break
-                    else:
+                    d['link_ls'] = ""
+                    if match:
+                        d['position'] = match.group(1)
+                        d['organization'] = match.group(2)
+                    if f.next():
                         line = f.next()
+                    else:
+                        break
                     latex_accents.replace_latex_accents(line)
-                    
+                    service_list.append(d)
+                dict['Service'] = service_list
+
             elif line.startswith("\subsection*{Membership}"):
                 line = f.next()
                 latex_accents.replace_latex_accents(line)
-                while line.startswith("\Member"):
+                membership_list = []
+                while line.startswith("\Member") and f.next():
                     list = line.split("}",1)
                     text = str(list[1]).strip()
-                    #dictionaries w/in dictionaries?
-                    match = re.match(r'{([^}]*)}{([^}]*)}{([^}]*)}', text)  # then do stuff with match.group(1) etc
+                    print text
+                    match = p1.match(text)
+                    d['category'] = "member"
+                    d['link_ls'] = ""
                     if match:
-                        print match.group(1)
-                    d['category'] = "service"
-                    d['year'] = year
-                    #d['position'] = match.group(0)
-                    #d['organization'] = match.group(1)
-                    if not line:
-                        break
-                    else:
-                        line = f.next()
+                        d['text'] = match.group(1)
+                    line = f.next()
                     latex_accents.replace_latex_accents(line)
+                    membership_list.append(d)
+                dict['Member'] = membership_list
+                
+            elif line.startswith("\subsection*{Honors}"):
+                line = f.next()
+                latex_accents.replace_latex_accents(line)
+                honors_list = []
+                while line.startswith("\Honor") and f.next():
+                    list = line.split("}",1)
+                    text = str(list[1]).strip()
+                    if line.startswith("\HonoraryDegree"):
+                        match = p3.match(text)
+                        d['category'] = "honor"
+                        d['link_ls'] = ""
+                        if match:
+                            d['year'] = match.group(1)
+                            d['degree'] = match.group(2)
+                            d['school'] = match.group(3)
+                    else:
+                        match = p2.match(text)
+                        d['category'] = "honor"
+                        d['link_ls'] = ""
+                        if match:
+                            d['year'] = match.group(1)
+                            d['position'] = match.group(2)
+                    line = f.next()
+                    latex_accents.replace_latex_accents(line)
+                    honors_list.append(d)
+                dict['Member'] = honors_list
+                
+            #need to get complete_name from somewhere
+            d['complete_name'] = name
+            
+            #Bibtex section (check over w/ joe)
+            elif line.startswith("\")
+            
+            
     f.close()
+    records = {'records': dict}
     print name + " read"
-    print d
-    return d
+    print dict
+    return records
 

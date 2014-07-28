@@ -4,7 +4,7 @@ import time
 import datetime
 time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8')   
 import random
-
+import text_json
 
 ## set some global variables for convenience of use
 global_vars = {}
@@ -1367,10 +1367,10 @@ def make_all():
     html = infile.read()
     html = unicode(html,'utf-8')
     #Xh2topX Xh3topX XbodytitleX XtestdisplayX XasideX XcontentX
-    data = read_ims_legacy('ims_legacy')
+    data = text_json.read_latex("Blackwell, David H.")
     print 'Read ' + str(len(data['records'])) + ' records from ims_legacy.txt'
-    global_vars['link_ls'] = data['link_ls']
-    global_vars['books'] = data['books']
+    #global_vars['link_ls'] = data['link_ls']
+    #global_vars['books'] = data['books']
     records = [ add_html(d) for d in data['records'] ]
     tot = len(records)
     print 'Making xml for ' + str(tot) + ' records'
