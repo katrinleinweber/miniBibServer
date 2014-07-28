@@ -238,7 +238,7 @@ def read_latex(name):
             d['complete_name'] = name
             
             #Bibtex section (check over w/ joe)
-            elif line.startswith("\")
+            elif line.startswith("\Member")
             
             
     f.close()

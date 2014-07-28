@@ -1,0 +1,137 @@
+Metadata-Version: 1.0
+Name: bidict
+Version: 0.1.1
+Summary: bidirectional (one-to-one) mapping data structure
+Home-page: http://bitbucket.org/jab/bidict
+Author: Josh Bronson
+Author-email: jabronson@gmail.com
+License: MIT
+Description: 
+        --------
+        Overview
+        --------
+        
+        ``bidict`` provides a bidirectional mapping data structure and related
+        utilities (``namedbidict``, ``inverted``) to naturally model one-to-one
+        relations in Python. To keep the learning curve low, it introduces no new
+        functions to the ``dict`` API you're already familiar with. It owes its
+        simplicity to Python's slice syntax, which provides a handy and natural way
+        of expressing the inverse mapping in a ``bidict``::
+        
+        >>> husbands2wives = bidict({'john': 'jackie'})
+        >>> husbands2wives['john'] # the forward mapping is just like with dict
+        'jackie'
+        >>> husbands2wives[:'jackie'] # use slice for the inverse mapping
+        'john'
+        
+        You can also use the unary inverse operator ``~`` on a bidict to get the
+        inverse mapping::
+        
+        >>> ~husbands2wives
+        bidict({'jackie': 'john'})
+        
+        
+        --------------------------
+        Motivation & More Examples
+        --------------------------
+        
+        Python's built-in ``dict`` lets us associate unique keys with arbitrary values.
+        Because keys must be hashable, values can be looked up by key in constant time.
+        Different keys can map to the same value, but a single key cannot map to two
+        different values. For instance, ``{-1: 1, 0: 0, 1: 1}`` is a ``dict`` with
+        three unique keys and two unique values, because the keys -1 and 1 both map to
+        1. If you try to write its inverse ``{1: -1, 0: 0, 1: 1}``, the ``dict`` that
+        comes out has only two mappings, one for key 1 and one for key 0; since key 1
+        is not allowed to map to both -1 and 1, one of these mappings is discarded.
+        
+        Sometimes the relation we're modeling will only ever have a single key mapping
+        to a single value, as in the relation of husbands to wives (assuming monogamy).
+        This is called a one-to-one (or injective) mapping (see
+        http://en.wikipedia.org/wiki/Injective_mapping).
+        
+        In this case we can be sure that the inverse mapping has the same number of
+        items as the forward mapping, and moreover that if key k maps to value v in the
+        forward mapping, value v maps to key k in the inverse. It would be useful then
+        to be able to look up keys by value in constant time in addition to being able
+        to look up values by key. With the additional constraint that values must be
+        hashable as well as keys, just such a bidirectional dictionary is possible:
+        enter ``bidict``.
+        
+        ``bidict`` provides a bidirectional mapping data structure which offers
+        constant-time forward and inverse lookups in a syntax which builds naturally
+        on what we're already used to from regular dicts. Consider the following
+        one-to-one mapping::
+        
+        >>> h2w = bidict({'bill': 'hillary', 'barack': 'michelle'})
+        
+        To look up a wife by husband, use the familiar subscript syntax as with a dict::
+        
+        >>> h2w['bill']
+        'hillary'
+        
+        Or, by analogy to array slicing, you can optionally provide a trailing colon to
+        emphasize that you're talking about a forward mapping::
+        
+        >>> h2w['bill':]
+        'hillary'
+        
+        And now you can guess how to spell the inverse mapping (i.e. to look up a
+        husband by wife)::
+        
+        >>> h2w[:'hillary']
+        'bill'
+        
+        The slice syntax works for setting and deleting items in either direction too::
+        
+        >>> h2w['bill':] = 'melinda'
+        >>> h2w[:'cher'] = 'sonny'
+        >>> del h2w[:'michelle']
+        
+        The ``namedbidict`` class factory can be used to create a bidirectional mapping
+        with customized names for the forward and the inverse mappings accessible via
+        attributes.
+        
+        A real-world example can be found in the ``htmlentitydefs`` module, which
+        maintains a ``name2codepoint`` dict and an inverse ``codepoint2name`` dict
+        separately. This could instead be modeled with a single ``bidict``::
+        
+        >>> HTMLEntities = namedbidict('HTMLEntities', 'names', 'codepoints')
+        >>> entities = HTMLEntities({'lt': 60, 'gt': 62, 'amp': 38}) # etc
+        >>> entities.names['lt']
+        60
+        >>> entities.codepoints[38]
+        'amp'
+        
+        See the ``bidict`` class for more examples.
+        
+        Note: ``bidict`` does not subclass ``dict``, but its API is a superset of the
+        ``dict`` API minus the ``fromkeys`` method, which does not make sense in the
+        context of an injective mapping. ``bidict`` implements the ``MutableMapping``
+        interface.
+        
+        This module also provides an ``inverted`` iterator in the spirit of the built-in
+        ``reversed``. Pass in a mapping to get the inverse mapping, an iterable of pairs
+        to get the pairs' inverses, or any object implementing an ``__inverted__``
+        method. See the ``inverted`` class for examples.
+        
+        Note: "inverse" rather than "reverse" is used because it's the term used in
+        mathematics and its meaning is more specific, and because "reversed" already
+        means something different in Python (reversing the order of the items in a
+        sequence versus inverting the (k, v) pairs in a mapping).
+        
+        
+        ----------
+        Background
+        ----------
+        
+        This module evolved from a November 2009 thread on comp.lang.python
+        (`link <http://groups.google.com/group/comp.lang.python/browse_frm/thread/785d100681f7d101/34703a66338abbd6>`_).
+        Thanks to Terry Reedy, Raymond Hettinger, and Francis Carr for their ideas.
+        
+        Please find `bidict on bitbucket <http://bitbucket.org/jab/bidict>`_ if you
+        would like to collaborate.
+        
+Keywords: mapping,bidirectional,bijection,injective,dict,dictionary
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License

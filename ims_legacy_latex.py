@@ -453,6 +453,7 @@ def read_ims_legacy(f='ims_legacy'):
     data['books'] = book_dict
     links_txt = instring.split('::links',1)[1].split('\n::')[0]
     data['link_ls'] = links_txt2ls(links_txt)
+    # print data['records'][4]
     return data
 
 def publish_ims_legacy(f='ims_legacy'):
@@ -1435,7 +1436,8 @@ def first_first(name):
     return first.strip() + ' ' + last.strip()
 
 def add_latex(d):
-        content = '' 
+        content = ''
+        content += "\n\\section*{" + sanitize_latex(first_first(d['complete_name'])) + "}"
         content += educ_latex(d)
         content += career_latex(d)
         content += honors_latex(d)
@@ -1505,8 +1507,8 @@ def sanitize_latex(txt):
         # print char_array[i].encode("utf-8")
     return "".join(char_array)
 
-# Replace every Capital Letter Except The First with a Bracketed Version!
-# Replace every {C}apital {L}etter {E}xcept {T}he {F}irst with a {B}racketed {V}ersion!
+# Replace every Capital Letter with a Bracketed Version!
+# {R}eplace every {C}apital {L}etter with a {B}racketed {V}ersion!
 def sanitize_bibtex(txt):
     char_array = list(txt)
     i = 0

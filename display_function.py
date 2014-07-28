@@ -132,8 +132,8 @@ def howpublished_tagged(r):
                 passd = {}
                 passd.update(r)
                 if passd.get('journal',''): passd['journal']  = '<j>' + passd['journal'] + '</j>'
-                if passd.get('volume',''): passd['volume']  = '<v>' + passd['volume'] + '</v>'
-                if passd.get('pages',''): passd['pages']  = '<pp>' + passd['pages'] + '</pp>'
+                if passd.get('volume',''): passd['volume']  = 'Vol. <v>' + passd['volume'] + '</v>'
+                if passd.get('pages',''): passd['pages']  = 'pp.<pp>' + passd['pages'] + '</pp>'
                 if passd.get('booktitle',''): passd['booktitle']  = 'In: ' + '<bt>' + passd['booktitle'] + '</bt>'
                 vv = [ passd.get(k,'').strip() for k in 'journal booktitle editor series publisher volume number pages note'.split() ]
                 vv = [ v for v in vv if v ]
