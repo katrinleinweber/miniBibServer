@@ -689,6 +689,7 @@ dl_template = '''
 
 def make_honor_rows(honor):
     d = honor
+    print d
     link_honor = add_links(d['text'],global_vars['link_ls'])
     rows = '<dt>' + d['year'] + '</dt><dd>' + link_honor + '</dd>\n'
     if d.get('citation',''):
@@ -1079,6 +1080,7 @@ def enhance_link(link):
 
 def honors_html(person):
         honors = person['Honor']
+        print honors
         h = ''
         if len(honors) == 1: heading = '<h4>Honor</h4>\n'
         else:                heading = '<h4>Honors</h4>\n'
@@ -1338,11 +1340,11 @@ def first_first(name):
     return first.strip() + ' ' + last.strip()
 
 def add_html(d):
-        d['heading_html'] = '<h2>' + first_first(d['complete_name']) + '</h2>'
-        d['photo_html'] = make_images_html(d) 
-        d['dates_html']  = make_dates_html(d)
-        d['dates_plain_html']  = make_dates_plain_html(d)
-        d['top_links_html'] = top_links_html(d)
+        #d['heading_html'] = '<h2>' + first_first(d['complete_name']) + '</h2>'
+        #d['photo_html'] = make_images_html(d) 
+        #d['dates_html']  = make_dates_html(d)
+        #d['dates_plain_html']  = make_dates_plain_html(d)
+        #d['top_links_html'] = top_links_html(d)
         content = '' 
         content += educ_html(d)
         content += career_html(d)
@@ -1353,8 +1355,8 @@ def add_html(d):
         content += biblio_html(d)
         content += source_data_html(d)
         d['body_html'] = content
-        d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
-        d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
+        #d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
+        #d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
         return d
 
 
@@ -1368,9 +1370,16 @@ def make_all():
     html = unicode(html,'utf-8')
     #Xh2topX Xh3topX XbodytitleX XtestdisplayX XasideX XcontentX
     data = text_json.read_latex("Blackwell, David H.")
+    #data = read_ims_legacy('ims_legacy')
+    #print data['records']
+    #print data['records']
     print 'Read ' + str(len(data['records'])) + ' records from ims_legacy.txt'
-    #global_vars['link_ls'] = data['link_ls']
-    #global_vars['books'] = data['books']
+    global_vars['link_ls'] = data['link_ls']
+    global_vars['books'] = data['books']
+    #print global_vars['link_ls']
+    #for d in data['records']:
+        #print len(d)
+        #SHOULD BE A DICT
     records = [ add_html(d) for d in data['records'] ]
     tot = len(records)
     print 'Making xml for ' + str(tot) + ' records'

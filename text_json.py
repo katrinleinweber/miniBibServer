@@ -152,7 +152,7 @@ def read_latex(name):
     data = {} #one? element (records) w/key 'records'
     records = [] 
     person = {} #should have ~ 30 total categories for each person
-    d = {} #each person gets one
+    #d = {} #each person gets one
     filename = name + ".tex"
     p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
     p2 = re.compile(r'{([^}]*)}{([^}]*)}')
@@ -170,7 +170,8 @@ def read_latex(name):
                 line = f.next()
                 latex_accents.replace_latex_accents(line)
                 service_list = []
-                if line.startswith("\Service") and f.next():
+                while line.startswith("\Service"):
+                    d = {}
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
@@ -179,66 +180,78 @@ def read_latex(name):
                     d['category'] = "service"
                     d['year'] = year
                     d['link_ls'] = ""
+                    d['text'] = ""
                     if match:
-                        d['position'] = match.group(1)
-                        d['organization'] = match.group(2)
+                        d['text'] = match.group(1) + ", " + match.group(2)
                     latex_accents.replace_latex_accents(line)
                     service_list.append(d)
+                    line = f.next()
                 person['Service'] = service_list
+                #print len(service_list)
 
-            elif line.startswith("\subsection*{Membership}"):
-                line = f.next()
-                latex_accents.replace_latex_accents(line)
-                membership_list = []
-                if line.startswith("\Member") and f.next():
-                    list = line.split("}",1)
-                    text = str(list[1]).strip()
-                    print text
-                    match = p1.match(text)
-                    d['category'] = "member"
-                    d['link_ls'] = ""
-                    if match:
-                        d['text'] = match.group(1)
-                    line = f.next()
-                    latex_accents.replace_latex_accents(line)
-                    membership_list.append(d)
-                person['Member'] = membership_list
-                
-            elif line.startswith("\subsection*{Honors}"):
-                line = f.next()
-                latex_accents.replace_latex_accents(line)
-                honors_list = []
-                if line.startswith("\Honor") and f.next():
-                    list = line.split("}",1)
-                    text = str(list[1]).strip()
-                    if line.startswith("\HonoraryDegree"):
-                        match = p3.match(text)
-                        d['category'] = "honor"
-                        d['link_ls'] = ""
-                        if match:
-                            d['year'] = match.group(1)
-                            d['degree'] = match.group(2)
-                            d['school'] = match.group(3)
-                    else:
-                        match = p2.match(text)
-                        d['category'] = "honor"
-                        d['link_ls'] = ""
-                        if match:
-                            d['year'] = match.group(1)
-                            d['position'] = match.group(2)
-                    line = f.next()
-                    latex_accents.replace_latex_accents(line)
-                    honors_list.append(d)
-                person['Honors'] = honors_list
-                
-            
+            #elif line.startswith("\subsection*{Membership}"):
+            #    line = f.next()
+            #    latex_accents.replace_latex_accents(line)
+            #    membership_list = []
+            #    if line.startswith("\Member") and f.next():
+            #        d = {}
+            #        list = line.split("}",1)
+            #        text = str(list[1]).strip()
+            #        print text
+            #        match = p1.match(text)
+            #        d['category'] = "member"
+            #        d['link_ls'] = ""
+            #        d['text'] = "" #TEMPORARY
+            #        if match:
+            #            d['text'] = match.group(1)
+            #        line = f.next()
+            #        latex_accents.replace_latex_accents(line)
+            #        membership_list.append(d)
+            #    person['Member'] = membership_list
+            #    #print membership_list
+            #    
+            #elif line.startswith("\subsection*{Honors}"):
+            #    #for some reason its not capturing this data
+            #    line = f.next()
+            #    latex_accents.replace_latex_accents(line)
+            #    honors_list = []
+            #    if line.startswith("\Honor") and f.next():
+            #        d = {}
+            #        list = line.split("}",1)
+            #        text = str(list[1]).strip()
+            #        if line.startswith("\HonoraryDegree"):
+            #            match = p3.match(text)
+            #            d['category'] = "honor"
+            #            d['link_ls'] = ""
+            #            if match:
+            #                d['year'] = match.group(1)
+            #                d['text'] = 'u' + match.group(2) + ' (Honorary)\t' + match.group(3)
+            #                #d['degree'] = match.group(2)
+            #                #d['school'] = match.group(3)
+            #        else:
+            #            match = p2.match(text)
+            #            d['category'] = "honor"
+            #            d['link_ls'] = ""
+            #            d['text'] = "" #TEMPORARY
+            #            d['year'] = "1999999" #TEMPORARY
+            #            if match:
+            #                d['year'] = match.group(1)
+            #                d['text'] = match.group(2)
+            #        line = f.next()
+            #        latex_accents.replace_latex_accents(line)
+            #        honors_list.append(d)
+            #    person['Honor'] = honors_list
+               
+            #weird error, should have gotten this one woking first, but things aren't going in the right places :/
                 
             #update ims_legacy_latex to get these from colon-formatted data
-            person['complete_name'] = "Blackwell, David H."
-            person['Education'] = []
-            person['Degree'] = []
-            person['Obituary'] = []
-            person['DOB'] = []
+        person['complete_name'] = name  #DEPENDS ON FILE TO BE READ!!
+        person['Education'] = []
+        person['Degree'] = []
+        person['Obituary'] = []
+        person['DOB'] = []
+        person['Position'] = []
+        person['public_record_txt'] = "" #this comes from bibtex
             
             
             #Bibtex section (check over w/ joe)
@@ -246,9 +259,11 @@ def read_latex(name):
             
             
     f.close()
-    records = [person] #will eventually add people
-    data = {'records': records}
-    print name + " read"
-    print data['records']
-    return records
+    records.append(person) #will eventually add people
+    data['records'] = records
+    data['link_ls'] = [{'category_ls': [u'committee'], 'href': u'http://academic-senate.berkeley.edu/committees/frl', 'anchor': u'Faculty Research Lecture Committee, University of California, Berkeley'}, {'category_ls': [u'lecture'], 'href': u'http://www.urel.berkeley.edu/faculty/history.html', 'anchor': u'Faculty Research Lecturer, University of California, Berkeley'}]
+    data['books'] = []
+    print filename + " read"
+    #print person['Service']
+    return data
 
