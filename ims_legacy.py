@@ -507,6 +507,7 @@ def id2url(k,v):
 
 def ids_dict(d):
     iii = {}
+    print d
     for link in d['link_ls']:
         try: 
             iii['zb-author-id'] = link['href'].split('http://zbmath.org/authors/?q=ai:',1)[1]
@@ -689,7 +690,7 @@ dl_template = '''
 
 def make_honor_rows(honor):
     d = honor
-    print d
+    #print d
     link_honor = add_links(d['text'],global_vars['link_ls'])
     rows = '<dt>' + d['year'] + '</dt><dd>' + link_honor + '</dd>\n'
     if d.get('citation',''):
@@ -698,8 +699,9 @@ def make_honor_rows(honor):
 
 def make_row(d): 
     text = d.get('text','')
+    print text
     text = add_links(text, global_vars['link_ls'])
-    return '<dt>' + d.get('year','') + '</dt><dd>' + text + '</dd>\n'
+    return '<dt>' + d.get('year','').decode("utf-8") + '</dt><dd>' + text + '</dd>\n'
 
 def make_images_html(d):
     name = d['complete_name']
@@ -1080,7 +1082,7 @@ def enhance_link(link):
 
 def honors_html(person):
         honors = person['Honor']
-        print honors
+        #print honors
         h = ''
         if len(honors) == 1: heading = '<h4>Honor</h4>\n'
         else:                heading = '<h4>Honors</h4>\n'
@@ -1102,11 +1104,13 @@ def career_html(person):
 
 def service_html(person):
         positions = person['Service']
+        print positions
         if not positions: return ''
         heading = '<h4>Professional Service</h4>\n'
         positions.sort(year_cmp)
         rows = ''
         for h in positions:
+            print h.get('text','')
             rows += make_row(h)
         return heading + dl_template.replace('$rows$',rows)
 
@@ -1345,18 +1349,21 @@ def add_html(d):
         #d['dates_html']  = make_dates_html(d)
         #d['dates_plain_html']  = make_dates_plain_html(d)
         #d['top_links_html'] = top_links_html(d)
+        
         content = '' 
-        content += educ_html(d)
-        content += career_html(d)
-        content += honors_html(d)
+        #content += educ_html(d)
+        #content += career_html(d)
+        #content += honors_html(d)
         content += service_html(d)
-        content += member_html(d)
-        content += bio_html(d)
-        content += biblio_html(d)
-        content += source_data_html(d)
+        #content += member_html(d)
+        #content += bio_html(d)
+        #content += biblio_html(d)
+        #content += source_data_html(d)
         d['body_html'] = content
+        
         #d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
         #d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
+        d['html'] = d['body_html']
         return d
 
 
@@ -1371,7 +1378,7 @@ def make_all():
     #Xh2topX Xh3topX XbodytitleX XtestdisplayX XasideX XcontentX
     data = text_json.read_latex("Blackwell, David H.")
     #data = read_ims_legacy('ims_legacy')
-    #print data['records']
+    #print data['link_ls']
     #print data['records']
     print 'Read ' + str(len(data['records'])) + ' records from ims_legacy.txt'
     global_vars['link_ls'] = data['link_ls']
@@ -1383,20 +1390,20 @@ def make_all():
     records = [ add_html(d) for d in data['records'] ]
     tot = len(records)
     print 'Making xml for ' + str(tot) + ' records'
-    make_xml( records)
+    #make_xml(records)
     content = ''
     #finish = False
+
     for d in records:
+        #content = ''
         name = d['complete_name']
-        if name.find('Blackwell') >= 0:
-            content += d['html']
-            content += '<hr><br><br>'
-        elif name.find('Chung') >= 0:
-            content += d['html']
-            content += '<hr><br><br>'
-        elif name.find('Varadhan') >= 0:
-            content += d['html']
-            content += '<hr><br><br>'
+        content += d['html']
+        content += '<hr><br><br>'
+        filename = name + '.html'
+        f = open(filename, 'w')
+        f.write(content.encode('utf-8'))
+        f.close()
+        print "made new file: " + filename
     html = html.replace('$covertext$',content)
     html = html.replace('$title$','IMS Scientific Legacy')
     #tmpfname = 'tmp/imslegacy/html/test_images.html'
