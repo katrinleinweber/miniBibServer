@@ -149,9 +149,10 @@ def format_member_json(text, n):
     n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
     
 def read_latex(name):
-    d = {}
-    dict = {}
-    records = {}
+    data = {} #one? element (records) w/key 'records'
+    records = [] 
+    person = {} #should have ~ 30 total categories for each person
+    d = {} #each person gets one
     filename = name + ".tex"
     p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
     p2 = re.compile(r'{([^}]*)}{([^}]*)}')
@@ -169,7 +170,7 @@ def read_latex(name):
                 line = f.next()
                 latex_accents.replace_latex_accents(line)
                 service_list = []
-                while line.startswith("\Service") and f.next():
+                if line.startswith("\Service") and f.next():
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
@@ -181,19 +182,15 @@ def read_latex(name):
                     if match:
                         d['position'] = match.group(1)
                         d['organization'] = match.group(2)
-                    if f.next():
-                        line = f.next()
-                    else:
-                        break
                     latex_accents.replace_latex_accents(line)
                     service_list.append(d)
-                dict['Service'] = service_list
+                person['Service'] = service_list
 
             elif line.startswith("\subsection*{Membership}"):
                 line = f.next()
                 latex_accents.replace_latex_accents(line)
                 membership_list = []
-                while line.startswith("\Member") and f.next():
+                if line.startswith("\Member") and f.next():
                     list = line.split("}",1)
                     text = str(list[1]).strip()
                     print text
@@ -205,13 +202,13 @@ def read_latex(name):
                     line = f.next()
                     latex_accents.replace_latex_accents(line)
                     membership_list.append(d)
-                dict['Member'] = membership_list
+                person['Member'] = membership_list
                 
             elif line.startswith("\subsection*{Honors}"):
                 line = f.next()
                 latex_accents.replace_latex_accents(line)
                 honors_list = []
-                while line.startswith("\Honor") and f.next():
+                if line.startswith("\Honor") and f.next():
                     list = line.split("}",1)
                     text = str(list[1]).strip()
                     if line.startswith("\HonoraryDegree"):
@@ -232,18 +229,26 @@ def read_latex(name):
                     line = f.next()
                     latex_accents.replace_latex_accents(line)
                     honors_list.append(d)
-                dict['Member'] = honors_list
+                person['Honors'] = honors_list
                 
-            #need to get complete_name from somewhere
-            d['complete_name'] = name
+            
+                
+            #update ims_legacy_latex to get these from colon-formatted data
+            person['complete_name'] = "Blackwell, David H."
+            person['Education'] = []
+            person['Degree'] = []
+            person['Obituary'] = []
+            person['DOB'] = []
+            
             
             #Bibtex section (check over w/ joe)
-            elif line.startswith("\Member")
+            #elif line.startswith("\Member")
             
             
     f.close()
-    records = {'records': dict}
+    records = [person] #will eventually add people
+    data = {'records': records}
     print name + " read"
-    print dict
+    print data['records']
     return records
 
