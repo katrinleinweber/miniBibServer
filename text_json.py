@@ -167,6 +167,7 @@ def read_latex(name):
     with open(filename, "r") as f:
         for line in f:
             if line.startswith("\subsection*{Professional Service}"):
+                f.next()
                 line = f.next()
                 latex_accents.replace_latex_accents(line)
                 service_list = []
@@ -185,6 +186,7 @@ def read_latex(name):
                         d['text'] = match.group(1) + ", " + match.group(2)
                     latex_accents.replace_latex_accents(line)
                     service_list.append(d)
+                    #f.next()
                     line = f.next()
                 person['Service'] = service_list
                 #print len(service_list)
@@ -193,22 +195,23 @@ def read_latex(name):
             #    line = f.next()
             #    latex_accents.replace_latex_accents(line)
             #    membership_list = []
-            #    if line.startswith("\Member") and f.next():
+            #    while line.startswith("\Member"):
             #        d = {}
             #        list = line.split("}",1)
-            #        text = str(list[1]).strip()
-            #        print text
-            #        match = p1.match(text)
+            #        text = line[line.find("{")+1:line.find("}")]
+            #        #match1 = p1.match(str(list))
+            #        #print match1.group(1)
             #        d['category'] = "member"
             #        d['link_ls'] = ""
-            #        d['text'] = "" #TEMPORARY
             #        if match:
-            #            d['text'] = match.group(1)
-            #        line = f.next()
+            #            d['text'] = text
             #        latex_accents.replace_latex_accents(line)
             #        membership_list.append(d)
+            #        #print d
+            #        if not (f.next()).strip()
+            #            line = f.next()
             #    person['Member'] = membership_list
-            #    #print membership_list
+            #    print membership_list
             #    
             #elif line.startswith("\subsection*{Honors}"):
             #    #for some reason its not capturing this data
@@ -264,6 +267,11 @@ def read_latex(name):
     data['link_ls'] = [{'category_ls': [u'committee'], 'href': u'http://academic-senate.berkeley.edu/committees/frl', 'anchor': u'Faculty Research Lecture Committee, University of California, Berkeley'}, {'category_ls': [u'lecture'], 'href': u'http://www.urel.berkeley.edu/faculty/history.html', 'anchor': u'Faculty Research Lecturer, University of California, Berkeley'}]
     data['books'] = []
     print filename + " read"
-    #print person['Service']
     return data
+
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
 
