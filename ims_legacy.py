@@ -699,7 +699,7 @@ def make_honor_rows(honor):
 
 def make_row(d): 
     text = d.get('text','')
-    print text
+    #print text
     text = add_links(text, global_vars['link_ls'])
     return '<dt>' + d.get('year','').decode("utf-8") + '</dt><dd>' + text + '</dd>\n'
 
@@ -1104,13 +1104,13 @@ def career_html(person):
 
 def service_html(person):
         positions = person['Service']
-        print positions
+        #print positions
         if not positions: return ''
         heading = '<h4>Professional Service</h4>\n'
         positions.sort(year_cmp)
         rows = ''
         for h in positions:
-            print h.get('text','')
+            #print h.get('text','')
             rows += make_row(h)
         return heading + dl_template.replace('$rows$',rows)
 
@@ -1353,9 +1353,9 @@ def add_html(d):
         content = '' 
         #content += educ_html(d)
         #content += career_html(d)
-        #content += honors_html(d)
+        content += honors_html(d)
         content += service_html(d)
-        #content += member_html(d)
+        content += member_html(d)
         #content += bio_html(d)
         #content += biblio_html(d)
         #content += source_data_html(d)
@@ -1376,7 +1376,7 @@ def make_all():
     html = infile.read()
     html = unicode(html,'utf-8')
     #Xh2topX Xh3topX XbodytitleX XtestdisplayX XasideX XcontentX
-    data = text_json.read_latex("Blackwell, David H.")
+    data = text_json.read_latex("blackwell")
     #data = read_ims_legacy('ims_legacy')
     #print data['link_ls']
     #print data['records']
@@ -1413,7 +1413,7 @@ def make_all():
     outfile.write(html.encode('utf-8'))
     outfile.close()
     #print 'wrote to  http://bibserver.berkeley.edu/' + tmpfname
-    print 'wrote html for Blackwell, Varadhan, Chung to  ' + tmpfname
+    print 'wrote ' + filename
 
 def enhance_bio(d):
     ref = d['ref']
