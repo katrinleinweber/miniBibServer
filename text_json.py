@@ -155,11 +155,15 @@ def read_latex(name):
     service_list = []
     membership_list = []
     honors_list = []
+    career_list = []
+    educ_list = []
+    degree_list = []
     
     filename = name + ".tex"
-    p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
-    p2 = re.compile(r'{([^}]*)}{([^}]*)}')
     p1 = re.compile(r'{([^}]*)}')
+    p2 = re.compile(r'{([^}]*)}{([^}]*)}')
+    p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
+    p4 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}{([^}]*)}')
     
     #JOE to add: bibdata part
     
@@ -176,6 +180,7 @@ def read_latex(name):
                 if g =="Service":
                     #print line
                     d = {}
+                    latex_accents.replace_latex_accents(line)
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
@@ -187,12 +192,12 @@ def read_latex(name):
                     d['text'] = ""
                     if match:
                         d['text'] = match.group(1) + ", " + match.group(2)
-                    latex_accents.replace_latex_accents(line)
                     service_list.append(d)
                 person['Service'] = service_list
                 
                 if g == "Member":
                     d = {}
+                    latex_accents.replace_latex_accents(line)
                     list = line.split("}",1)
                     text = line[line.find("{")+1:line.find("}")]
                     #match1 = p1.match(str(list))
@@ -201,7 +206,6 @@ def read_latex(name):
                     d['link_ls'] = ""
                     if match:
                         d['text'] = text
-                    latex_accents.replace_latex_accents(line)
                     membership_list.append(d)
                 person['Member'] = membership_list
                 
@@ -235,20 +239,75 @@ def read_latex(name):
                         d['text'] = match.group(1)
                     honors_list.append(d)
                 person['Honor'] = honors_list
-               
+                
+                if g == "Position":
+                    d = {}
+                    latex_accents.replace_latex_accents(line)
+                    year = line[line.find("{")+1:line.find("}")]
+                    list = line.split("}",1)
+                    text = str(list[1]).strip()
+                    match = p2.match(text)
+                    d['category'] = "position"
+                    d['year'] = year
+                    if match:
+                        d['text'] = match.group(1) + ', ' + match.group(2)
+                    career_list.append(d)
+                person['Position'] = career_list
+                
+                if g == "Education":
+                    d = {}
+                    latex_accents.replace_latex_accents(line)
+                    year = line[line.find("{")+1:line.find("}")]
+                    list = line.split("}",1)
+                    text = str(list[1]).strip()
+                    match = p1.match(text)
+                    d['category'] = "education"
+                    d['year'] = year
+                    if match:
+                        d['text'] = match.group(1)
+                    educ_list.append(d)
+                person['Education'] = educ_list
+                
+                #need genealogy links?
+                if g == "Degree":
+                    d = {}
+                    latex_accents.replace_latex_accents(line)
+                    year = line[line.find("{")+1:line.find("}")]
+                    list = line.split("}",1)
+                    text = str(list[1]).strip()
+                    d['category'] = "degree"
+                    d['year'] = year
+                    #test for optional fields
+                    if text.count('}') <= 3:
+                        match = p2.match(text)
+                        d['type'] = match.group(1)
+                        d['school'] = match.group(2)
+                    else:
+                        match = p4.match(text)
+                        d['type'] = match.group(1)
+                        d['school'] = match.group(2)
+                        d['thesis_title'] = match.group(3)
+                        #has to be a LIST of links. work on this
+                        #d['link_ls'].append(match.group(4))
+                    educ_list.append(d)
+                person['Degree'] = degree_list
+                
+                if g == "DOB":
+                    #this could probably be done w/a regexp? ... :?
+                    #R = re.compile(r'.\{$\{')
+                    #   ???? tomorrow I shall learn
+                    person['DOB'] = line[line.find("{")+1:line.find("}")]
+                
+                if g == "DOD":
+                    person['DOD'] = line[line.find("{")+1:line.find("}")]
                 
             #update ims_legacy_latex to get these from colon-formatted data
-        person['complete_name'] = name  #DEPENDS ON FILE TO BE READ!!
-        person['Education'] = []
-        person['Degree'] = []
+        person['complete_name'] = "Blackwell, David H."  #DEPENDS ON FILE TO BE READ!!
         person['Obituary'] = []
-        person['DOB'] = []
-        person['Position'] = []
         person['public_record_txt'] = "" #this comes from bibtex
             
             
             #Bibtex section (check over w/ joe)
-            #elif line.startswith("\Member")
             
             
     f.close()
@@ -259,10 +318,4 @@ def read_latex(name):
     print filename + " read"
     #print data
     return data
-
-def file_len(fname):
-    with open(fname) as f:
-        for i, l in enumerate(f):
-            pass
-    return i + 1
 
