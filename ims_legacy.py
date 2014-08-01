@@ -1321,8 +1321,8 @@ def make_dates_html(d):
     templ = '<p id="lifespan">DOB&thinsp;&ndash;&thinsp;DOD</p>'
     if d.has_key('DOB') and d.has_key('DOD'):
         for k in 'DOB DOD'.split(): templ = templ.replace(k, show_date( getf(d,k) ) )
-        return templ 
-    else: return ''
+    else:
+        return ''
 
 def make_dates_plain_html(d):
     templ = 'DOB&nbsp;-&nbsp; DOD<br>'
@@ -1344,15 +1344,15 @@ def first_first(name):
     return first.strip() + ' ' + last.strip()
 
 def add_html(d):
-        #d['heading_html'] = '<h2>' + first_first(d['complete_name']) + '</h2>'
-        #d['photo_html'] = make_images_html(d) 
-        #d['dates_html']  = make_dates_html(d)
-        #d['dates_plain_html']  = make_dates_plain_html(d)
-        #d['top_links_html'] = top_links_html(d)
+        d['heading_html'] = '<h2>' + first_first(d['complete_name']) + '</h2>'
+        d['photo_html'] = make_images_html(d) 
+        d['dates_html']  = make_dates_html(d)   #check how this function processes dates
+        d['dates_plain_html']  = make_dates_plain_html(d)
+        d['top_links_html'] = top_links_html(d)
         
         content = '' 
-        #content += educ_html(d)
-        #content += career_html(d)
+        content += educ_html(d)
+        content += career_html(d)
         content += honors_html(d)
         content += service_html(d)
         content += member_html(d)
@@ -1362,8 +1362,7 @@ def add_html(d):
         d['body_html'] = content
         
         #d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
-        #d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
-        d['html'] = d['body_html']
+        d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
         return d
 
 
