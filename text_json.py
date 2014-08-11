@@ -7,6 +7,8 @@ time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8'
 import random
 import latex_accents
 import re
+import bibtex
+import display_function
 
 def make_all():
     #runs publish_json on all .tex files in a directory
@@ -147,6 +149,36 @@ def format_member_json(text, n):
     n.write("\t\t{\n")
     n.write("\t\t\t\"category\": :\"member\",\n")
     n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
+
+def make_ref_for_record(r): 
+    title = r.get('title','').strip()
+    if title == 'Untitled': title = ''
+    author = r.get('author','').strip()
+    if author == 'Anonymous': author = ''
+    howpub  = r.get('howpublished','')
+    year = r.get('year','')
+    if year == 'year?': year = 'Undated'
+    ref = ''
+    if title:  
+        if not title[-1] in '?.!': title += '.'
+        ref += '<t>' + title + '</t> '
+    if author: ref += '<au>' + author + '</au>. '
+    ref += howpub
+    #
+    # Need to deal with enhancements for books somehow
+    # but commenting this out for now until book processing
+    # is complete.
+    #
+    """
+    book_link_ls = []
+    books = global_vars['books']
+    for bkey in books.keys():
+        if ref.find(bkey) >= 0:
+            ref = ref.replace(bkey,books[bkey]['ref'])
+            book_link_ls = books[bkey].get('link_ls',[])
+    """
+
+    return ref
     
 def read_latex(name):
     data = {} #four elements (records, links_ls, books, ??) w/key 'records'
@@ -165,12 +197,26 @@ def read_latex(name):
     p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
     p4 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}{([^}]*)}')
     
-    #JOE to add: bibdata part
+    # bibdata part
     
-    #end of bib part
+    filestring = f.read()
+    bibpart = re.split(r"\\end{filecontents}",re.split(r"\\begin{filecontents}{\\jobname.bib}", filestring)[1])[0]
+    allbib=bibtex.read_bibstring(bibpart)
+    # Refactor the individual bibliographic elements
+    for bib in allbib:
+        bib[u'id'] = bib.pop('citekey')
+        bib[u'howpublished'] = display_function.howpublished_tagged(allbib[1])
+        bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
+        bib[u'ref'] = make_ref_for_record(bib)
+    # note that the individual elements of allbib still need to be added in the
+    # correct section for Memoir, Biography etc. - they can be cross-referenced
+    # from the later section, which requires changing
+    
+    #end of bibdata part
     
     R = re.compile(r'\\(DOB|DOD|Profile|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography){')
     with open(filename, "r") as f:
+        # loop over lines
         for line in f:
             #if line.startswith("\subsection*{Professional Service}"):
             match = re.search(R,line)
@@ -301,7 +347,8 @@ def read_latex(name):
                 if g == "DOD":
                     person['DOD'] = line[line.find("{")+1:line.find("}")]
                 
-            #update ims_legacy_latex to get these from colon-formatted data
+            # update ims_legacy_latex to get these from colon-formatted data!
+            
         person['complete_name'] = "Blackwell, David H."  #DEPENDS ON FILE TO BE READ!!
         person['Obituary'] = []
         person['public_record_txt'] = "" #this comes from bibtex
