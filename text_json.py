@@ -39,28 +39,29 @@ def read_latex(name):
     p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
     p4 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}{([^}]*)}')
     
-    # bibdata part
-    
-    filestring = f.read()
-    bibpart = re.split(r"\\end{filecontents}",re.split(r"\\begin{filecontents}{\\jobname.bib}", filestring)[1])[0]
-    allbib=bibtex.read_bibstring(bibpart)
-    # Refactor the individual bibliographic elements
-    for bib in allbib:
-        bib[u'id'] = bib.pop('citekey')
-        bib[u'howpublished'] = display_function.howpublished_tagged(allbib[1])
-        bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
-        bib[u'ref'] = make_ref_for_record(bib)
-    # note that the individual elements of allbib still need to be added in the
-    # correct section for Memoir, Biography etc. - they can be cross-referenced
-    # from the later section, which requires changing
-    
-    #end of bibdata part
-    
     #run reg exp to capture the listed lines
     R = re.compile(r'\\(DOB|DOD|Profile|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography){')
     with open(filename, "r") as f:
+        # bibdata part [optional]
+        filestring = f.read()
+        if (re.search(r"\\begin{filecontents}{\\jobname.bib}", filestring) and re.search(r"\\end{filecontents}", filestring)):
+            bibpart = re.split(r"\\end{filecontents}",re.split(r"\\begin{filecontents}{\\jobname.bib}", filestring)[1])[0]
+            #start = re.split(r"\\begin{filecontents}{\\jobname.bib}", filestring)[1]
+            allbib=bibtex.read_bibstring(bibpart)
+            # Refactor the individual bibliographic elements
+            for bib in allbib:
+                bib[u'id'] = bib.pop('citekey')
+                bib[u'howpublished'] = display_function.howpublished_tagged(allbib[1])
+                bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
+                bib[u'ref'] = make_ref_for_record(bib)
+                print bib[u'ref']
+        # note that the individual elements of allbib still need to be added in the
+        # correct section for Memoir, Biography etc. - they can be cross-referenced
+        # from the later section, which requires changing
+        #end of bibdata part
         # loop over lines
-        for line in f:
+
+        for line in filestring.split('\n'):
             match = re.search(R,line)
             if match:
                 g = match.group(1)
@@ -97,8 +98,8 @@ def read_latex(name):
                     if match:
                         d['text'] = text
                     membership_list.append(d)
-                person['Member'] = membership_list
                 '''
+                person['Member'] = membership_list
                 
                 if g == "HonoraryDegree":
                     d = {}
@@ -210,4 +211,34 @@ def read_latex(name):
     print filename + " read"
     #print data
     return data
+
+def make_ref_for_record(r): 
+    title = r.get('title','').strip()
+    if title == 'Untitled': title = ''
+    author = r.get('author','').strip()
+    if author == 'Anonymous': author = ''
+    howpub  = r.get('howpublished','')
+    year = r.get('year','')
+    if year == 'year?': year = 'Undated'
+    ref = ''
+    if title:  
+        if not title[-1] in '?.!': title += '.'
+        ref += '<t>' + title + '</t> '
+    if author: ref += '<au>' + author + '</au>. '
+    ref += howpub
+    #
+    # Need to deal with enhancements for books somehow
+    # but commenting this out for now until book processing
+    # is complete.
+    #
+    """
+    book_link_ls = []
+    books = global_vars['books']
+    for bkey in books.keys():
+        if ref.find(bkey) >= 0:
+            ref = ref.replace(bkey,books[bkey]['ref'])
+            book_link_ls = books[bkey].get('link_ls',[])
+    """
+
+    return ref
 

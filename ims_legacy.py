@@ -808,6 +808,7 @@ def read_section(section_txt):
     #1963 Ph.D. University of California, Berkeley
     #    http://genealogy.math.ndsu.nodak.edu/id.php?id=34373
     #        :thesis_title On Optimal Stopping
+    print section_txt['text']
     txt = '\n'.join( [ line.strip() for line in section_txt.split('\n') ])
     d = {}
     subsecs = txt.split('\n:')
@@ -1115,6 +1116,7 @@ def service_html(person):
         return heading + dl_template.replace('$rows$',rows)
 
 def member_html(person):
+        person.get('Member',[])
         positions = person['Member']
         if not positions: return ''
         heading = '<h4>Membership</h4>\n'
@@ -1350,6 +1352,7 @@ def add_html(d):
         d['dates_plain_html']  = make_dates_plain_html(d)
         d['top_links_html'] = top_links_html(d)
         
+        
         content = '' 
         content += educ_html(d)
         content += career_html(d)
@@ -1375,7 +1378,7 @@ def make_all():
     html = infile.read()
     html = unicode(html,'utf-8')
     #Xh2topX Xh3topX XbodytitleX XtestdisplayX XasideX XcontentX
-    data = text_json.read_latex("blackwell")
+    data = text_json.read_latex("blackwell_new")
     #data = read_ims_legacy('ims_legacy')
     #print data['link_ls']
     #print data['records']
@@ -1506,9 +1509,33 @@ def missing_emails():
             if not d.get('Email',[]):
                 print d['record_txt'].encode('utf-8')
 
+def make_one(filename):
+    html = ""
+    data = text_json.read_latex(filename)
+    global_vars['link_ls'] = data['link_ls']
+    global_vars['books'] = data['books']
+    records = [ add_html(d) for d in data['records'] ]
+    tot = len(records)
+    # print 'Making xml for ' + str(tot) + ' records'
+    for d in records:
+        content = ''
+        name = d['complete_name']
+        content += d['html']
+        content += '<hr><br><br>'
+        # Don't print a file, we don't want to deal with permission issues
+        #
+        # filename = name + '.html'
+        # f = open(filename, 'w')
+        # f.write(content.encode('utf-8'))
+        # f.close()
+        # print "made new file: " + filename
+    html = content
+    print html
+    return html
 
 if __name__ == '__main__':
     make_all()
     publish_ims_legacy()
     #missing_emails()
     
+
