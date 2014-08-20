@@ -1171,6 +1171,20 @@ def member_latex(person):
         rows += '\\Member{' + sanitize_latex(d['text']) + '}\n'
     return heading + rows
 
+def life_latex(person):
+    DOB = person.get('DOB',[])
+    DOD = person.get('DOD',[])
+    name = person.get('complete_name',[])
+    if not DOB: return ''
+    if not DOD: return ''
+    heading = "\n\n\\section*{" + name + "}\n"
+    rows = ''
+    for d in DOB:
+        rows += '\\DOB{' + sanitize_latex(d) + '}\n'
+    for d in DOD:
+        rows += '\\DOD{' + sanitize_latex(d) + '}\n'
+    return heading + rows
+
 # Still to fix
 def biblio_latex(person):
         heading = '\n\n\\subsection*{Bibliography}\n'
@@ -1437,8 +1451,10 @@ def first_first(name):
     return first.strip() + ' ' + last.strip()
 
 def add_latex(d):
+        #print d
         content = ''
         content += "\n\\section*{" + sanitize_latex(first_first(d['complete_name'])) + "}"
+        content += life_latex(d)
         content += educ_latex(d)
         content += career_latex(d)
         content += honors_latex(d)
@@ -1462,6 +1478,7 @@ def make_all():
     html = unicode(html,'utf-8')
 
     data = read_ims_legacy('ims_legacy')
+    #print data
     print 'Read ' + str(len(data['records'])) + ' records from ims_legacy.txt'
     global_vars['link_ls'] = data['link_ls']
     global_vars['books'] = data['books']

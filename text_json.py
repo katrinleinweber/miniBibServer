@@ -10,177 +10,17 @@ import re
 import bibtex
 import display_function
 
-def make_all():
-    #runs publish_json on all .tex files in a directory
-    rootdir = "C:/Users/mnhockeygirl/Desktop/me/json_files"
-    origindir = "/tex_files"
-    for files in os.walk(origindir):
-        for file in files:
-            print file
-    print "done!"
+'''
+figure out the order for everything: obituary,service, (DOB, DVD, Collected_Works, DOD), Member,
+(symposium, homepage, id, display_name), Degree, (Memoir), honor?, (complete_name, selected_works, oral_history),
+in_memoriam, public_record_txt, link_ls), Position, (record_txt),  Honor?, (Deceased, Fetschifts??,
+Image, alt_id, death_notice), education, (Endowment, archive, biography)) 
+'''
 
-def publish_json(name):
-    filename = name + ".tex"
-    newfile = name + ".json"
-    content = {}
-    #open .tex file
-    f = open(filename)
-    n = open(newfile,'a')
-    #series of if statements with sub functions to process each category
-    with open(filename, "r") as f:
-        #this is definitely not the most efficient way to do this..
-        #get rid of extra brackets
-        #!!!IMPORTANT!!! have to work out the order of .json and .tex files so that .json gets written in the correct order
-        
-        '''
-        figure out the order for everything: obituary,service, (DOB, DVD, Collected_Works, DOD), Member,
-        (symposium, homepage, id, display_name), Degree, (Memoir), honor?, (complete_name, selected_works, oral_history),
-        in_memoriam, public_record_txt, link_ls), Position, (record_txt),  Honor?, (Deceased, Fetschifts??,
-        Image, alt_id, death_notice), education, (Endowment, archive, biography)) 
-        '''
-        #what if each if statement (and sub-function) created its own named variable and then we assemble those at the end
-        #but, I don't think f.write can take variables, only strings :/
-        
-        for line in f:
-            
-            if line.startswith("\subsection*{Professional Service}"):
-                n.write("\t\"Service\": [\n")
-                line = f.next()
-                while line.startswith("\Service"):
-                    #easier way to do this: read until first } bracket, then read until next one, etc.
-                    year = line[line.find("{")+1:line.find("}")]
-                    list = line.split("}",1)
-                    text = str(list[1]).strip()
-                    #text.replace("}{",",") --> this isn't working??
-                    #send year, text, etc. to separate function that will format it in json
-                    format_service_json(year, text, n)
-                    line = f.next()
-                n.write("\t],\n")
-                
-                n.write("DOB, DVD, Collected Works, DOD\n")
-
-            elif line.startswith("\subsection*{Membership}"):
-                n.write("Member\n")
-                line = f.next()
-                while line.startswith("\Member"):
-                    text = line[line.find("{")+1:line.find("}")]
-                    format_member_json(text, n)
-                    if f.next():
-                        line = f.next() #it reaches the end of the file, so else stop iterations
-                n.write("Symposium, Homepage, id, display_name\n")
-                
-                #degrees???? not in .tex file (oh, that i generated, joe i think is doing this)
-                
-            elif line.startswith("\subsection*{Education}"):
-                n.write("\t\"Education\": [\n")
-                line = f.next()
-                while line.startswith("\Education"):
-                    #easier way to do this: read until first } bracket, then read until next one, etc.
-                    print "something"
-                    #difference btwn Degree and Education??
-                    #these categories are different in .tex and .json..?
-                    line = f.next()
-                n.write("\t],\n")
-                
-                n.write("Memoir, Honor, complete_name, Selected_Works, Oral_History, In_Memoriam, public_record.txt, Art_Exhibition\n")
-                
-            elif line.startswith("\subsection*{Career}"):
-                n.write("\t\"Postition\": [\n")
-                line = f.next()
-                while line.startswith("\Position"):
-                    #easier way to do this: read until first } bracket, then read until next one, etc.
-                    year = line[line.find("{")+1:line.find("}")]
-                    list = line.split("}",1)
-                    text = str(list[1]).strip()
-                    #text = position (optional), organization
-                    format_career_json(year, text, n)
-                    line = f.next()
-                n.write("\t],\n")
-                
-                n.write("record_txt\n")
-                
-            elif line.startswith("\subsection*{Honors}"):
-                #write "Sevice": [ header to file
-                n.write("\t\"Honor\": [")
-                line = f.next() #necessary??
-                while line.startswith("\Honor"):
-                    list = line.split("}")
-                    if line.startswith("\Honorary"):
-                        honor_type = 0
-                        text = str(list[1]).strip() + " (Honorary)\t" + str(list[2]).strip()
-                    else:
-                        honor_type = 1
-                        text = str(list[1]).strip()
-                    year = line[line.find("{")+1:line.find("}")]
-                    format_honors_json(year, text, n)
-                    line = f.next()
-                n.write("\t],")
-                
-                n.write("Deceased, Festschrift, Image, alt-id, Death_Notice\n")
-                n.write("EDUCATION!\n")
-                n.write("Endowment, Archive, Biography")
-    f.close()
-    n.close()
-    print newfile + " written"
-    return n
-
-def format_career_json(year, text, n):
-    #can combine some/all of these lines??
-    n.write("\t\t{\n")
-    n.write("\t\t\t\"category\": :\"position\",\n")
-    n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
-    n.write("\t\t\t\"year\":" + " \"" + year + "\"" + ",\n\t\t},\n")
-    #don't need a comma on the last one.. fix that
-    #include link_ls??
-
-def format_honors_json(year,text, n):
-    n.write("\t\t{\n")
-    n.write("\t\t\t\"category\": :\"honor\",\n")
-    n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
-    n.write("\t\t\t\"year\":" + " \"" + year + "\"" + ",\n\t\t},\n")
-    
-def format_service_json(year, text, n):
-    n.write("\t\t{\n")
-    n.write("\t\t\t\"category\": :\"service\",\n")
-    n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
-    n.write("\t\t\t\"year\":" + " \"" + year + "\"" + ",\n\t\t},\n")
-    
-def format_member_json(text, n):
-    n.write("\t\t{\n")
-    n.write("\t\t\t\"category\": :\"member\",\n")
-    n.write("\t\t\t\"text\":" + " \"" + text + "\"" + ",\n")
-
-def make_ref_for_record(r): 
-    title = r.get('title','').strip()
-    if title == 'Untitled': title = ''
-    author = r.get('author','').strip()
-    if author == 'Anonymous': author = ''
-    howpub  = r.get('howpublished','')
-    year = r.get('year','')
-    if year == 'year?': year = 'Undated'
-    ref = ''
-    if title:  
-        if not title[-1] in '?.!': title += '.'
-        ref += '<t>' + title + '</t> '
-    if author: ref += '<au>' + author + '</au>. '
-    ref += howpub
-    #
-    # Need to deal with enhancements for books somehow
-    # but commenting this out for now until book processing
-    # is complete.
-    #
-    """
-    book_link_ls = []
-    books = global_vars['books']
-    for bkey in books.keys():
-        if ref.find(bkey) >= 0:
-            ref = ref.replace(bkey,books[bkey]['ref'])
-            book_link_ls = books[bkey].get('link_ls',[])
-    """
-
-    return ref
-    
+#this function reads in a single .tex file and outputs a dictionary of person-specific elements (honors, education, etc.)
+#the dictionary is then processed in ims_legacy.py byt the make_all() function to create a html page
 def read_latex(name):
+    #data{} includes 
     data = {} #four elements (records, links_ls, books, ??) w/key 'records'
     records = [] 
     person = {} #should have ~ 30 total categories for each person
@@ -192,6 +32,8 @@ def read_latex(name):
     degree_list = []
     
     filename = name + ".tex"
+    
+    #reg exps to capture all lines containing cv data dependant on the number of bracketed data elements
     p1 = re.compile(r'{([^}]*)}')
     p2 = re.compile(r'{([^}]*)}{([^}]*)}')
     p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
@@ -214,15 +56,15 @@ def read_latex(name):
     
     #end of bibdata part
     
+    #run reg exp to capture the listed lines
     R = re.compile(r'\\(DOB|DOD|Profile|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography){')
     with open(filename, "r") as f:
         # loop over lines
         for line in f:
-            #if line.startswith("\subsection*{Professional Service}"):
             match = re.search(R,line)
             if match:
                 g = match.group(1)
-                #print g
+                #Service section
                 if g =="Service":
                     #print line
                     d = {}
@@ -241,6 +83,8 @@ def read_latex(name):
                     service_list.append(d)
                 person['Service'] = service_list
                 
+                '''
+                #per request we aren't including a membership section
                 if g == "Member":
                     d = {}
                     latex_accents.replace_latex_accents(line)
@@ -254,6 +98,7 @@ def read_latex(name):
                         d['text'] = text
                     membership_list.append(d)
                 person['Member'] = membership_list
+                '''
                 
                 if g == "HonoraryDegree":
                     d = {}
