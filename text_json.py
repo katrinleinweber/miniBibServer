@@ -31,7 +31,7 @@ def read_latex(name):
     educ_list = []
     degree_list = []
     
-    filename = name + ".tex"
+    filename = name 
     
     #reg exps to capture all lines containing cv data dependant on the number of bracketed data elements
     p1 = re.compile(r'{([^}]*)}')
@@ -40,7 +40,7 @@ def read_latex(name):
     p4 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}{([^}]*)}')
     
     #run reg exp to capture the listed lines
-    R = re.compile(r'\\(DOB|DOD|Profile|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography){')
+    R = re.compile(r'\\(Name|DOB|DOD|Profile|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography){')
     with open(filename, "r") as f:
         # bibdata part [optional]
         filestring = f.read()
@@ -54,11 +54,11 @@ def read_latex(name):
                 bib[u'howpublished'] = display_function.howpublished_tagged(allbib[1])
                 bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
                 bib[u'ref'] = make_ref_for_record(bib)
-                print bib[u'ref']
+                # print bib[u'ref']
         # note that the individual elements of allbib still need to be added in the
         # correct section for Memoir, Biography etc. - they can be cross-referenced
         # from the later section, which requires changing
-        #end of bibdata part
+        # end of bibdata part
         # loop over lines
 
         for line in filestring.split('\n'):
@@ -84,8 +84,8 @@ def read_latex(name):
                     service_list.append(d)
                 person['Service'] = service_list
                 
+                # per request we aren't populating the membership section
                 '''
-                #per request we aren't including a membership section
                 if g == "Member":
                     d = {}
                     latex_accents.replace_latex_accents(line)
@@ -192,10 +192,14 @@ def read_latex(name):
                 
                 if g == "DOD":
                     person['DOD'] = line[line.find("{")+1:line.find("}")]
+
+                if g == "Name":
+                    person['complete_name'] = line[line.find("{")+1:line.find("}")]
                 
             # update ims_legacy_latex to get these from colon-formatted data!
-            
-        person['complete_name'] = "Blackwell, David H."  #DEPENDS ON FILE TO BE READ!!
+            if not ('complete_name' in person):
+                person['complete_name'] = "Added, Name is to be"
+
         person['Obituary'] = []
         person['public_record_txt'] = "" #this comes from bibtex
             
