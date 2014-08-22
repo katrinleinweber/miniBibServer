@@ -1,9 +1,9 @@
 import os
-import json 
+import json
 import glob
 import time
 import datetime
-time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8')   
+time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8')
 import random
 import latex_accents
 import re
@@ -14,15 +14,15 @@ import display_function
 figure out the order for everything: obituary,service, (DOB, DVD, Collected_Works, DOD), Member,
 (symposium, homepage, id, display_name), Degree, (Memoir), honor?, (complete_name, selected_works, oral_history),
 in_memoriam, public_record_txt, link_ls), Position, (record_txt),  Honor?, (Deceased, Fetschifts??,
-Image, alt_id, death_notice), education, (Endowment, archive, biography)) 
+Image, alt_id, death_notice), education, (Endowment, archive, biography))
 '''
 
 #this function reads in a single .tex file and outputs a dictionary of person-specific elements (honors, education, etc.)
 #the dictionary is then processed in ims_legacy.py byt the make_all() function to create a html page
 def read_latex(name):
-    #data{} includes 
+    #data{} includes
     data = {} #four elements (records, links_ls, books, ??) w/key 'records'
-    records = [] 
+    records = []
     person = {} #should have ~ 30 total categories for each person
     service_list = []
     membership_list = []
@@ -30,44 +30,60 @@ def read_latex(name):
     career_list = []
     educ_list = []
     degree_list = []
-    
-    filename = name + ".tex"
-    
+
+    biography_list = []
+    archive_list = []
+    inmemoriam_list = []
+    memoir_list = []
+    obituary_list = []
+    oralhistory_list = []
+    artexhibition_list = []
+    autobiography_list = []
+    dvd_list = []
+    deathnotice_list = []
+    collectedworks_list = []
+    selectedworks_list = []
+    symposium_list = []
+    endowment_list = []
+    festschrift_list = []
+
+    filename = name
+
     #reg exps to capture all lines containing cv data dependant on the number of bracketed data elements
     p1 = re.compile(r'{([^}]*)}')
     p2 = re.compile(r'{([^}]*)}{([^}]*)}')
     p3 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}')
     p4 = re.compile(r'{([^}]*)}{([^}]*)}{([^}]*)}{([^}]*)}')
-    
+
     #run reg exp to capture the listed lines
-    R = re.compile(r'\\(DOB|DOD|Profile|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography){')
+    R = re.compile(r'\\(Name|DOB|DOD|Profile|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography|Archive|InMemoriam|Memoir|Obituary|OralHistory|ArtExhibition|Autobiography|DVD|DeathNotice|CollectedWorks|SelectedWorks|Symposium|Endowment|Festschrift){')
+
     with open(filename, "r") as f:
         # bibdata part [optional]
         filestring = f.read()
         if (re.search(r"\\begin{filecontents}{\\jobname.bib}", filestring) and re.search(r"\\end{filecontents}", filestring)):
             bibpart = re.split(r"\\end{filecontents}",re.split(r"\\begin{filecontents}{\\jobname.bib}", filestring)[1])[0]
-            #start = re.split(r"\\begin{filecontents}{\\jobname.bib}", filestring)[1]
             allbib=bibtex.read_bibstring(bibpart)
-            # Refactor the individual bibliographic elements
+            # Refactor some of the individual bibliographic elements where needed
             for bib in allbib:
                 bib[u'id'] = bib.pop('citekey')
                 bib[u'howpublished'] = display_function.howpublished_tagged(allbib[1])
                 bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
                 bib[u'ref'] = make_ref_for_record(bib)
-                print bib[u'ref']
+                # print bib[u'ref']
         # note that the individual elements of allbib still need to be added in the
         # correct section for Memoir, Biography etc. - they can be cross-referenced
         # from the later section, which requires changing
-        #end of bibdata part
+        # end of bibdata part
         # loop over lines
 
         for line in filestring.split('\n'):
             match = re.search(R,line)
             if match:
+                # print line
                 g = match.group(1)
                 #Service section
                 if g =="Service":
-                    #print line
                     d = {}
                     latex_accents.replace_latex_accents(line)
                     year = line[line.find("{")+1:line.find("}")]
@@ -82,10 +98,9 @@ def read_latex(name):
                     if match:
                         d['text'] = match.group(1) + ", " + match.group(2)
                     service_list.append(d)
-                person['Service'] = service_list
-                
+
+                # per request we aren't populating the membership section
                 '''
-                #per request we aren't including a membership section
                 if g == "Member":
                     d = {}
                     latex_accents.replace_latex_accents(line)
@@ -99,8 +114,7 @@ def read_latex(name):
                         d['text'] = text
                     membership_list.append(d)
                 '''
-                person['Member'] = membership_list
-                
+
                 if g == "HonoraryDegree":
                     d = {}
                     latex_accents.replace_latex_accents(line)
@@ -114,8 +128,7 @@ def read_latex(name):
                         d['year'] = year
                         d['text'] = match.group(1) + ' (Honorary)\t' + match.group(2)
                     honors_list.append(d)
-                person['Honor'] = honors_list
-                        
+
                 if g == "Honor":
                     d = {}
                     latex_accents.replace_latex_accents(line)
@@ -130,8 +143,7 @@ def read_latex(name):
                         d['year'] = year
                         d['text'] = match.group(1)
                     honors_list.append(d)
-                person['Honor'] = honors_list
-                
+
                 if g == "Position":
                     d = {}
                     latex_accents.replace_latex_accents(line)
@@ -144,8 +156,7 @@ def read_latex(name):
                     if match:
                         d['text'] = match.group(1) + ', ' + match.group(2)
                     career_list.append(d)
-                person['Position'] = career_list
-                
+
                 if g == "Education":
                     d = {}
                     latex_accents.replace_latex_accents(line)
@@ -158,8 +169,7 @@ def read_latex(name):
                     if match:
                         d['text'] = match.group(1)
                     educ_list.append(d)
-                person['Education'] = educ_list
-                
+
                 #need genealogy links?
                 if g == "Degree":
                     d = {}
@@ -182,27 +192,83 @@ def read_latex(name):
                         #has to be a LIST of links. work on this
                         #d['link_ls'].append(match.group(4))
                     educ_list.append(d)
-                person['Degree'] = degree_list
-                
+
+                if g == "Biography":
+                    biography_list.append(populate_bib_d(line,allbib))
+                if g == "Archive":
+                    archive_list.append(populate_bib_d(line,allbib))
+                if g == "InMemoriam":
+                    inmemoriam_list.append(populate_bib_d(line,allbib))
+                if g == "Memoir":
+                    memoir_list.append(populate_bib_d(line,allbib))
+                if g == "Obituary":
+                    obituary_list.append(populate_bib_d(line,allbib))
+                if g == "OralHistory":
+                    oralhistory_list.append(populate_bib_d(line,allbib))
+                if g == "ArtExhibition":
+                    artexhibition_list.append(populate_bib_d(line,allbib))
+                if g == "Autobiography":
+                    autobiography_list.append(populate_bib_d(line,allbib))
+                if g == "DVD":
+                    dvd_list.append(populate_bib_d(line,allbib))
+                if g == "DeathNotice":
+                    deathnotice_list.append(populate_bib_d(line,allbib))
+                if g == "CollectedWorks":
+                    collectedworks_list.append(populate_bib_d(line,allbib))
+                if g == "SelectedWorks":
+                    selectedworks_list.append(populate_bib_d(line,allbib))
+                if g == "Symposium":
+                    symposium_list.append(populate_bib_d(line,allbib))
+                if g == "Endowment":
+                    endowment_list.append(populate_bib_d(line,allbib))
+                if g == "Festschrift":
+                    festschrift_list.append(populate_bib_d(line,allbib))
+
                 if g == "DOB":
                     #this could probably be done w/a regexp? ... :?
                     #R = re.compile(r'.\{$\{')
                     #   ???? tomorrow I shall learn
                     person['DOB'] = line[line.find("{")+1:line.find("}")]
-                
+
                 if g == "DOD":
                     person['DOD'] = line[line.find("{")+1:line.find("}")]
-                
-            # update ims_legacy_latex to get these from colon-formatted data!
-            
-        person['complete_name'] = "Blackwell, David H."  #DEPENDS ON FILE TO BE READ!!
-        person['Obituary'] = []
-        person['public_record_txt'] = "" #this comes from bibtex
-            
-            
-            #Bibtex section (check over w/ joe)
-            
-            
+
+                if g == "Name":
+                    person['complete_name'] = line[line.find("{")+1:line.find("}")]
+
+            # End of loop, add things to the person data structure as needed
+
+        person['Service'] = service_list
+        person['Member'] = membership_list
+        person['Honor'] = honors_list
+        person['Position'] = career_list
+        person['Education'] = educ_list
+        person['Degree'] = degree_list
+
+        person['Biography']        = biography_list
+        person['Archive']          = archive_list
+        person['Memoir']           = memoir_list
+        person['Art_Exhibition']   = artexhibition_list
+        person['Collected_Works']  = collectedworks_list
+        person['DVD']              = dvd_list
+        person['Endowment']        = endowment_list
+        person['Festschrift']      = festschrift_list
+        person['Autobiography']    = autobiography_list
+        person['Oral_History']     = oralhistory_list
+        person['Selected_Works']   = selectedworks_list
+        person['Symposium']        = symposium_list
+        person['Death_Notice']     = deathnotice_list
+        person['In_Memoriam']      = inmemoriam_list
+        person['Obituary']         = obituary_list
+
+        # NB. we need to update ims_legacy_latex to get these from colon-formatted
+        # data!
+        if not ('complete_name' in person):
+            person['complete_name'] = "Added, Name is to be"
+
+        person['public_record_txt'] = "" #this comes from bibtex (?)
+        # print person
+
     f.close()
     records.append(person) #will eventually add people
     data['records'] = records
@@ -212,7 +278,7 @@ def read_latex(name):
     #print data
     return data
 
-def make_ref_for_record(r): 
+def make_ref_for_record(r):
     title = r.get('title','').strip()
     if title == 'Untitled': title = ''
     author = r.get('author','').strip()
@@ -221,7 +287,7 @@ def make_ref_for_record(r):
     year = r.get('year','')
     if year == 'year?': year = 'Undated'
     ref = ''
-    if title:  
+    if title:
         if not title[-1] in '?.!': title += '.'
         ref += '<t>' + title + '</t> '
     if author: ref += '<au>' + author + '</au>. '
@@ -242,3 +308,17 @@ def make_ref_for_record(r):
 
     return ref
 
+def populate_bib_d (line,allbib):
+    d = {}
+    id = line[line.find("{")+1:line.find("}")]
+    for bib in allbib:
+        if (bib['id'] == id):
+            d['author'] = latex_accents.replace_latex_accents(bib['author'])
+            d['title'] = re.sub("{|}","",latex_accents.replace_latex_accents(bib['title']))
+            d['bibtype'] = bib['bibtype']
+            d['topline'] = bib['bibtype'] + " " + bib['id']
+            d['year'] = bib['year']
+            d['howpublished'] = bib['howpublished']
+            d['ref'] = bib['ref']
+            d['id'] = bib['id']
+            return d

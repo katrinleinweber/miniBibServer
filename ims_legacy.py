@@ -735,10 +735,13 @@ def make_bio_rows(b):
     ref += howpub
     book_link_ls = []
     books = global_vars['books']
+    # Books: now a list not a dictionary
+    '''
     for bkey in books.keys():
         if ref.find(bkey) >= 0:
             ref = ref.replace(bkey,books[bkey]['ref'])
             book_link_ls = books[bkey].get('link_ls',[])
+    '''
     for t in tag_map.keys():
         ref = ref.replace(t,tag_map[t])
     ref += ' '
@@ -1359,8 +1362,8 @@ def add_html(d):
         content += honors_html(d)
         content += service_html(d)
         content += member_html(d)
-        #content += bio_html(d)
-        #content += biblio_html(d)
+        content += bio_html(d)
+        # content += biblio_html(d)
         #content += source_data_html(d)
         d['body_html'] = content
         
@@ -1522,13 +1525,6 @@ def make_one(filename):
         name = d['complete_name']
         content += d['html']
         content += '<hr><br><br>'
-        # Don't print a file, we don't want to deal with permission issues
-        #
-        # filename = name + '.html'
-        # f = open(filename, 'w')
-        # f.write(content.encode('utf-8'))
-        # f.close()
-        # print "made new file: " + filename
     html = content
     print html
     return html
