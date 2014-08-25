@@ -5,6 +5,13 @@ import sys
 import base64
 from pprint import pprint
 
+'''
+Step 1: download copies of all files in our list
+
+Step 2: compared dowloaded files to local copies
+
+Step 3: IF different, submit pull request
+
 github = Github('https://api.github.com')
 owner = 'maddyloo'
 repo = 'miniBibServer'

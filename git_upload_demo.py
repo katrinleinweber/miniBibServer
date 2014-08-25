@@ -1,42 +1,12 @@
 from hammock import Hammock as Github
 import json
 import urllib
-import datetime
 import sys
 import base64
 from pprint import pprint
-from bs4 import BeautifulSoup
-
-#soup = BeautifulSoup(urllib.urlopen('www.google.com/'))
-html = urllib.urlopen('https://news.google.com/?ar=1403895110')
-#h = html.decode("utf-8")
-soup = BeautifulSoup(html)
-
-#get the string in all <span> tags w/ class "titletext"
-spans = soup.find_all('span', attrs={'class':'titletext'})
-
-#get time 
-#time = datetime.datetime.now().strftime("%m/%d/%y %H:%M")
-time = datetime.datetime.now().strftime("%H:%M")
-filename = time + '.txt'
-print filename
-
-#write all titletexts to a new file w/title of time
-file = open(filename, 'w')
-
-for span in spans:
-	if span.string:
-		#deal with unicode problem (not very efficiently)
-		if __name__ == "__main__":
-			reload(sys)
-			sys.setdefaultencoding("utf-8")
-		#write each headline to new line	
-		file.write(span.string + "\n")
-
-file.close()
 
 #upload file to github
-
+'''
 with open( filename, "rb") as text_file:
 	encoded_string = base64.b64encode(text_file.read())
 
@@ -56,5 +26,25 @@ resp = github.repos(user, repo).contents(filename).PUT(
 	data = json.dumps(data))
 
 pprint (vars(resp))
-
+'''
 #edit to test git :/
+
+#data = {'owner':'maddyloo',
+#	#might need full path: 
+#	'path':'/master/test_LaTeXML/corneli-citations.bib',
+#	'repo':'miniBibServer'}
+
+github = Github('https://api.github.com')
+owner = 'maddyloo'
+repo = 'miniBibServer'
+path = 'test_LaTeXML/corneli-citations.bib'
+#GET /repos/:owner/:repo/contents/:path
+resp = github.repos(owner, repo).contents(path).GET(
+	#auth = (user, password),
+	headers = {'Content-type': 'textfile'})
+	#data = json.dumps(data))
+
+#j = json.loads(resp.text)
+j = resp.json()
+print(base64.b64decode(j['content']))
+#pprint(resp['_content'])
