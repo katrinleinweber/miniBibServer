@@ -11,7 +11,7 @@
 
 % A quick hack to make years show up at the start of bibliographic citations,
 % (And not in the usual place.)
-\renewbibmacro{author}{\emph{(\printfield{year})} \printnames{author}}
+\renewbibmacro{author}{\textbf{(\printfield{year})} \printnames{author}}
 \renewbibmacro{date}{}
 
 % We also need to get rid of parenthesis around the (elided) year
@@ -111,12 +111,12 @@
 \newcommand{\Homepage}[2]{\textbf{Homepage} \href{#1}{#2}}
 
 % YEAR, NAME-OF-INSTITUTION
-\newcommand{\Education}[2]{(\emph{#1}) #2\newline}
+\newcommand{\Education}[2]{(\textbf{#1}) #2\newline}
 
 \newcommand{\Member}[1]{\paragraph{Member} #1}
 % YEAR, ROLE, INSTITUTION
-\newcommand{\Position}[3]{(\emph{#1}) #2, #3\newline}
-\newcommand{\Service}[3]{(\emph{#1}) #2, #3\newline}
+\newcommand{\Position}[3]{(\textbf{#1}) #2, #3\newline}
+\newcommand{\Service}[3]{(\textbf{#1}) #2, #3\newline}
 
 \newcommand{\EN}[1]{\ednote{#1}}
 
@@ -128,7 +128,7 @@
 % NOTE: it might be more convenient to have separate commands per degree, but
 % let's follow the legacy format for now
 \DeclareDocumentCommand\Degree{ m m m g g }{%
-(\emph{#1}) \emph{#2} #3\newline%
+(\textbf{#1}) \emph{#2} #3\newline%
 \IfNoValueF {#4} {Thesis: \emph{#4}%
                   \IfNoValueT {#5} {\newline}%
                   \IfNoValueF {#5} { (\href{#5}{Math. Geneology})\newline }%
@@ -147,12 +147,12 @@
 % NOTE: it might be more convenient to separate out things like "1964 IMS Fellow"
 % from the more complex "HonoraryDegree", but we can do that later
 \DeclareDocumentCommand\Honor{ m m g}{%
-(\emph{#1}) #2\newline%
+(\textbf{#1}) #2\newline%
 \IfNoValueF {#3} {\emph{#3}\newline }%
 }
 
 \DeclareDocumentCommand\HonoraryDegree{ m m m g}{%
-(\emph{#1}) \emph{#2} (honorary) #3\newline%
+(\textbf{#1}) \emph{#2} (honorary) #3\newline%
 \IfNoValueF {#4} {\emph{#4}\newline}%
 }
 
