@@ -1175,14 +1175,14 @@ def life_latex(person):
     DOB = person.get('DOB',[])
     DOD = person.get('DOD',[])
     name = person.get('complete_name',[])
-    if not DOB: return ''
-    if not DOD: return ''
-    heading = "\n\n\\section*{" + name + "}\n"
+    heading = "\n\n\\Name{" + name + "}\n"
     rows = ''
     for d in DOB:
         rows += '\\DOB{' + sanitize_latex(d) + '}\n'
+        break
     for d in DOD:
         rows += '\\DOD{' + sanitize_latex(d) + '}\n'
+        break
     return heading + rows
 
 # Still to fix
@@ -1232,7 +1232,9 @@ def bio_latex(person):
             rows += 'year={' + b['year'] + '},\n'
             rows += 'author={' + sanitize_latex(b['author']) + '},\n'
             rows += 'title={' + sanitize_bibtex(sanitize_latex(b['title'])) + '},\n'
-            # we've need to read the howpublished field and refactor the entries
+            print "title1: " + sanitize_latex(b['title'])
+            print "title2: " + sanitize_bibtex(sanitize_latex(b['title']))
+            # read the howpublished field and refactor the entries
             rows += read_howpublished(b['howpublished'])
             rows += '}'
             cites += "\\" + c.replace('_','') + '{' + b['id'] + '}\n'
@@ -1453,7 +1455,7 @@ def first_first(name):
 def add_latex(d):
         #print d
         content = ''
-        content += "\n\\section*{" + sanitize_latex(first_first(d['complete_name'])) + "}"
+        
         content += life_latex(d)
         content += educ_latex(d)
         content += career_latex(d)
@@ -1506,6 +1508,7 @@ def make_all():
         f.close()
         print "made new latex file: " + filename.encode('utf-8')
 
+
 # This will fix the typical characters that cause errors in LaTeX articles
 # Should double check that this is always what's wanted, e.g. in the case of underscores
 # which could be used in mathematical expressions to denote subscripts
@@ -1525,17 +1528,17 @@ def sanitize_latex(txt):
         # print char_array[i].encode("utf-8")
     return "".join(char_array)
 
-# Replace every Capital Letter with a Bracketed Version!
-# {R}eplace every {C}apital {L}etter with a {B}racketed {V}ersion!
+# ``Replace every Capital Letter vis \`a vis a Bracketed Version!''
+# {`}{`}{R}eplace every {C}apital {L}etter vis \`a vis a {B}racketed {V}ersion!{'}{'}
 def sanitize_bibtex(txt):
     char_array = list(txt)
     i = 0
     while i < len(char_array) :
-        if re.match("[A-Z`']",char_array[i]) and (i == 0 or char_array[i-1] != "{") and (i == len(char_array) -1 or char_array[i+1] != "}"):
-            char_array[i] = "{" + char_array[i] + "}"
+        if re.match("[A-Z`']",char_array[i]):
+            if (not (i!=0 and char_array[i-1] == "\\")):
+                if ((i == 0 or char_array[i-1] != "{") and (i == len(char_array) -1 or char_array[i+1] != "}")):
+                    char_array[i] = "{" + char_array[i] + "}"
         i=i+1
-#    if (char_array[len(char_array)-1] == "`" or char_array[len(char_array)-1] == "`")
-#        char_array[len(char_array)-1] = "{" + char_array[len(char_array)-1] + "}"
     return "".join(char_array)
 
 def enhance_bio(d):

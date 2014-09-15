@@ -10,15 +10,24 @@ import re
 import bibtex
 import display_function
 
+"""
+  the read_latex function reads in a single .tex file and outputs
+  a dictionary of person-specific elements (honors, education, etc.)
+
+  the dictionary is then processed in ims_legacy.py by the make_all()
+  function to create a html page
+"""
+
 '''
-figure out the order for everything: obituary,service, (DOB, DVD, Collected_Works, DOD), Member,
-(symposium, homepage, id, display_name), Degree, (Memoir), honor?, (complete_name, selected_works, oral_history),
-in_memoriam, public_record_txt, link_ls), Position, (record_txt),  Honor?, (Deceased, Fetschifts??,
-Image, alt_id, death_notice), education, (Endowment, archive, biography))
+figure out the order for everything:
+  obituary,service, (DOB, DVD, Collected_Works, DOD), Member,
+  (symposium, homepage, id, display_name), Degree, (Memoir),
+  honor?, (complete_name, selected_works, oral_history),
+  in_memoriam, public_record_txt, link_ls, Position,
+  (record_txt),  Honor?, (Deceased, Fetschifts??,
+  Image, alt_id, death_notice), education, (Endowment, archive, biography)
 '''
 
-#this function reads in a single .tex file and outputs a dictionary of person-specific elements (honors, education, etc.)
-#the dictionary is then processed in ims_legacy.py byt the make_all() function to create a html page
 def read_latex(name):
     #data{} includes
     data = {} #four elements (records, links_ls, books, ??) w/key 'records'
@@ -226,8 +235,6 @@ def read_latex(name):
 
                 if g == "DOB":
                     #this could probably be done w/a regexp? ... :?
-                    #R = re.compile(r'.\{$\{')
-                    #   ???? tomorrow I shall learn
                     person['DOB'] = line[line.find("{")+1:line.find("}")]
 
                 if g == "DOD":
