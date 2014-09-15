@@ -67,7 +67,7 @@ def read_latex(name):
             # Refactor some of the individual bibliographic elements where needed
             for bib in allbib:
                 bib[u'id'] = bib.pop('citekey')
-                bib[u'howpublished'] = display_function.howpublished_tagged(allbib[1])
+                bib[u'howpublished'] = display_function.howpublished_tagged(allbib[0])
                 bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
                 bib[u'ref'] = make_ref_for_record(bib)
                 # print bib[u'ref']
@@ -85,7 +85,7 @@ def read_latex(name):
                 #Service section
                 if g =="Service":
                     d = {}
-                    latex_accents.replace_latex_accents(line)
+                    line = latex_accents.replace_latex_accents(line)
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
@@ -103,7 +103,7 @@ def read_latex(name):
                 '''
                 if g == "Member":
                     d = {}
-                    latex_accents.replace_latex_accents(line)
+                    line = latex_accents.replace_latex_accents(line)
                     list = line.split("}",1)
                     text = line[line.find("{")+1:line.find("}")]
                     #match1 = p1.match(str(list))
@@ -131,7 +131,7 @@ def read_latex(name):
 
                 if g == "Honor":
                     d = {}
-                    latex_accents.replace_latex_accents(line)
+                    line = latex_accents.replace_latex_accents(line)
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
@@ -146,7 +146,7 @@ def read_latex(name):
 
                 if g == "Position":
                     d = {}
-                    latex_accents.replace_latex_accents(line)
+                    line = latex_accents.replace_latex_accents(line)
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
@@ -159,7 +159,7 @@ def read_latex(name):
 
                 if g == "Education":
                     d = {}
-                    latex_accents.replace_latex_accents(line)
+                    line = latex_accents.replace_latex_accents(line)
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()
@@ -173,7 +173,7 @@ def read_latex(name):
                 #need genealogy links?
                 if g == "Degree":
                     d = {}
-                    latex_accents.replace_latex_accents(line)
+                    line = latex_accents.replace_latex_accents(line)
                     year = line[line.find("{")+1:line.find("}")]
                     list = line.split("}",1)
                     text = str(list[1]).strip()

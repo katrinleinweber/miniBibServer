@@ -1526,7 +1526,7 @@ def make_one(filename):
         content += d['html']
         content += '<hr><br><br>'
     html = content
-    print html
+    # print html
     return html
 
 if __name__ == '__main__':
