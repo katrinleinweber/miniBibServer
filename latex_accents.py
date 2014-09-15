@@ -309,6 +309,7 @@ u"Š":    "\\v{S}",
 u"Ì":    "\\`{I}",
 u"ï":      "\\\"{\\i}",
 u"Ï":      "\\\"{I}",
+u"ń":    "\\'{n}",
 u"ñ":    "\\~{n}",
 u"Ñ":    "\\~{N}",
 u"ó":    "\\'{o}",
@@ -375,7 +376,7 @@ u"ì":    "\\`{\\i}"
 # print "entities.latex_lookup \\'{a} should give " +  "aacute: [" + entities.latex_lookup["\\'{a}"] + "]."
 # [\u00CC\u00EF\u00CF\u00F1\u00D1\u00F3\u00D3\u00F4\u00D4\u00F2\u00D2\u00F8\u00D8\u00F5\u00D5\u00F6\u00D6\u00DF\u00FE\u00DE\u00FA\u00DA\u00FB\u00DB\u00F9\u00D9\u00FC\u00DC\u00FD\u00DD\u00FF\u00E1\u00C1\u00E2\u00C2\u00E0\u00C0\u00E5\u00C5\u00E3\u00C3\u00E4\u00C4\u00E6\u00C6\u00E7\u00C7\u00F0\u00D0\u00E9\u00C9\u00EA\u00CA\u00E8\u00C8\u00EB\u00CB\u00ED\u00CD\u00EE\u00CE\u00EC\u0161\u0160\u0153\u0152\u0178]
 
-match_unicode_accents = re.compile(u'[–ŸœŒšŠÌïÏñÑóÓôÔòÒøØõÕöÖßþÞúÚûÛùÙüÜýÝÿáÁâÂàÀåÅãÃäÄæÆçÇðÐéÉêÊèÈëËíÍîÎì]',re.UNICODE)
+match_unicode_accents = re.compile(u'[–ŸœŒšŠÌïÏńñÑóÓôÔòÒøØõÕöÖßþÞúÚûÛùÙüÜýÝÿáÁâÂàÀåÅãÃäÄæÆçÇðÐéÉêÊèÈëËíÍîÎì]',re.UNICODE)
 
 """
 This direction is comparatively straightforward.  Note that this gets rid of both Unicode
