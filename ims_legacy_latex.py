@@ -1225,17 +1225,17 @@ def bio_latex(person):
         for b in bios:
             #print b
             if b['bibtype'] == "webcollection":
-                btype = collection
+                btype = "collection"
+            if b['bibtype'] == "inwebcollection":
+                btype = "incollection"
             else:
                 btype=b['bibtype']
             rows += '\n\n@' + btype + '{' + b['id'] + ',\n'
             rows += 'year={' + b['year'] + '},\n'
             rows += 'author={' + sanitize_latex(b['author']) + '},\n'
             rows += 'title={' + sanitize_bibtex(sanitize_latex(b['title'])) + '},\n'
-            print "title1: " + sanitize_latex(b['title'])
-            print "title2: " + sanitize_bibtex(sanitize_latex(b['title']))
             # read the howpublished field and refactor the entries
-            rows += read_howpublished(b['howpublished'])
+            rows += sanitize_latex(read_howpublished(b['howpublished']))
             rows += '}'
             cites += "\\" + c.replace('_','') + '{' + b['id'] + '}\n'
         citations += heading + cites
@@ -1244,7 +1244,6 @@ def bio_latex(person):
         localized = open("./bibfiles/" + name + '.bib', 'a')
         localized.write(rows.encode('utf-8'))
         localized.close()
-        print "added to bib file: " + name.encode('utf-8') + ".bib"
         # And just for ease of checking, append ALL the bibtex here
         unified=open("allbib.bib", "a")
         unified.write(rows.encode('utf-8'))
@@ -1524,6 +1523,10 @@ def sanitize_latex(txt):
             char_array[i] = u'`'
         elif char_array[i] == u"’":
             char_array[i] = u"'"
+        elif char_array[i] == u"“":
+            char_array[i] = u"``"
+        elif char_array[i] == u"”":
+            char_array[i] = u"''"
         i=i+1
         # print char_array[i].encode("utf-8")
     return "".join(char_array)

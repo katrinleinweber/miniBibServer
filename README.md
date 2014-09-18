@@ -12,9 +12,13 @@ It has several associated features.
 ### Workflow
 
 1. Convert original data to `.tex+bib` format using code in **ims_legacy_latex.py** (requires `ims_legacy.txt`, sold separately):
-```python -c "import ims_legacy_latex; ims_legacy_latex.make_all()"```
+```sh
+python -c "import ims_legacy_latex; ims_legacy_latex.make_all()"
+```
 1. This can be converted _en masse_ into `.html` format:
-```python -c "import ims_legacy_html; ims_legacy_html.make_all()"```
+```sh
+python -c "import ims_legacy_html; ims_legacy_html.make_all()"
+```
 1. This data is then uploaded to a separate (private) Github repository.
 1. The repository is subsequently kept up to date via the **distributed_update.py** script (details to follow).
 
