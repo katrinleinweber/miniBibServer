@@ -16,7 +16,10 @@ It has several associated features.
 2. This can be converted _en masse_ into `.html` format:
   - `python -c "import ims_legacy_html; ims_legacy_html.make_all()"`
 3. This data is then uploaded to a separate (private) Github repository.
-4. The repository is subsequently kept up to date via the **distributed_update.py** script (details to follow).
+4. The repository is subsequently kept up to date via the **distributed_update.py** script.  It runs under cron to achieve the following:
+  1. Poll and download copies of all files in our list
+  2: Compare downloaded files to local (checked out) copies
+  3: If different, submit pull request with the diff on behalf of the upstream editor
 
 ### See also
 
