@@ -18,8 +18,8 @@ It has several associated features.
 3. This data is then uploaded to a separate (private) Github repository.
 4. The repository is subsequently kept up to date via the **distributed_update.py** script.  It runs under cron to achieve the following:
   1. Poll and download copies of all files in our list
-  2: Compare downloaded files to local (checked out) copies
-  3: If different, submit pull request with the diff on behalf of the upstream editor
+  2. Compare downloaded files to local (checked out) copies
+  3. If different, submit pull request with the diff on behalf of the upstream editor
 
 ### See also
 
