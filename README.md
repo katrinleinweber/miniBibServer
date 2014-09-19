@@ -15,12 +15,12 @@ It has several associated features.
 ```sh
 python -c "import ims_legacy_latex; ims_legacy_latex.make_all()"
 ```
-1. This can be converted _en masse_ into `.html` format:
+2. This can be converted _en masse_ into `.html` format:
 ```sh
 python -c "import ims_legacy_html; ims_legacy_html.make_all()"
 ```
-1. This data is then uploaded to a separate (private) Github repository.
-1. The repository is subsequently kept up to date via the **distributed_update.py** script (details to follow).
+3. This data is then uploaded to a separate (private) Github repository.
+4. The repository is subsequently kept up to date via the **distributed_update.py** script (details to follow).
 
 ### See also
 
