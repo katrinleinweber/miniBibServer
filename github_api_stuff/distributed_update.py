@@ -5,6 +5,8 @@ import json
 import urllib
 import sys
 import base64
+import filecmp
+
 from pprint import pprint
 
 ## Some assumptions about the layout of things
@@ -14,7 +16,6 @@ from pprint import pprint
 
 # Let's assume that the program has its own branch of the Git
 # repository where it makes commits, e.g. an "updates" branch
-
 
 ## Step 1: download copies of all files in our list
 
@@ -39,30 +40,36 @@ def check_local (source):
     print "Found local source!"
 
 for item in sources:
-    name=item[0]
-    print "name: " + urllib.unquote(name)
+    person_name=item[0]
+    print "person name: " + person_name
     source=item[1]
     # Maybe the only thing to do in this case is produce some new HTML,
     # assuming we keep "staged" and "working" copies separate.  But as
     # a first step, let's assume there's nothing to do in this case, and
     # we just need to process the upstream files.
     if (source[:9] == "tex_files"):
-        filename = urllib.unquote(source.rsplit("/",1)[1])
-        print "filename:" + filename
+        upstream_filename = urllib.unquote(source.rsplit("/",1)[1])
+        print "filename:" + upstream_filename
         check_local(source)
     else:
-        filename = urllib.unquote(source.rsplit("/",1)[1])
+        upstream_filename = urllib.unquote(source.rsplit("/",1)[1])    
         content = urllib.urlopen(source).read()
-        print "filename:" + filename
+        local_filename = "/home/joe/jim/BibProject/tex_files/" + person_name + ".tex"
+        new_filename = person_name + ".tex"
+        with open(new_filename, "w") as new_file:
+            # the comparison won't work unless the file has been written and closed!
+            new_file.write(content)
+            new_file.close()
+        # val will be True if the files are the same, and False if they differ.
+        val = filecmp.cmp(person_name + ".tex", local_filename)
+        print "Val is: " + str(val)
+        print "local filename:" + local_filename
+        print "new filename:" + new_filename
         print "content:" + content[:36]
-        # Now that we have the content we need a good way to make the comparison
-
-# set(fileA.readlines()).difference(set(fileB.readlines()))
 
 sys.exit("Stop here for now")
 
-
-## Step 3: If different, submit pull request
+## Step 3: If different, make a commit and submit a pull request
 
 github = Github('https://api.github.com')
 owner = 'maddyloo'
