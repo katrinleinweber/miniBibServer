@@ -37,8 +37,11 @@ sources = [["Aitken, Alexander C.", "http://metameso.org/~joe/aitken.tex"],
 ## Step 2: compare downloaded files to local copies
 
 def check_local (source):
+    """We may eventually do something a bit more interesting."""
     print "Found local source!"
 
+## Continue the script - may want to add some error handling in case the URLs don't load
+## 
 for item in sources:
     person_name=item[0]
     print "person name: " + person_name
@@ -66,22 +69,44 @@ for item in sources:
         print "local filename:" + local_filename
         print "new filename:" + new_filename
         print "content:" + content[:36]
-
-sys.exit("Stop here for now")
+        if (not(val)):
+            commit_and_make_pull_request(new_filename)
 
 ## Step 3: If different, make a commit and submit a pull request
+def commit_and_make_pull_request(filename):
+    ## Basic definitions
+    github = Github('https://api.github.com')
+    owner = 'maddyloo'
+    repo = 'miniBibServer'
+    
+    ## A: Get the SHA of the most recent commit to this branch
+    resp = github.repos(owner, repo).git.refs.heads.GET('changes')
+    sha = json.loads(resp._content)['sha']
 
-github = Github('https://api.github.com')
-owner = 'maddyloo'
-repo = 'miniBibServer'
-path = 'test_LaTeXML/corneli-citations.bib'
-#GET /repos/:owner/:repo/contents/:path
-resp = github.repos(owner, repo).contents(path).GET(
-	#auth = (user, password),
-	headers = {'Content-type': 'textfile'})
-	#data = json.dumps(data))
+    with open( filename, "rb") as text_file:
+    	encoded_string = base64.b64encode(text_file.read())
+    
+    data = {'message':'Adding "'+filename+'".',
+          'committer':{'name':'Joe Corneli',
+                       'email':'holtzermann17@gmail.com'},
+          'content':encoded_string,
+          'branch':'master'}
+    
+    github = Github('https://api.github.com')
 
-#j = json.loads(resp.text)
-j = resp.json()
-print(base64.b64decode(j['content']))
-#pprint(resp['_content'])
+    path = 'test_LaTeXML/corneli-citations.bib'
+    user = 'holtzermann17'
+    password = '8befeade219b038b9189a153fdb282cefa04c5b1' # Github token
+
+    resp = github.repos(user, repo).contents(filename).PUT(
+	auth = (user, password),
+	headers = {'Content-type': 'textfile'},
+	data = json.dumps(data))
+    
+    #j = json.loads(resp.text)
+    j = resp.json()
+    print(base64.b64decode(j['content']))
+    #pprint(resp['_content'])
+
+
+sys.exit("Stop here for now")

@@ -15,6 +15,15 @@ password = '' #Github token goes here
 
 resp = github.repos(owner, repo).git.refs('heads/changes').GET(
     	auth = (user, password))
-#sha = json.loads(resp._content)['sha']
+sha_latest_commit = json.loads(resp._content)['object']['sha']
 
-pprint(json.loads(resp._content)['object']['sha'])
+print sha_latest_commit
+
+## We may also need this other sha?
+
+resp = github.repos(owner, repo).git.commits(sha_latest_commit).GET(
+    	auth = (user, password))
+sha_base_tree = json.loads(resp._content)['tree']['sha']
+
+print sha_base_tree
+
