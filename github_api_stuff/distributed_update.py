@@ -125,25 +125,34 @@ for item in ims_sources.urllist:
         print "filename:" + upstream_filename
         check_local(source)
     else:
-        upstream_filename = urllib.unquote(source.rsplit("/",1)[1])    
-        content = urllib.urlopen(source).read()
-        local_filename = "/home/joe/jim/BibProject/tex_files/" + person_name + ".tex"
-        new_filename = person_name + ".tex"
-        with open(new_filename, "w") as new_file:
-            # the comparison won't work unless the file has been written and closed!
-            new_file.write(content)
-            new_file.close()
-        # val will be True if the files are the same, and False if they differ.
-        val = filecmp.cmp(person_name + ".tex", local_filename)
-        print "Val is: " + str(val)
-        print "local filename:" + local_filename
-        print "new filename:" + new_filename
-        print "content:" + content[:36]
-        if (not(val)):
-            basename = re.sub('[ ,.]', '', person_name)
-            make_branch(basename)
-            make_commit(basename,new_filename,content)
-            make_pull_request(new_filename,basename)
+        upstream_filename = urllib.unquote(source.rsplit("/",1)[1])
 
+        try: 
+            content = urllib.urlopen(source).read()
+        except urllib2.HTTPError, e:
+            # we could do some more sophisticated logging here, and throughout
+            print('HTTPError = ' + str(e.code))
+        else:
+            local_filename = "/home/joe/jim/BibProject/tex_files/" + person_name + ".tex"
+            new_filename = person_name + ".tex"
+            with open(new_filename, "w") as new_file:
+                # the comparison won't work unless the file has been written and closed!
+                new_file.write(content)
+                new_file.close()
+            # val will be True if the files are the same, and False if they differ.
+            val = filecmp.cmp(person_name + ".tex", local_filename)
+            print "Val is: " + str(val)
+            print "local filename:" + local_filename
+            print "new filename:" + new_filename
+            print "content:" + content[:36]
+            if (not(val)):
+                basename = re.sub('[ ,.]', '', person_name)
+                make_branch(basename)
+                make_commit(basename,new_filename,content)
+                # we should probably update the HTML automatically as well, but maybe
+                # just what we do about it will depend on what IMS wants...
+                # I guess that part can wait until after deploying this version,
+                # it's not going to require a major change to the code
+                make_pull_request(new_filename,basename)
+    
 # distributed_update.py ends here
-
