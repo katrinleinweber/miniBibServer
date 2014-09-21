@@ -19,7 +19,13 @@ path = 'tex_files/'+encoded_filename
 
 data={'ref':"changes"}
 
-## Step ZERO: get the current file so we can extract its hash
+## Step ONE: get the current file so we can extract its hash
+## this isn't the "canonical" way to go about making a commit
+## described variously with five or seven steps:
+##    http://www.mdswanson.com/blog/2011/07/23/digging-around-the-github-api-take-2.html
+##    http://stackoverflow.com/a/14672793/821010
+## but this is a cheap and dirty method that will work without hassle.
+## and the "proper" way to go about it can be investigated separately.
 resp = github.repos(owner, repo).contents(path).GET(
     	auth = (user, password),
         headers = {'Content-type': 'application/json'},
@@ -27,7 +33,7 @@ resp = github.repos(owner, repo).contents(path).GET(
 
 sha = json.loads(resp._content)['sha']
 
-## Step ONE: add the new content
+## Step TWO: add the new content
 data={'message':'Programmatic update to "' + filename + '".',
       'committer':{'name':'Joe Corneli',
                    'email':'holtzermann17@gmail.com'},

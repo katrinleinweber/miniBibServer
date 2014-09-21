@@ -6,6 +6,7 @@ import urllib
 import sys
 import base64
 import filecmp
+import re
 
 from pprint import pprint
 
@@ -14,8 +15,78 @@ from pprint import pprint
 # Let's assume that a checked out version of the BibProject is available at, for example
 # /home/joe/jim/BibProject/
 
-# Let's assume that the program has its own branch of the Git
-# repository where it makes commits, e.g. an "updates" branch
+# We'll make a new branch for each commit, so that we can close things out cleanly.
+
+# Here's the basic information for using the Github API:
+
+github = Github('https://api.github.com')
+owner = 'maddyloo'
+repo = 'BibProject'
+user = 'holtzermann17'
+password = '8befeade219b038b9189a153fdb282cefa04c5b1' #Github token goes here
+
+## Relevant functions
+
+def make_branch(basename):
+    """Just make a new branch with this name."""
+    ## Step ZERO: get a reference
+    resp = github.repos(owner, repo).git.refs('heads/master').GET(
+        	auth = (user, password))
+    sha_latest_commit = json.loads(resp._content)['object']['sha']
+    
+    ## Step ONE: create the branch derived from that reference
+    data={"ref": "refs/heads/"+basename,
+          "sha": sha_latest_commit}
+    
+    resp = github.repos(owner, repo).git.refs.POST(
+        	auth = (user, password),
+            headers = {'Content-type': 'application/json'},
+            data=json.dumps(data))
+
+def make_commit(basename,filename,content):
+    """Update filename in the branch basename to hold given content."""
+
+    encoded_filename=urllib.quote(filename)
+    path = 'tex_files/'+encoded_filename
+
+    ## Step ONE: get the current file so we can extract its hash
+    ## this isn't the "canonical" way to go about making a commit
+    ## described variously with five or seven steps, see
+    ## make_commit.py for the "right way to do this" (work in progress).
+    data={'ref':basename}
+    resp = github.repos(owner, repo).contents(path).GET(
+        	auth = (user, password),
+            headers = {'Content-type': 'application/json'},
+            data=json.dumps(data))
+    
+    sha = json.loads(resp._content)['sha']
+    
+    ## Step TWO: add the new content
+    data={'message':'Programmatic update to "' + filename + '".',
+          'committer':{'name':'Joe Corneli',
+                       'email':'holtzermann17@gmail.com'},
+          'content':base64.b64encode(content),
+          'sha':sha,
+          'branch':basename}
+    
+    # Forming the correct URL (per the instructions from the Hammock docs!)
+    # In particular, we need to specify the :path as part of the url, whereas
+    # other arguments are passed along as a JSON body
+    resp = github.repos(owner, repo).contents(path).PUT(
+            auth=(user, password),
+            headers = {'Content-type': 'application/json'},
+            data=json.dumps(data))
+
+def make_pull_request(filename,basename):
+    data = {"title": "Update to " + filename,
+            "body": "Please pull this in!",
+            "head": basename,
+            "base": "master"}
+    
+    resp = github.repos(owner, repo).pulls.POST(
+        	auth = (user, password),
+            headers = {'Content-type': 'application/json'},
+            data=json.dumps(data))
 
 ## Step 1: download copies of all files in our list
 
@@ -26,6 +97,7 @@ from pprint import pprint
 
 # We can make this an association between (canonical) member names and remote URLs
 # (Eventually this will expand to have all of the members on it.)
+# And it should probably be stored in a separate file so that it's easier to update.
 
 sources = [["Aitken, Alexander C.", "http://metameso.org/~joe/aitken.tex"],
            ["Birnbaum, Z. William", "http://metameso.org/~joe/birnbaum.tex"],
@@ -37,11 +109,11 @@ sources = [["Aitken, Alexander C.", "http://metameso.org/~joe/aitken.tex"],
 ## Step 2: compare downloaded files to local copies
 
 def check_local (source):
-    """We may eventually do something a bit more interesting."""
+    """We may eventually do something interesting but let's see."""
     print "Found local source!"
 
-## Continue the script - may want to add some error handling in case the URLs don't load
-## 
+## Continue the script
+##  - note, we may want to add some error handling in case the URLs don't load
 for item in sources:
     person_name=item[0]
     print "person name: " + person_name
@@ -70,43 +142,7 @@ for item in sources:
         print "new filename:" + new_filename
         print "content:" + content[:36]
         if (not(val)):
-            commit_and_make_pull_request(new_filename)
-
-## Step 3: If different, make a commit and submit a pull request
-def commit_and_make_pull_request(filename):
-    ## Basic definitions
-    github = Github('https://api.github.com')
-    owner = 'maddyloo'
-    repo = 'miniBibServer'
-    
-    ## A: Get the SHA of the most recent commit to this branch
-    resp = github.repos(owner, repo).git.refs.heads.GET('changes')
-    sha = json.loads(resp._content)['sha']
-
-    with open( filename, "rb") as text_file:
-    	encoded_string = base64.b64encode(text_file.read())
-    
-    data = {'message':'Adding "'+filename+'".',
-          'committer':{'name':'Joe Corneli',
-                       'email':'holtzermann17@gmail.com'},
-          'content':encoded_string,
-          'branch':'master'}
-    
-    github = Github('https://api.github.com')
-
-    path = 'test_LaTeXML/corneli-citations.bib'
-    user = 'holtzermann17'
-    password = '8befeade219b038b9189a153fdb282cefa04c5b1' # Github token
-
-    resp = github.repos(user, repo).contents(filename).PUT(
-	auth = (user, password),
-	headers = {'Content-type': 'textfile'},
-	data = json.dumps(data))
-    
-    #j = json.loads(resp.text)
-    j = resp.json()
-    print(base64.b64decode(j['content']))
-    #pprint(resp['_content'])
-
-
-sys.exit("Stop here for now")
+            basename = re.sub('[ ,.]', '', person_name)
+            make_branch(basename)
+            make_commit(basename,new_filename,content)
+            make_pull_request(new_filename,basename)
