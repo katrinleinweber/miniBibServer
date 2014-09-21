@@ -8,6 +8,9 @@ import base64
 import filecmp
 import re
 
+# This file will just contain the list of names and URLs of source material.
+import ims_sources
+
 from pprint import pprint
 
 ## Some assumptions about the layout of things
@@ -99,22 +102,17 @@ def make_pull_request(filename,basename):
 # (Eventually this will expand to have all of the members on it.)
 # And it should probably be stored in a separate file so that it's easier to update.
 
-sources = [["Aitken, Alexander C.", "http://metameso.org/~joe/aitken.tex"],
-           ["Birnbaum, Z. William", "http://metameso.org/~joe/birnbaum.tex"],
-           ["Carver, Harry C.", "tex_files/Carver%2C%20Harry%20C..tex"],
-           ["Dugué, Daniel", "tex_files/Dugu%C3%A9%2C%20Daniel.tex"]]
-
 # We'll do the actual downloading as part of a loop in the next step
 
 ## Step 2: compare downloaded files to local copies
 
 def check_local (source):
-    """We may eventually do something interesting but let's see."""
-    print "Found local source!"
+    """We may eventually do something interesting but for now, just ignore."""
+    print(".")
 
 ## Continue the script
 ##  - note, we may want to add some error handling in case the URLs don't load
-for item in sources:
+for item in ims_sources.urllist:
     person_name=item[0]
     print "person name: " + person_name
     source=item[1]
@@ -146,3 +144,6 @@ for item in sources:
             make_branch(basename)
             make_commit(basename,new_filename,content)
             make_pull_request(new_filename,basename)
+
+# distributed_update.py ends here
+
