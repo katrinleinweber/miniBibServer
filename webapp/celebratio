@@ -1,0 +1,41 @@
+<VirtualHost *:80>
+ # ---- Configure VirtualHost Defaults ----
+ServerName ims.metameso.org
+ServerAdmin holtzermann17@gmail.com
+
+DocumentRoot /var/www/celebratio/http
+
+    <Directory />
+            Options FollowSymLinks
+            AllowOverride None
+    </Directory>
+
+    <Directory /var/www/celebratio/http/>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride None
+            Order allow,deny
+            allow from all
+    </Directory>
+
+    # ---- Configure WSGI Listener(s) ----
+
+    WSGIDaemonProcess flaskapp user=www-data group=www-data threads=5
+    
+    # JAC - NB. changing this line to / from flasktest1
+    # was what worked, after a bunch of mucking around with rewrite rules
+    WSGIScriptAlias / /var/www/celebratio/wsgi/flasktest1.wsgi 
+
+    <Directory /var/www/celebratio/http/flasktest1>
+            WSGIProcessGroup flaskapp
+            WSGIApplicationGroup %{GLOBAL}
+            Order deny,allow
+            Allow from all
+    </Directory>
+
+    # ---- Configure Logging ----
+
+ErrorLog /var/www/celebratio/logs/error.log
+LogLevel warn
+CustomLog /var/www/celebratio/logs/access.log combined
+
+</VirtualHost>

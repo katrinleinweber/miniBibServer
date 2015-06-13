@@ -1205,6 +1205,7 @@ def life_latex(person):
     if deceased:
         heading += " \\Deceased"
     heading += "\n"
+
     rows = ''
 
     if ims_id:
@@ -1221,6 +1222,7 @@ def life_latex(person):
     lifespan = ''
 
     for d in DOB:
+
         lifespan += '\\DOB{' + sanitize_latex(d) + '}\n'
     for d in DOD:
         lifespan += '\\DOD{' + sanitize_latex(d) + '}\n'
@@ -1302,19 +1304,23 @@ def bio_latex(person):
         bios.sort(year_cmp)
         for b in bios:
             if b['bibtype'] == "webcollection":
-                btype = collection
+                btype = "collection"
+            if b['bibtype'] == "inwebcollection":
+                btype = "incollection"
             else:
                 btype=b['bibtype']
             rows += '\n\n@' + btype + '{' + b['id'] + ',\n'
             rows += 'year={' + b['year'] + '},\n'
             rows += 'author={' + sanitize_latex(b['author']) + '},\n'
             rows += 'title={' + sanitize_bibtex(sanitize_latex(b['title'])) + '},\n'
+
             # we need to read the howpublished field and refactor the entries
             rows += read_howpublished(b['howpublished'])
             # some entries include a URL
             for link in b['link_ls']:
                 if link['href']:
                     rows += 'url={' + link['href'] + '},\n'
+
             rows += '}'
             cites += "\\" + c.replace('_','') + '{' + b['id'] + '}\n'
         citations += heading + cites
@@ -1323,7 +1329,9 @@ def bio_latex(person):
         localized = open("./bibfiles/" + user_id + '.bib', 'a')
         localized.write(rows.encode('utf-8'))
         localized.close()
+
         print "added to bib file: " + user_id.encode('utf-8') + ".bib"
+
         # And just for ease of checking, append ALL the bibtex here
         unified=open("allbib.bib", "a")
         unified.write(rows.encode('utf-8'))
@@ -1538,7 +1546,9 @@ def first_first(name):
 def add_latex(d):
         #print d
         content = ''
+
         # content += "\n\\section*{" + sanitize_latex(first_first(d['complete_name'])) + "}"
+
         content += life_latex(d)
         content += profiles_latex(d)
         content += educ_latex(d)
@@ -1610,6 +1620,7 @@ def make_all():
         print "made latex file #" + str(record_counter) + ": " + filename.encode('utf-8')
         record_counter = record_counter + 1
 
+
 # This will fix the typical characters that cause errors in LaTeX articles
 # Should double check that this is always what's wanted, e.g. in the case of underscores
 # which could be used in mathematical expressions to denote subscripts
@@ -1625,16 +1636,22 @@ def sanitize_latex(txt):
             char_array[i] = u'`'
         elif char_array[i] == u"’":
             char_array[i] = u"'"
+        elif char_array[i] == u"“":
+            char_array[i] = u"``"
+        elif char_array[i] == u"”":
+            char_array[i] = u"''"
         i=i+1
         # print char_array[i].encode("utf-8")
     return "".join(char_array)
 
 # `Replace \`{a} la Bracket!'
 # {`}{R}eplace \`{a} {l}a {B}racket!{'}
+
 def sanitize_bibtex(txt):
     char_array = list(txt)
     i = 0
     while i < len(char_array) :
+
         # CRITERIA:
         # matching letter, like "A"
         # and either first character
@@ -1643,6 +1660,7 @@ def sanitize_bibtex(txt):
         #         or else not followed by }
         if re.match("[A-Z`']",char_array[i]) and (i == 0 or (char_array[i-1] != "{" and char_array[i-1] != "\\")) and (i == len(char_array) -1 or char_array[i+1] != "}"):
             char_array[i] = "{" + char_array[i] + "}"
+
         i=i+1
     return "".join(char_array)
 

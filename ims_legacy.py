@@ -176,14 +176,7 @@ def show_date(dt):
     elif d.has_key('year'): return d['year']
     else: return ''
 
-def getf(d,k):
-    dd = d.get(k,[])
-    if len(dd) > 0: return dd[0]
-    else: return ''
 
-
-
-    
 bio_cat_plurals = '''
     Biography       Biographies
     Symposium       Symposia
@@ -1321,13 +1314,27 @@ def add_bio_data():
     outfile.close()
     #print p
 
+def getf(d,k):
+    dd = d.get(k,[])
+    if len(dd) > 0: return dd[0]
+    else: return ''
 
 def make_dates_html(d):
     templ = '<p id="lifespan">DOB&thinsp;&ndash;&thinsp;DOD</p>'
-    if d.has_key('DOB') and d.has_key('DOD'):
-        for k in 'DOB DOD'.split(): templ = templ.replace(k, show_date( getf(d,k) ) )
+    if d.has_key('DOB'):
+        templ = templ.replace('DOB', show_date( d['DOB'] ) )
     else:
-        return ''
+        templ = templ.replace('DOB', '?' )
+
+    if d.has_key('DOD'):
+        templ = templ.replace('DOD', show_date( d['DOD'] ) )
+    else:
+        if d.has_key('DOB'):
+            templ = templ.replace('DOD', '--' )
+        else:
+            templ = templ.replace('DOD', '?' )
+
+    return templ
 
 def make_dates_plain_html(d):
     templ = 'DOB&nbsp;-&nbsp; DOD<br>'
@@ -1349,27 +1356,26 @@ def first_first(name):
     return first.strip() + ' ' + last.strip()
 
 def add_html(d):
-        d['heading_html'] = '<h2>' + first_first(d['complete_name']) + '</h2>'
-        d['photo_html'] = make_images_html(d) 
-        d['dates_html']  = make_dates_html(d)   #check how this function processes dates
-        d['dates_plain_html']  = make_dates_plain_html(d)
-        d['top_links_html'] = top_links_html(d)
-        
-        
-        content = '' 
-        content += educ_html(d)
-        content += career_html(d)
-        content += honors_html(d)
-        content += service_html(d)
-        content += member_html(d)
-        content += bio_html(d)
-        # content += biblio_html(d)
-        #content += source_data_html(d)
-        d['body_html'] = content
-        
-        #d['covertext_html'] = d['photo_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
-        d['html'] = d['photo_html'] + d['heading_html'] + d['dates_plain_html']  + d['top_links_html'] + d['body_html']
-        return d
+    d['heading_html'] = unicode('<h2>' + first_first(d['complete_name']) + '</h2>','utf-8')
+    d['photo_html'] = make_images_html(d)
+    d['dates_html']  = make_dates_html(d)
+    d['dates_plain_html']  = make_dates_plain_html(d)
+    d['top_links_html'] = top_links_html(d)
+
+    print "Name: "+d['heading_html']
+    
+    content = '' 
+    content += educ_html(d)
+    content += career_html(d)
+    content += honors_html(d)
+    content += service_html(d)
+    content += member_html(d)
+    content += bio_html(d)
+    # content += biblio_html(d)
+    #content += source_data_html(d)
+    d['body_html'] = content
+    d['html'] = d['photo_html'] + d['heading_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
+    return d
 
 
 
@@ -1526,7 +1532,7 @@ def make_one(filename):
         content += d['html']
         content += '<hr><br><br>'
     html = content
-    print html
+    # print html
     return html
 
 if __name__ == '__main__':

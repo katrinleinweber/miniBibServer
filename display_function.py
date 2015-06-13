@@ -143,6 +143,7 @@ def howpublished_tagged(r):
                     try: howpub += ', ' + v
                     except: howpub += ', ' + '????'
             return howpub
+
 def howpublished_plain(r):
             howpub = r.get('howpublished','')
             if not howpub:

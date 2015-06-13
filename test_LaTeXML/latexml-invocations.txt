@@ -1,0 +1,1 @@
+latexml --dest=corneli-citations.bib.xml corneli-citations.bib && latexml --destination=joe_corneli_vitae.xml joe_corneli_vitae.tex && latexmlpost --destination=joe_corneli_vitae.html joe_corneli_vitae.xml

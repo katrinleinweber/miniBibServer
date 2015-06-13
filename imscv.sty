@@ -28,8 +28,10 @@
 
 % A quick hack to make years show up at the start of bibliographic citations,
 % (And not in the usual place.)
-\renewbibmacro{author}{\emph{(\printfield{year})} \printnames{author}}
+\renewbibmacro{author}{\begin{tabular}{>{\raggedleft\arraybackslash}p{0.07\textwidth}@{\hskip 0.02\textwidth}p{.93\textwidth}}\textbf{\printfield{year}}& \printnames{author}}
 \renewbibmacro{date}{}
+
+\renewbibmacro*{finentry}{.\\\end{tabular}}
 
 % We also need to get rid of parenthesis around the (elided) year
 % Cf. http://tex.stackexchange.com/questions/66161/biblatex-remove-parentheses-around-year-for-articles
@@ -52,6 +54,15 @@
 %
 % END OF BIBLATEX CONFIGURATION
 %
+
+\usepackage{xstring}
+
+\newcommand{\datedItem}[2]{%
+\StrSubstitute{#1}{--}{\par--\,}[\temp]
+\begin{tabular}{>{\raggedleft\arraybackslash}p{0.07\textwidth}@{\hskip 0.02\textwidth}p{.93\textwidth}}%
+\textbf{\temp} & #2 \\%
+\end{tabular}%
+}
 
 \setlength\parindent{0pt}
 
@@ -143,12 +154,12 @@
 
 
 % YEAR, NAME-OF-INSTITUTION
-\newcommand{\Education}[2]{(\emph{#1}) #2\newline}
+\newcommand{\Education}[2]{\datedItem{#1}{#2}}
 
 \newcommand{\Member}[1]{\textbf{Member} #1\newline}
 % YEAR, ROLE, INSTITUTION
-\newcommand{\Position}[3]{(\emph{#1}) #2, #3\newline}
-\newcommand{\Service}[3]{(\emph{#1}) #2, #3\newline}
+\newcommand{\Position}[3]{\datedItem{#1}{#2, #3}}
+\newcommand{\Service}[3]{\datedItem{#1}{#2, #3}}
 
 \newcommand{\EN}[1]{\ednote{#1}}
 
@@ -171,6 +182,7 @@
 % print second optional arg, if present 
 \IfNoValueF {#5} { (\href{#5}{Math. Geneology})\newline}%
 }
+}
 
 % NAME-OF-INSTITUTION required
 % URL optional
@@ -190,8 +202,8 @@
 }
 
 \DeclareDocumentCommand\HonoraryDegree{ m m m g}{%
-(\emph{#1}) \emph{#2} (honorary) #3\newline%
-\IfNoValueF {#4} {\emph{#4}\newline}%
+\datedItem{#1}{\emph{#2} (honorary) #3}\newline%
+\IfNoValueF {#4} {\textbf{#4}\newline}%
 }
 
 
