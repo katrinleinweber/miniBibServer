@@ -1,0 +1,410 @@
+% arara: pdflatex
+% arara: biber
+% arara: pdflatex
+% arara: pdflatex
+\documentclass[letterpaper]{article}
+\usepackage{imscv}
+
+\titlespacing*{\subsection}{0pt}{2.5ex plus 1ex minus .2ex}{2.5ex plus 1ex minus .2ex}
+
+\usepackage{mdframed}
+\usepackage{alltt}
+\addbibresource{imsBooks.bib}
+\addbibresource{\jobname.bib}
+\usepackage{filecontents}
+\begin{filecontents}{\jobname.bib}
+%% BibTeX file for Daley, Daryl J.
+\end{filecontents}
+
+\begin{document}
+
+\title{Discussion of the ``IMS CV style'' (imscv.sty)}
+\author{Joe Corneli}
+
+\maketitle
+
+\section{Introduction}
+
+The current documents describes biographic records written in the
+``IMS CV style'' that is, documents designed to be compiled using
+imscv.sty.  This style is designed to produce nice-looking PDFs, but
+also to store fielded data that can be easily converted to other
+formats (for example, to HTML for display on the web).  In addition to
+simple ``biographical'' and ``membership'' information, these files
+typically also include ``bibliographic'' information relevant to the
+life of the person described.  This information is recorded in
+Bib\TeX\ records that are included within the preamble of
+\LaTeX\ file, via {\tt filecontents}.  In standard usage, the
+``biographical'' information appears next, followed by an inclusion of
+the bibliographic records into the text.
+
+
+\section{Compiling}
+
+The beginning of the preamble of documents written to be compiled with
+the imscv.sty style file looks like this:
+
+\begin{verbatim}
+% arara: pdflatex
+% arara: biber
+% arara: pdflatex
+% arara: pdflatex
+\documentclass[letterpaper]{article}
+\usepackage{imscv}
+\addbibresource{imsBooks.bib}
+\addbibresource{\jobname.bib}
+\usepackage{filecontents}
+[...]
+\end{verbatim}
+
+They can be compiled either with the complex command {\tt pdflatex
+  \emph{filename} \&\& biber \emph{filename} \&\& pdflatex
+  \emph{filename} \&\& pdflatex \emph{filename}} or with the single
+command {\tt arara \emph{filename}} for users who have {\tt arara}
+installed.  (For example, it is part of texlive.)  For uniformity,
+filenames are written without suffix.
+
+\subsection*{Example}
+
+\begin{alltt}
+{\tt pdflatex public__john_q \&\& biber public__john_q \&\& pdflatex\(\rightarrow\)
+    public__john_q \&\& pdflatex public__john_q}
+\end{alltt}
+
+or, more simply:
+
+\begin{alltt}
+arara public__john_q
+\end{alltt}
+
+\section{Biblographic records}
+
+%% A common pattern in the legacy sources for is to store a
+%% ``bibliographic-style'' reference with the following form:
+
+%% \begin{alltt}
+%% :BioCat bibtype person__id:N
+%%         Title goes here
+%%         Author goes here
+%%         Howpublished information goes here 
+%%         Year goes here
+%%         URL goes here, if any
+%%         :ref <t>Title repeated here</t>. <j>Name of journal</j>,\(\rightarrow\)
+%%             Vol. <vol>X</vol>, <n>Y</n> other information not\(\rightarrow\)
+%%             fielded pp. <pp>P-Q</pp>
+%% \end{alltt}
+
+With the new implementation, bibliography-style data is turned into
+standard Bib\TeX\ records, included via {\tt filecontents} and
+referred to in the appropriate section of the member bio.
+%  Thus, the data above would be transformed into the
+%following record:\footnote{(In practice the {\tt :ref} data typically
+%  repeats the {\tt Howpublished}, sometimes with slightly different
+%  formatting or information.)}
+This example entry should look familiar (other bibtypes are supported as well):
+
+\begin{alltt}
+@journal\{person__id:N,
+year=\{Year goes here\},
+author=\{Author goes here\},
+title=\{Title goes here\},
+journal=\{Name of journal\},
+volume=\{X\},
+number=\{Y\},
+pages=\{P-Q\},
+url=\{URL goes here, if any\}\}
+\end{alltt}
+
+This will be brought into the \LaTeX\ file in the appropiate
+subsection, like this:
+
+\begin{alltt}
+\verb|\|subsection\verb|*{|\emph{BioCat Heading}\verb|}}|
+\emph{\textbackslash}\emph{BioCatCite}\verb|{|person__id:N\verb|}|
+\end{alltt}
+
+where {\tt \textbackslash \emph{BioCatCite}} is one of several
+synonyms that are introduced for the usual \verb|\cite| command.  This
+helps support automated scanning of the files.  The {\tt \emph{BioCat
+    Heading}} is not expected to be processed automatically, so it
+mainly serves as a visual guide and can be written in the plural or
+singular form.
+
+\bigskip
+
+\begin{mdframed}
+\begin{addmargin}[0em]{6em}
+\begin{itemize}
+\item {\tt \emph{\textbackslash BioCatCite}} $\in$ 
+\{
+\verb|\Biography|,
+\verb|\Symposium|,
+\verb|\Archive|,
+\verb|\ArtExhibition|,
+\verb|\CollectedWorks|,
+\verb|\SelectedWorks|,
+\verb|\DVD|,
+\verb|\Endowment|,
+\verb|\Festschrift|,
+\verb|\Memoir|,
+\verb|\OralHistory|,
+\verb|\DeathNotice|,
+\verb|\Obituary|,
+\verb|\InMemoriam|\}
+\item {\tt \emph{BioCat Heading}} $\in$ \{Biography, Biographies,
+Symposium, Symposia,
+Archive, Archives,
+\ldots ,
+Obituary, Obituaries,
+In Memoriam\} 
+\end{itemize}
+\end{addmargin}
+\end{mdframed}
+
+\bigskip
+
+\subsection*{Example}
+
+The following Bib\TeX\ records would be stored in the file
+\verb|public__john_q.tex| inside a \verb|filecontents| block
+in the document's preamble --
+
+\begin{verbatim}
+\begin{filecontents}{\jobname.bib}
+[... some lines omitted ...]
+@article{public__john_q:13,
+  title={{J}ohn {Q}. {P}ublic visits a {L}and called {U}qbar},
+  author={Haslam, Silas},
+  journal={Revista Canadiense de Estudios Hisp{\'a}nicos},
+  pages={275--280},
+  year={2001},
+  publisher={JSTOR}
+}
+
+@misc{public__john_q:14,
+year={2002},
+author={Anonymous},
+title={{U}ntitled},
+}
+\end{filecontents}
+\end{verbatim}
+
+\ldots and would be brought into the main \LaTeX\ portion of the text
+later on, like this:
+
+\begin{verbatim}
+\subsection*{Obituary}
+\Obituary{public__john_q:13}       
+
+\subsection*{In Memoriam}
+\InMemoriam{public__john_q:14}
+\end{verbatim}
+
+Note: as mentioned in the introduction, in practice, the other
+elements of the record, described in the sections below, will appear
+before the bibliographic records are incorporated.
+
+%\newpage
+
+\section{Basic membership and biographical data}
+
+These commands record straightforward information about the membership
+and biography.  These commands each take one argument, which should be
+self-explanatory:
+
+\begin{mdframed}
+\verb|\Name{NAME}|\quad
+\verb|\ID{ID}|\quad
+\verb|\AltID{ALT-ID}|\quad
+\verb|\DOB{DOB}|
+
+\verb|\DOD{DOD}|\quad
+\verb|\DisplayName{SHORT-NAME}|\quad
+\verb|\AltName{OTHER-NAME}|
+
+\verb|\BirthPlace{PLACE}|\quad \verb|\Deceased|
+\end{mdframed}
+
+As indicated, the command \verb|\Deceased| takes \emph{zero} arguments
+and should be placed after \verb|\Name{...}|, only in the case in
+which the record describes a member who is deceased.
+
+\subsection*{Example}
+
+\begin{verbatim}
+[... preamble, including bibliography data as above, omitted ...]
+\begin{document}
+
+\Name{John Q. Public} \Deceased
+
+\ID{public__john_q}
+\AltID{public__john}
+
+\DisplayName{Public, John}
+\AltName{John Doe}
+
+\DOB{1963-11-23}
+\DOD{2001-09-10}
+\BirthPlace{USA}
+[...]
+\end{verbatim}
+
+\section{Links}
+
+
+\begin{mdframed}
+\texttt{\textbackslash Homepage\{URL\}} \quad
+\texttt{\textbackslash Email\{EMAIL-ADDRESS\}} \quad
+\texttt{\textbackslash Profile\{URL\}}
+\end{mdframed}
+
+Note that \verb|\Email{...}| is not something that every user wishes
+to publish on the open web, so while this field is supported at the
+user's option, it is not in any way required.  
+
+\subsection*{Example}
+
+\begin{verbatim}
+[...]
+\Homepage{http://www.jqpublicblog.com}
+\Email{estate_of_john_public@gmail.com}
+
+\subsection*{Profiles}
+\Profile{http://en.wikipedia.org/wiki/John_Q._Public}{Wikipedia}
+\Profile{http://en.wiktionary.org/wiki/John_Q._Public}{Wiktionary}
+[...]
+\end{verbatim}
+
+\section{Degrees}
+
+\begin{mdframed}
+\texttt{\textbackslash Degree\{YEAR\}\{NAME-OF-DEGREE\}\{NAME-OF-INSTITUTION\}\newline
+\hspace*{2cm}[\emph{THESIS-TITLE}]<\emph{MATH-GENEOLOGY-URL}>}
+\end{mdframed}
+
+Note the varied delimiters for different components; the two arguments
+listed in the second line are optional.  (But to assist with automated
+processing, the command should be entered on one line.)
+
+\subsection*{Examples}
+
+In the most typical case, all arguments will be provided.  The URL
+will be formatted as a link.
+
+\begin{verbatim}
+\Degree{1979}{Ph.D.}{Miskatonic University}[A Statistical
+  Interrogation of `Psychological Distress and Repeated Television
+  Viewing']<http://genealogy.math.ndsu.nodak.edu/id.php?id=123456>
+\end{verbatim}
+
+\Degree{1979}{Ph.D.}{Miskatonic University}[A Statistical
+  Interrogation of `Psychological Distress and Repeated Television
+  Viewing']<http://genealogy.math.ndsu.nodak.edu/id.php?id=123456>
+
+However, for some reason the geneology record is missing, we
+can just provide the title:
+
+\begin{verbatim}
+\Degree{1979}{Ph.D.}{Miskatonic University}[A Statistical
+Interrogation of `Psychological Distress and Repeated Television
+Viewing']
+\end{verbatim}
+
+\Degree{1979}{Ph.D.}{Miskatonic University}[A Statistical
+Interrogation of `Psychological Distress and Repeated Television
+Viewing']
+
+Similarly, if the thesis title is missing, we can just provide the
+geneology record:
+
+\begin{verbatim}
+\Degree{1979}{Ph.D.}{Miskatonic
+University}<http://genealogy.math.ndsu.nodak.edu/id.php?id=123456>
+\end{verbatim}
+
+\Degree{1979}{Ph.D.}{Miskatonic University}<http://genealogy.math.ndsu.nodak.edu/id.php?id=123456>
+
+Finally, some types of degree don't expect either of those optional
+arguments, or they may not be known, and in such cases, they can both
+be left off.
+
+\begin{verbatim}
+\Degree{1975}{B.A.}{Miskatonic University}
+\end{verbatim}
+
+\Degree{1975}{B.A.}{Miskatonic University}
+
+\section{Career}
+
+\begin{mdframed}
+\texttt{\textbackslash Position\{YEAR(S)\}\{ROLE\}\{INSTITUTION\}}
+
+\texttt{\textbackslash Service\{YEAR(S)\}\{ROLE\}\{INSTITUTION\}}
+
+\texttt{\textbackslash Affiliation\{INSTITUTION\}}\{\emph{URL}\}
+\end{mdframed}
+
+Only a few legacy users specify an \verb|\Affiliation{...}| and they
+generally do so with one argument, which is sometimes the name of an
+institution, sometimes a URL, or sometimes both together.  Here we
+list one required argument which is meant to denote the institution,
+and introduce \emph{url} as an optional second argument.
+
+\subsection*{Examples}
+\begin{alltt}
+\verb|\subsection*{Career}|
+\verb|\Position{|1979--1989\verb|}{|Researcher\verb|}{|Amundsen-Scott South Pole\(\rightarrow\)
+    Station\verb|}|
+\verb|\Position{|1989--2001\verb|}{|Professor of Statistics\verb|}|\verb|{|Miskatonic\(\rightarrow\)
+    University\verb|}|
+\verb|\Affiliation{PlanetMath.org}{http://planetmath.org}|
+\verb|\subsection*{Professional Service}|
+\verb|\Service{1990-1992}{Correspondent}{London| Psychogeographical\(\rightarrow\)
+    Association\verb|}|
+\end{alltt}
+\vspace{-.5cm}
+\subsubsection*{Career}
+\Position{1979--1989}{Researcher}{Amundsen-Scott South Pole Station}
+\Position{1989--2001}{Professor of Mathematics}{Miskatonic University}
+
+\Affiliation{PlanetMath.org}{http://planetmath.org}
+\vspace{-.3cm}
+\subsubsection*{Professional Service}
+\Service{1990-1992}{Correspondent}{London Psychogeographical Association}
+
+\section*{Honors}
+
+\begin{mdframed}
+\texttt{\textbackslash Honor\{YEAR\}\{INSTITUTION/NAME-OF-HONOR\}\{\emph{CITATION}\}}
+\end{mdframed}
+
+The \emph{citation} field is optional.
+
+\subsection*{Examples}
+
+\begin{alltt}
+\verb|\Honor{2001}{Fellowship of the Ring}|
+\verb|\Honor{2015}{League of Extraordinary Gentlemen}{Elected|\(\rightarrow\)
+    posthumously for services to literature.\verb|}|
+\end{alltt}
+
+\Honor{2001}{Fellowship of the Ring}
+\Honor{2015}{League of Extraordinary Gentlemen}{Elected posthumously for services to literature.}
+
+\section*{Membership in other organizations}
+
+\begin{mdframed}
+\texttt{\textbackslash Member\{INSTITUTION\}}
+\end{mdframed}
+
+\subsection*{Example}
+
+\begin{verbatim}
+\Member{Association of Autonomous Astronauts}
+\end{verbatim}
+
+\Member{Association of Autonomous Astronauts}
+
+
+\end{document}
+
