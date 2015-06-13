@@ -7,15 +7,15 @@ import datetime
 time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8')   
 import random
 import latex_accents
-import pprint
+from pprint import pprint
 
-pp = pprint.PrettyPrinter(indent=4)
+# pp = pprint.PrettyPrinter(indent=4)
 
 ## set some global variables for convenience of use
 global_vars = {}
 global_vars['published_files_directory'] = './published_files/'
 
-global_vars['latex_beg'] = '\\documentclass[letterpaper]{article}\n\\usepackage{imscv}\n\\addbibresource{imsBooks.bib}\n\\addbibresource{\\jobname.bib}\n\\usepackage{filecontents}\n\\begin{filecontents}{\\jobname.bib}\n'
+global_vars['latex_beg'] = '% arara: pdflatex\n% arara: biber\n% arara: pdflatex\n% arara: pdflatex\n\\documentclass[letterpaper]{article}\n\\usepackage{imscv}\n\\addbibresource{imsBooks.bib}\n\\addbibresource{\\jobname.bib}\n\\usepackage{filecontents}\n\\begin{filecontents}{\\jobname.bib}\n'
 global_vars['latex_med'] = '\n\\end{filecontents}\n\n\\begin{document}'
 global_vars['latex_end'] = '\\end{document}'
 
@@ -383,8 +383,6 @@ def list_links(txt, link_ls):
 #print list_links(txt, links)
 
 
-
-
 def read_ims_legacy(f='ims_legacy'):
     data = {}
     dls = []
@@ -408,7 +406,9 @@ def read_ims_legacy(f='ims_legacy'):
         d = {}
         d['record_txt'] = '::person ' + x.strip() + '\n'
         lines = d['record_txt'].split('\n')
-        lines = [line for line in lines if not line.find('Email') >= 0 ]
+        # Comment this out, since we can decide later (e.g. at print time) whether we want to
+        # include email in these files.
+        # lines = [line for line in lines if not line.find('Email') >= 0 ]
         pubrecord = '\n'.join(lines) + '\n'
         d['public_record_txt'] =  break_txt(pubrecord,80)
         secs = x.split('\n:')
@@ -453,8 +453,15 @@ def read_ims_legacy(f='ims_legacy'):
     data['books'] = book_dict
     links_txt = instring.split('::links',1)[1].split('\n::')[0]
     data['link_ls'] = links_txt2ls(links_txt)
-    # 85 is blackwell, 4 is aitken
-    # print data['records'][4]
+    # 85 is blackwell, 4 is aitken, 1073 is public__john, 31 is bai__zhidong, 1069 zidek__james_v
+    # count=0
+    # for r in data['records']:
+    #     print "{} is {}".format(count, r['id'])
+    #     count = count + 1
+    # pprint ( data['records'][31] )
+    # pprint ( data['records'][1069] )
+    # pprint ( data['records'][1073] )
+    # pprint ( data['records'][391] )
     return data
 
 def publish_ims_legacy(f='ims_legacy'):
@@ -1111,14 +1118,12 @@ def educ_latex(person):
         d['text'] = d.get('type','')  + ', ' + d.get('school','')  + ' '  ## could hyperlink here
         rows += award_kind + '{' + d['year'].replace(u'–','--') + '}' + award_type + '{' + sanitize_latex(d.get('school','')) + '}'
 
-        #print optional elements (e.g. thesis title)
+        # print optional elements (thesis title and geneology) - if they are present
         if d.get('thesis_title','').strip():
-            rows += '{' + sanitize_latex(d['thesis_title']) + '}'
-        #if d.get('link_ls',''):
-            #rows += '{' + d.get['link_ls'] + '}'
+            rows += '[' + sanitize_latex(d['thesis_title']) + ']'
         for link in d['link_ls']:
             if link['href'].find('genealogy') >= 0:
-                rows += '{' + link['href'] + '}'
+                rows += '<' + link['href'] + '>'
         rows += '\n'
     #print heading + rows
     return heading + rows
@@ -1126,13 +1131,18 @@ def educ_latex(person):
 def career_latex(person):
     #[{'category': 'position', 'text': u'Department of Statistics, University of Melbourne', 'year': u'19??-1982', 'link_ls': []}]
     career = person.get('Position',[])
-    if not career: return ''
+    affiliation = person.get('affiliation',[])
+    if not (career or affiliation): return ''
     heading = '\n\n\\subsection*{Career}\n'
     rows = ''
     for d in career:
         text = d['text'].split(',',1)
         #links???
         rows +='\\Position{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(text[0]) + '}{' + sanitize_latex(text[-1]) + '}\n'
+
+    for a in affiliation:
+        rows +='\\Affiliation{' + sanitize_latex(a) + '}\n'
+
     return heading + rows
 
 def honors_latex(person):
@@ -1149,7 +1159,12 @@ def honors_latex(person):
             text2 = text.split(')')
             rows += '\\HonoraryDegree{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(text1[0]) + '}{' + sanitize_latex(text2[-1].strip()) + '}\n'
         else:
-            rows += '\\Honor{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(d['text']) + '}\n'
+            rows += '\\Honor{' + d['year'].replace(u'–','--') + '}{' + sanitize_latex(d['text']) + '}'
+            try: citation = d['citation']
+            except: citation = ''
+            if not citation == '':
+                rows += '{' + sanitize_latex(citation) + '}'
+            rows += '\n'
     return heading + rows
 
 def service_latex(person):
@@ -1172,28 +1187,90 @@ def member_latex(person):
     return heading + rows
 
 def life_latex(person):
+
+    name = person.get('complete_name',[])
+    deceased = person.get('Deceased',[])
+
+    ims_id = person.get('id',[])
+    alt_id = person.get('alt-id',[])
+    display_name = person.get('display_name',[])
+    alt_name = person.get('alt_name',[])
+
     DOB = person.get('DOB',[])
     DOD = person.get('DOD',[])
-    name = person.get('complete_name',[])
-    if not DOB: return ''
-    if not DOD: return ''
-    heading = "\n\n\\section*{" + name + "}\n"
-    rows = ''
-    for d in DOB:
-        rows += '\\DOB{' + sanitize_latex(d) + '}\n'
-    for d in DOD:
-        rows += '\\DOD{' + sanitize_latex(d) + '}\n'
-    return heading + rows
+    birth_place = person.get('birth_place',[])
 
-# Still to fix
-def biblio_latex(person):
-        heading = '\n\n\\subsection*{Bibliography}\n'
-        rows = ''
-        for b in person.get('link_ls',[]):
-            bb = enhance_link(b)
-            if bb.get('rel','') == 'biblio':
-                rows += make_biblio_rows(bb)
-        return rows
+    heading = "\n\n\\Name{" + sanitize_latex(name) + "}"
+
+    if deceased:
+        heading += " \\Deceased"
+    heading += "\n"
+    rows = ''
+
+    if ims_id:
+        rows += '\\ID{' + ims_id + '}\n'
+    if alt_id:
+        rows += '\\AltID{' + alt_id[0] + '}'
+    rows += "\n\n"
+
+    if display_name:
+        rows += '\\DisplayName{' + sanitize_latex(display_name[0]) + '}\n'
+    if alt_name:
+        rows += '\\AltName{' + sanitize_latex(alt_name[0]) + '}'
+
+    lifespan = ''
+
+    for d in DOB:
+        lifespan += '\\DOB{' + sanitize_latex(d) + '}\n'
+    for d in DOD:
+        lifespan += '\\DOD{' + sanitize_latex(d) + '}\n'
+    if birth_place:
+        lifespan += '\\BirthPlace{' + sanitize_latex(birth_place[0]) + '}'
+
+    contact = ''
+
+    for h in person.get('Homepage',[]):
+        href = h.get('href','').strip()
+        if not href:
+            contact += ''
+        else:
+            contact += '\\Homepage{' + h['href'] + '}\n'
+
+    for e in person.get('Email',[]):
+        contact += '\\Email{' + e.strip() + '}\n'
+
+    ret = heading + rows
+  
+    if not lifespan=='':
+        ret = ret + "\n\n" + lifespan
+    if not contact=='':
+        ret = ret + "\n\n" + contact
+
+    return ret 
+
+def profiles_latex(person):
+    rows = ''
+
+    for b in person.get('link_ls',[]):
+        bb = enhance_link(b)
+        href = bb.get('href','').strip()
+        if not href:
+            rows += ''
+        else:
+            rows += '\\Profile{' + bb['href'] + '}{' + sanitize_latex( bb['anchor']) + '}\n'
+    if not rows == '':
+        rows = '\n\n\\subsection*{Profiles}\n' + rows
+    return rows
+
+# not needed anymore
+#def biblio_latex(person):
+#    heading = '\n\n\\subsection*{Bibliography}\n'
+#    rows = ''
+#    for b in person.get('link_ls',[]):
+#        bb = enhance_link(b)
+#        if bb.get('rel','') == 'biblio':
+#            rows += make_biblio_rows(bb)
+#    return rows
 
 def source_data_html(person):
     templ = '''<h4 class="alt js-collapse js-collapseoff">Source Data</h4>
@@ -1207,9 +1284,10 @@ def source_data_html(person):
 # TO FIX
 def bio_latex(person):
     citations = ''
-    name = person['complete_name']
-    localized = open("./bibfiles/" + name + '.bib', 'w')
-    comment = "%% BibTeX file for " + name
+    user_name = person['complete_name']
+    user_id = person['id']
+    localized = open("./bibfiles/" + user_id + '.bib', 'w')
+    comment = "%% BibTeX file for " + user_name
     localized.write(comment.encode('utf-8'))
     localized.close()
     for c in bio_cat_order[0:]:
@@ -1223,7 +1301,6 @@ def bio_latex(person):
         cites = ''
         bios.sort(year_cmp)
         for b in bios:
-            #print b
             if b['bibtype'] == "webcollection":
                 btype = collection
             else:
@@ -1232,17 +1309,21 @@ def bio_latex(person):
             rows += 'year={' + b['year'] + '},\n'
             rows += 'author={' + sanitize_latex(b['author']) + '},\n'
             rows += 'title={' + sanitize_bibtex(sanitize_latex(b['title'])) + '},\n'
-            # we've need to read the howpublished field and refactor the entries
+            # we need to read the howpublished field and refactor the entries
             rows += read_howpublished(b['howpublished'])
+            # some entries include a URL
+            for link in b['link_ls']:
+                if link['href']:
+                    rows += 'url={' + link['href'] + '},\n'
             rows += '}'
             cites += "\\" + c.replace('_','') + '{' + b['id'] + '}\n'
         citations += heading + cites
         # Write out bibtex to a file we will reuse later
-        name = person['complete_name']
-        localized = open("./bibfiles/" + name + '.bib', 'a')
+        user_id = person['id']
+        localized = open("./bibfiles/" + user_id + '.bib', 'a')
         localized.write(rows.encode('utf-8'))
         localized.close()
-        print "added to bib file: " + name.encode('utf-8') + ".bib"
+        print "added to bib file: " + user_id.encode('utf-8') + ".bib"
         # And just for ease of checking, append ALL the bibtex here
         unified=open("allbib.bib", "a")
         unified.write(rows.encode('utf-8'))
@@ -1258,9 +1339,9 @@ def read_howpublished(howpubinfo):
              ["bt", "BIB-TITLE"],        # These are not in bibtex but rather are references
              ["cit", "BIB-CITATION"],    # to something else - but none appear in output, so...
              ["ed", "editor"],
-             ["howpub", "note"],         # nested howpubs are dealt with as notes
-             ["howpublished", "note"],   #
-             ["note", "note"],   
+             ["howpub", "addendum"],         # nested howpubs are dealt with as an "addendum"
+             ["howpublished", "addendum"],   #
+             ["note", "addendum"],   
              ["j", "journal"],
              ["journal", "journal"],
              ["pages", "pages"],
@@ -1276,6 +1357,7 @@ def read_howpublished(howpubinfo):
              ["volume", "volume"],
              ["n", "number"],
              ["number", "number"],
+             #"u", "url"],
              ["webcollection", "booktitle"],
              ["y", "year"],
              ["year", "year"]]
@@ -1288,9 +1370,12 @@ def read_howpublished(howpubinfo):
             if (elt[1]=="title" or elt[1]=="booktitle") :
                 retval = sanitize_bibtex(retval)
     # deal with cross-references to items collected in imsBooks.bib
-    match= re.search("<rel>In </rel><inc>(.+?)</inc>",howpubinfo)
+    match= re.search("<inc>(.+?)</inc>",howpubinfo)
     if match :
         retval += "crossref={" + match.group(1).strip() + "},\n"
+    # Worst case scenario, there are no tags and we can just store the whole field as an "addendum"
+    if retval=='':
+        retval="addendum={" + sanitize_latex(howpubinfo) + "},\n"
     return retval
 
 def make_mg_data(data):
@@ -1453,8 +1538,9 @@ def first_first(name):
 def add_latex(d):
         #print d
         content = ''
-        content += "\n\\section*{" + sanitize_latex(first_first(d['complete_name'])) + "}"
+        # content += "\n\\section*{" + sanitize_latex(first_first(d['complete_name'])) + "}"
         content += life_latex(d)
+        content += profiles_latex(d)
         content += educ_latex(d)
         content += career_latex(d)
         content += honors_latex(d)
@@ -1468,10 +1554,21 @@ def add_latex(d):
         return d
 
 def make_all():
-    # For testing purposes, I'm creating a file with all of the bib data
+    # For testing and convenience, I'm creating a file that collects all of the bib data
     unified=open("allbib.bib", "w")
     unified.write("%% COMMENT This is a collection of all the bibliographic data\n\n")
     unified.close()
+    
+    # And for future use, an index of all the user_ids and files
+    index=open("index.txt", "w")
+    indexheader="%% COMMENT This is an index of sources for bibliographic data\n"
+    indexheader+="%% Blank lines and lines beginning with \"%\" are ignored.\n"
+    indexheader+="%% Sample entries:\n"
+    indexheader+="%%   alice_user   ./texfiles/alice_user.tex\n"
+    indexheader+="%%   bob_user     http://bob_server.com/cv.tex\n\n"
+    index.write(indexheader)
+    index.close()
+    
     out_dir = global_vars['published_files_directory'] 
     infile = open('./celebratio_cv_template.html')
     html = infile.read()
@@ -1486,25 +1583,32 @@ def make_all():
     tot = len(records)
     print 'Making xml for ' + str(tot) + ' records'
     make_xml( records)
-
+    
+    record_counter = 0
     for d in records:
         content = ''
-        name = d['complete_name']
+        user_id = d['id']
 
         bibcontent = ''
         try:
-            bibfile = open("./bibfiles/" + name + '.bib', 'r')
+            bibfile = open("./bibfiles/" + user_id + '.bib', 'r')
             bibcontent = unicode(bibfile.read(),'utf-8')
             bibfile.close()
         except: continue
 
         content +=  global_vars['latex_beg'] + bibcontent + global_vars['latex_med'] + d['latex'] + global_vars['latex_end']
 
-        filename = name + '.tex'
+        filename = user_id + '.tex'
         f = open("./texfiles/" + filename, 'w')
         f.write(content.encode('utf-8'))
         f.close()
-        print "made new latex file: " + filename.encode('utf-8')
+        
+        index=open("index.txt", "a")
+        index.write(("{0:30}\t./texfiles/{0}.tex\n").format(user_id))
+        index.close()
+        
+        print "made latex file #" + str(record_counter) + ": " + filename.encode('utf-8')
+        record_counter = record_counter + 1
 
 # This will fix the typical characters that cause errors in LaTeX articles
 # Should double check that this is always what's wanted, e.g. in the case of underscores
@@ -1525,17 +1629,21 @@ def sanitize_latex(txt):
         # print char_array[i].encode("utf-8")
     return "".join(char_array)
 
-# Replace every Capital Letter with a Bracketed Version!
-# {R}eplace every {C}apital {L}etter with a {B}racketed {V}ersion!
+# `Replace \`{a} la Bracket!'
+# {`}{R}eplace \`{a} {l}a {B}racket!{'}
 def sanitize_bibtex(txt):
     char_array = list(txt)
     i = 0
     while i < len(char_array) :
-        if re.match("[A-Z`']",char_array[i]) and (i == 0 or char_array[i-1] != "{") and (i == len(char_array) -1 or char_array[i+1] != "}"):
+        # CRITERIA:
+        # matching letter, like "A"
+        # and either first character
+        #         or else not preceded by { or \
+        # and either final character
+        #         or else not followed by }
+        if re.match("[A-Z`']",char_array[i]) and (i == 0 or (char_array[i-1] != "{" and char_array[i-1] != "\\")) and (i == len(char_array) -1 or char_array[i+1] != "}"):
             char_array[i] = "{" + char_array[i] + "}"
         i=i+1
-#    if (char_array[len(char_array)-1] == "`" or char_array[len(char_array)-1] == "`")
-#        char_array[len(char_array)-1] = "{" + char_array[len(char_array)-1] + "}"
     return "".join(char_array)
 
 def enhance_bio(d):
@@ -1633,6 +1741,6 @@ def missing_emails():
 
 if __name__ == '__main__':
     make_all()
-    publish_ims_legacy()
+    #publish_ims_legacy()
     #missing_emails()
     

@@ -1,9 +1,26 @@
 % July 1, 2014 - an initial treatment of the IMS legacy format
 
 % This package defines some commands for formatting CVs.
+
+% Useful for some of the items that have an optional component
+% See http://www.texdev.net/2010/05/23/from-newcommand-to-newdocumentcommand/
+% for a nice tutorial
+\usepackage{xparse}
+
 % Bibliographic data is handled with bibtex format (and processed with Biber+BibLaTeX)
 
+\usepackage[hyphens]{url}
+
 \usepackage[url=false,citestyle=verbose]{biblatex}
+
+% Compress sections a bit
+
+\usepackage{titlesec}
+
+\titlespacing*{\subsection}{0pt}{.5ex plus 1ex minus .2ex}{.5ex plus 1ex minus .2ex}
+
+% for fine-tuning margins with addmargin
+\usepackage{scrextend}
 
 %
 % START OF BIBLATEX CONFIGURATION
@@ -27,9 +44,9 @@
        \usebibmacro{date}}% NEW
   \newunit}
 
-% Format the URL as markup for the title
+% Format the URL as markup for the title, if it is given
 \DeclareFieldFormat
-  [article,inbook,incollection,inproceedings,patent,thesis,unpublished,techreport,misc]
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished,techreport,misc,book]
   {title}{\href{\thefield{url}}{#1}}
 
 %
@@ -40,14 +57,29 @@
 
 \usepackage[show]{ed}
 \ednotelabel{Editor's Note}
-\usepackage{hyperref}
+
+\usepackage[ocgcolorlinks]{hyperref}
+
+\newcommand\textvtt[1]{{\normalfont\fontfamily{cmvtt}\selectfont #1}}
+%\DeclareTextFontCommand{\urltexttt}{\ttfamily\hyphenchar\font=45\relax}
+
+%\makeatletter
+%\def\url@vttstyle{%
+%  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\textvtt}}}
+%\makeatother
+
+\urlstyle{sf}
 
 \newcommand{\UnderscoreCommands}{\do\Id \do\AltId}
 \usepackage[strings]{underscore}
 
+%
+% USER LEVEL COMMANDS
+%
+
 % These are useful for internal bookkeeping
-\newcommand{\ID}[1]{IMS ID: #1}
-\newcommand{\AltID}[1]{IMS Alternate Id: #1}
+\newcommand{\ID}[1]{\marginpar{\flushleft{\textbf{IMS ID}} \fbox{#1}}}
+\newcommand{\AltID}[1]{\marginpar{\flushleft{\textbf{Alt.~Id}} \fbox{#1}}}
 
 % Ref is a pointer to a publication of some kind, usually it goes along with
 % Biography, Memoir, Archive, or some other text, as the HTML formatted citation.
@@ -56,21 +88,21 @@
 
 % References to things that will be found elsewhere - given the biblatex formatting above,
 % this seems to do it
-\newcommand{\Biography}[1]{\cite{#1}\newline}
 \newcommand{\Archive}[1]{\cite{#1}\newline}
+\newcommand{\ArtExhibition}[1]{\cite{#1}\newline}
+\newcommand{\Autobiography}[1]{\cite{#1}\newline}
+\newcommand{\Biography}[1]{\cite{#1}\newline}
+\newcommand{\CollectedWorks}[1]{\cite{#1}\newline}
+\newcommand{\DVD}[1]{\cite{#1}\newline}
+\newcommand{\DeathNotice}[1]{\cite{#1}\newline}
+\newcommand{\Endowment}[1]{\cite{#1}\newline}
+\newcommand{\Festschrift}[1]{\cite{#1}\newline}
 \newcommand{\InMemoriam}[1]{\cite{#1}\newline}
 \newcommand{\Memoir}[1]{\cite{#1}\newline}
 \newcommand{\Obituary}[1]{\cite{#1}\newline}
 \newcommand{\OralHistory}[1]{\cite{#1}\newline}
-\newcommand{\ArtExhibition}[1]{\cite{#1}\newline}
-\newcommand{\Autobiography}[1]{\cite{#1}\newline}
-\newcommand{\DVD}[1]{\cite{#1}\newline}
-\newcommand{\DeathNotice}[1]{\cite{#1}\newline}
-\newcommand{\CollectedWorks}[1]{\cite{#1}\newline}
 \newcommand{\SelectedWorks}[1]{\cite{#1}\newline}
 \newcommand{\Symposium}[1]{\cite{#1}\newline}
-\newcommand{\Endowment}[1]{\cite{#1}\newline}
-\newcommand{\Festschrift}[1]{\cite{#1}\newline}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -80,65 +112,70 @@
 \newcommand{\Concept}[1]{\url{#1}}
 % they are present as a "default" after ::person in legacy format,
 % Let's include a link text, since that's how they seem to be used
-\newcommand{\Profile}[2]{\textbf{Profile}: \href{#1}{#2}\newline}
 
-% Email address handling - first a trick to create a mailto: command
-\catcode`\_=11\relax
-\newcommand\emailfont{\rmfamily}
-\newcommand\emailampersat{{\color{black}\small@}}
-\newcommand\email[1]{\_email #1\q_nil}
-\def\_email#1@#2\q_nil{
-  \href{mailto:#1@#2}
-    {{\emailfont\detokenize{#1}\emailampersat\detokenize{#2}}}
-}
-\catcode`\_=8\relax  
+% 1st ``synonym'' for href
+\makeatletter
+\newcommand*{\Profile}{\begingroup\@makeother\#\@makeother\%\@makeother\&\@myprofilelink}
+\newcommand*{\@myprofilelink}[2]{\href{#1}{\underline{#2}}\endgroup\newline} 
+\makeatother
 
-% Consistent with the other uppercased commands, this is the command for users
-\newcommand{\Email}[1]{\email{#1}}
+\newcommand{\Email}[1]{\textbf{Email:} \href{mailto:#1}{\nolinkurl{#1}}\newline}
 
 % Basic data
-\newcommand{\DOB}[1]{\paragraph{Date of birth}\textit{#1}}
-\newcommand{\DOD}[1]{\paragraph{Date of death}\textit{#1}}
+\newsavebox{\LivingOrDeceasedBox}
+\newcommand{\Deceased}{\savebox{\LivingOrDeceasedBox}{(\textbf{Deceased})}}
 
-% This should be improved to parse the argument and display \textbf{Deceased}
-% if needed
-\newcommand{\Deceased}[1]{#1}
-\newcommand{\Name}[1]{{\Large #1}}
-\newcommand{\DisplayName}[1]{\paragraph{Short name} #1}
-\newcommand{\AltName}[1]{\paragraph{AKA} #1}
-\newcommand{\BirthPlace}[1]{\paragraph{Place of Birth} #1}
+\newcommand{\DOB}[1]{\textbf{Date of birth:} \textit{#1} \usebox{\LivingOrDeceasedBox}\newline}
+\newcommand{\DOD}[1]{\textbf{Date of death:} \textit{#1}\newline}
 
-\newcommand{\Homepage}[2]{\textbf{Homepage} \href{#1}{#2}}
+\newcommand{\Name}[1]{\section*{#1}}
+\newcommand{\DisplayName}[1]{\textbf{Short name} #1\newline}
+\newcommand{\AltName}[1]{\textbf{AKA} #1\newline}
+\newcommand{\BirthPlace}[1]{\textbf{Place of Birth} #1\newline}
+
+
+
+% 2nd ``synonym'' for href (with more decoration)
+\makeatletter
+\newcommand*{\Homepage}{\begingroup\@makeother\#\@makeother\%\@makeother\&\@makeother\~\@myhomepagelink}
+\newcommand*{\@myhomepagelink}[1]{\textbf{Homepage:} \url{#1}\endgroup\newline} 
+\makeatother
+
 
 % YEAR, NAME-OF-INSTITUTION
 \newcommand{\Education}[2]{(\emph{#1}) #2\newline}
 
-\newcommand{\Member}[1]{\paragraph{Member} #1}
+\newcommand{\Member}[1]{\textbf{Member} #1\newline}
 % YEAR, ROLE, INSTITUTION
 \newcommand{\Position}[3]{(\emph{#1}) #2, #3\newline}
 \newcommand{\Service}[3]{(\emph{#1}) #2, #3\newline}
 
 \newcommand{\EN}[1]{\ednote{#1}}
 
-% Useful for some of the items that have an optional aspect
-\usepackage{xparse}
+\newcommand{\YEARUNKNOWN}{\textbf{YEAR?}}
+\newcommand{\TITLEUNKNOWN}{\textbf{TITLE?}}
 
 % YEAR, NAME-OF-DEGREE, NAME-OF-INSTITUTION are mandatory,
-% math geneology url and thesis title are optional
-% NOTE: it might be more convenient to have separate commands per degree, but
-% let's follow the legacy format for now
-\DeclareDocumentCommand\Degree{ m m m g g }{%
+% MATH-GENEOLOGY-URL and THESIS-TITLE are optional
+% In practice, most entries for a PhD degree have at least the MATH-GENEOLOGY-URL even if the THESIS-TITLE is unknown.
+% However, entries for other degrees, like MA, will not have a MATH-GENEOLOGY-URL.  In practice, MA theses do not seem to have
+% a title either, but perhaps that will change in the future.  Using different kinds of brackets allows all the different
+% possibilities.
+\DeclareDocumentCommand\Degree{ m m m d[] d<> }{%
+% print mandatory args
 (\emph{#1}) \emph{#2} #3\newline%
+% print first optional arg, if present
 \IfNoValueF {#4} {Thesis: \emph{#4}%
                   \IfNoValueT {#5} {\newline}%
-                  \IfNoValueF {#5} { (\href{#5}{Math. Geneology})\newline }%
-                }%
+}%
+% print second optional arg, if present 
+\IfNoValueF {#5} { (\href{#5}{Math. Geneology})\newline}%
 }
 
-% name of institution required
-% url optional
+% NAME-OF-INSTITUTION required
+% URL optional
 \DeclareDocumentCommand\Affiliation{ m g }{%
-\paragraph{Affiliation} #1%
+\textbf{Affiliation} #1%
 \IfNoValueF {#2} {\newline link: \url{#2}}%
 }
 
@@ -147,8 +184,9 @@
 % NOTE: it might be more convenient to separate out things like "1964 IMS Fellow"
 % from the more complex "HonoraryDegree", but we can do that later
 \DeclareDocumentCommand\Honor{ m m g}{%
-(\emph{#1}) #2\newline%
-\IfNoValueF {#3} {\emph{#3}\newline }%
+(\emph{#1}) #2%
+\IfNoValueT {#3} {\newline}
+\IfNoValueF {#3} {\begin{addmargin}[2em]{0em}\emph{#3}\end{addmargin}}%
 }
 
 \DeclareDocumentCommand\HonoraryDegree{ m m m g}{%
@@ -157,4 +195,62 @@
 }
 
 
+%
+% Additional hyperref config from
+% http://tex.stackexchange.com/questions/47267/breaking-links-and-escaping-characters-in-bibliographies-with-backlinks-and-ocgc
+% 
 
+\makeatletter
+\AtBeginDocument{%
+    \newlength{\temp@x}%
+    \newlength{\temp@y}%
+    \newlength{\temp@w}%
+    \newlength{\temp@h}%
+    \def\my@coords#1#2#3#4{%
+      \setlength{\temp@x}{#1}%
+      \setlength{\temp@y}{#2}%
+      \setlength{\temp@w}{#3}%
+      \setlength{\temp@h}{#4}%
+      \adjustlengths{}%
+      \my@pdfliteral{\strip@pt\temp@x\space\strip@pt\temp@y\space\strip@pt\temp@w\space\strip@pt\temp@h\space re}}%
+    \ifpdf
+      \typeout{In PDF mode}%
+      \def\my@pdfliteral#1{\pdfliteral page{#1}}% I don't know why % this command...
+      \def\adjustlengths{}%
+    \fi
+    \ifxetex
+      \def\my@pdfliteral #1{\special{pdf: literal direct #1}}% isn't equivalent to this one
+      \def\adjustlengths{\setlength{\temp@h}{-\temp@h}\addtolength{\temp@y}{1in}\addtolength{\temp@x}{-1in}}%
+    \fi%
+    \def\Hy@colorlink#1{%
+      \begingroup
+        \ifHy@ocgcolorlinks
+          \def\Hy@ocgcolor{#1}%
+          \my@pdfliteral{q}%
+          \my@pdfliteral{7 Tr}% Set text mode to clipping-only
+        \else
+          \HyColor@UseColor#1%
+        \fi
+    }%
+    \def\Hy@endcolorlink{%
+      \ifHy@ocgcolorlinks%
+        \my@pdfliteral{/OC/OCPrint BDC}%
+        \my@coords{0pt}{0pt}{\pdfpagewidth}{\pdfpageheight}%
+        \my@pdfliteral{F}% Fill clipping path (the url's text) with
+                           % current color
+        %
+        \my@pdfliteral{EMC/OC/OCView BDC}%
+        \begingroup%
+          \expandafter\HyColor@UseColor\Hy@ocgcolor%
+          \my@coords{0pt}{0pt}{\pdfpagewidth}{\pdfpageheight}%
+          \my@pdfliteral{F}% Fill clipping path (the url's text)
+                             % with \Hy@ocgcolor
+        \endgroup%
+        \my@pdfliteral{EMC}%
+        \my@pdfliteral{0 Tr}% Reset text to normal mode
+        \my@pdfliteral{Q}%
+      \fi
+      \endgroup
+    }%
+}
+\makeatother
