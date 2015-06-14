@@ -13,7 +13,7 @@
 \addbibresource{\jobname.bib}
 \usepackage{filecontents}
 \begin{filecontents}{\jobname.bib}
-%% BibTeX file for Daley, Daryl J.
+%% BibTeX file - none needed here
 \end{filecontents}
 
 \begin{document}
@@ -140,6 +140,7 @@ singular form.
 \verb|\Biography|,
 \verb|\Symposium|,
 \verb|\Archive|,
+\verb|\Autobiography|,
 \verb|\ArtExhibition|,
 \verb|\CollectedWorks|,
 \verb|\SelectedWorks|,
@@ -227,7 +228,9 @@ self-explanatory:
 
 As indicated, the command \verb|\Deceased| takes \emph{zero} arguments
 and should be placed after \verb|\Name{...}|, only in the case in
-which the record describes a member who is deceased.
+which the record describes a member who is deceased.  Note: The format
+of the argument passed to \verb|\Name{...}| should be
+\texttt{\emph{family name}, \emph{given name(s)}}.
 
 \subsection*{Example}
 
@@ -235,7 +238,7 @@ which the record describes a member who is deceased.
 [... preamble, including bibliography data as above, omitted ...]
 \begin{document}
 
-\Name{John Q. Public} \Deceased
+\Name{Public, John Q.} \Deceased
 
 \ID{public__john_q}
 \AltID{public__john}
@@ -255,7 +258,7 @@ which the record describes a member who is deceased.
 \begin{mdframed}
 \texttt{\textbackslash Homepage\{URL\}} \quad
 \texttt{\textbackslash Email\{EMAIL-ADDRESS\}} \quad
-\texttt{\textbackslash Profile\{URL\}}
+\texttt{\textbackslash Profile\{URL\}\{TEXT\}}
 \end{mdframed}
 
 Note that \verb|\Email{...}| is not something that every user wishes
@@ -396,6 +399,9 @@ The \emph{citation} field is optional.
 \begin{mdframed}
 \texttt{\textbackslash Member\{INSTITUTION\}}
 \end{mdframed}
+
+Note, this field is largely unused and likely to be deprecated.  It is
+included here only for historical compatibility.
 
 \subsection*{Example}
 
