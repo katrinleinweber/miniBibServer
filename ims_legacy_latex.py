@@ -1585,9 +1585,10 @@ def make_all():
     html = unicode(html,'utf-8')
 
     data = read_ims_legacy('ims_legacy')
-    #print data
-    print 'Read ' + str(len(data['records'])) + ' records from ims_legacy.txt'
+    # print data
+    # print 'Read ' + str(len(data['records'])) + ' records from ims_legacy.txt'
     global_vars['link_ls'] = data['link_ls']
+    # pprint (global_vars['link_ls'])
     global_vars['books'] = data['books']
     records = [ add_latex(d) for d in data['records'] ]
     tot = len(records)
