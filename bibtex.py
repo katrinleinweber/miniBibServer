@@ -211,7 +211,7 @@ def read_bibitem(item):     ### returns a python dict
 			
 			count = 0
 			current_field = ''
-			while count <= 100:   ### just a safey net to avoid infinite looping if code breaks
+			while count <= 100:   ### just a safety net to avoid infinite looping if code breaks
 				count = count + 1
 				comma_split = string.split(rest,',',1)
 				this_frag = comma_split[0]
