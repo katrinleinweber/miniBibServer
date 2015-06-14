@@ -6,9 +6,238 @@ time_stamp = unicode( datetime.datetime.now().isoformat().split('.')[0], 'utf-8'
 import random
 import text_json
 
+from pprint import pprint 
+
 ## set some global variables for convenience of use
 global_vars = {}
 global_vars['published_files_directory'] = './published_files/'
+
+# Save these here so we don't have to pass them around
+global_vars['link_ls'] = [{'anchor': u'Faculty Research Lecture Committee, University of California, Berkeley',
+                           'category_ls': [u'committee'],
+                           'href': u'http://academic-senate.berkeley.edu/committees/frl'},
+                          {'anchor': u'Faculty Research Lecturer, University of California, Berkeley',
+                           'category_ls': [u'lecture'],
+                           'href': u'http://www.urel.berkeley.edu/faculty/history.html'},
+                          {'anchor': u'The Royal Netherlands Academy of Arts and Sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Royal_Netherlands_Academy_of_Arts_and_Sciences'},
+                          {'anchor': u'American Association for Advancement of Science',
+                           'category_ls': [u'society'],
+                           'href': u'http://www.aaas.org/'},
+                          {'anchor': u'President, Institute of Mathematical Statistics',
+                           'category_ls': [u'president_list'],
+                           'href': u'http://imstat.org/officials/past_officials.html'},
+                          {'anchor': u'Commander of the Order of the British Empire',
+                           'category_ls': [],
+                           'href': u'http://en.wikipedia.org/wiki/Order_of_the_British_Empire'},
+                          {'anchor': u'Royal Danish Academy of Sciences and Letters',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Royal_Danish_Academy_of_Sciences_and_Letters'},
+                          {'anchor': u'Academy of the Social Sciences in Australia',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Academy_of_the_Social_Sciences_in_Australia'},
+                          {'anchor': u'American Mathematical Society, Fellows List',
+                           'category_ls': [u'fellow_ls'],
+                           'href': u'http://www.ams.org/profession/fellows-list'},
+                          {'anchor': u'National Medal of Technology and Innovation',
+                           'category_ls': [],
+                           'href': u'http://en.wikipedia.org/wiki/National_Medal_of_Technology_and_Innovation'},
+                          {'anchor': u'Norbert Wiener Prize in Applied Mathematics',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Norbert_Wiener_Prize_in_Applied_Mathematics'},
+                          {'anchor': u'Israel Academy of Sciences and Humanities',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Israel_Academy_of_Sciences_and_Humanities'},
+                          {'anchor': u'Norwegian Academy of Science and Letters',
+                           'category_ls': [u'academy'],
+                           'href': u'https://en.wikipedia.org/wiki/Norwegian_Academy_of_Science_and_Letters'},
+                          {'anchor': u'The Institute of Statistical Mathematics',
+                           'category_ls': [],
+                           'href': u'http://www.ism.ac.jp/index_e.html'},
+                          {'anchor': u'American Academy of Arts and Sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/American_Academy_of_Arts_and_Sciences'},
+                          {'anchor': u'American Mathematical Society, Fellow',
+                           'category_ls': [u'fellow'],
+                           'href': u'http://www.ams.org/profession/ams-fellows/ams-fellows'},
+                          {'anchor': u'Institute of Mathematical Statistics',
+                           'category_ls': [u'society'],
+                           'href': u'http://imstat.org/'},
+                          {'anchor': u'Officer of the Order of Australia',
+                           'category_ls': [u'honor'],
+                           'href': u'http://en.wikipedia.org/wiki/Order_of_Australia'},
+                          {'anchor': u'Royal Spanish Academy of Sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Spanish_Royal_Academy_of_Sciences'},
+                          {'anchor': u'Nobel Prize in Economic Sciences',
+                           'category_ls': [u'prize'],
+                           'href': u'http://www.nobelprize.org/nobel_prizes/economics/laureates/'},
+                          {'anchor': u'Indian National Science Academy',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Indian_National_Science_Academy'},
+                          {'anchor': u'National Academy of Engineering',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/National_Academy_of_Engineering'},
+                          {'anchor': u'The Royal Society of Literature',
+                           'category_ls': [u'society'],
+                           'href': u'https://en.wikipedia.org/wiki/Royal_Society_of_Literature'},
+                          {'anchor': u'Third World Academy of Sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/TWAS'},
+                          {'anchor': u'Accademia Nazionale dei Lincei',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Accademia_dei_Lincei'},
+                          {'anchor': u'American Philosophical Society',
+                           'category_ls': [u'society'],
+                           'href': u'http://en.wikipedia.org/wiki/American_Philosophical_Society'},
+                          {'anchor': u'Officer of the Order of Canada',
+                           'category_ls': [u'honor'],
+                           'href': u'https://en.wikipedia.org/wiki/Order_of_Canada'},
+                          {'anchor': u'The Royal Society of Edinburgh',
+                           'category_ls': [u'society'],
+                           'href': u'http://en.wikipedia.org/wiki/Royal_Society_of_Edinburgh'},
+                          {'anchor': u'American Mathematical Society',
+                           'category_ls': [u'society'],
+                           'href': u'http://www.ams.org/'},
+                          {'anchor': u'Australian Academy of Science',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Australian_Academy_of_Science'},
+                          {'anchor': u'John von Neumann Theory Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/John_von_Neumann_Theory_Prize'},
+                          {'anchor': u'Presidential Medal of Freedom',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Presidential_Medal_of_Freedom'},
+                          {'anchor': u'National Academy of Sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/National_Academy_of_Sciences'},
+                          {'anchor': u'The George B. Dantzig Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/George_B._Dantzig_Prize#George_B._Dantzig_Prize'},
+                          {'anchor': u'The Royal Society of Canada',
+                           'category_ls': [u'society'],
+                           'href': u'http://en.wikipedia.org/wiki/Royal_Society_of_Canada'},
+                          {'anchor': u'Acad&eacute;mie des sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/French_Academy_of_Sciences'},
+                          {'anchor': u'Indian Academy of Sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/Indian_Academy_of_Sciences'},
+                          {'anchor': u'John von Neumann Lecturer',
+                           'category_ls': [u'lecture'],
+                           'href': u'http://www.siam.org/prizes/sponsored/vonneumann.php'},
+                          {'anchor': u'National Medal of Science',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/National_Medal_of_Science'},
+                          {'anchor': u'Royal Statistical Society',
+                           'category_ls': [u'society'],
+                           'href': u'https://www.rss.org.uk/'},
+                          {'anchor': u'Elizabeth L. Scott Award',
+                           'category_ls': [u'award'],
+                           'href': u'http://nisla05.niss.org/copss/PastAwardsScott.pdf'},
+                          {'anchor': u'George W. Snedecor Award',
+                           'category_ls': [u'award'],
+                           'href': u'http://nisla05.niss.org/copss/PastAwardsSnedecor.pdf'},
+                          {'anchor': u"COPSS Presidents' Award",
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/COPSS_Presidents%27_Award'},
+                          {'anchor': u'Acad&eacute;mie des sciences',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/French_Academy_of_Sciences'},
+                          {'anchor': u'Harry C. Carver Medal',
+                           'category_ls': [u'award'],
+                           'href': u'http://imstat.org/awards/awards_IMS_recipients.htm'},
+                          {'anchor': u'Institute of Medicine',
+                           'category_ls': [u'society'],
+                           'href': u'https://en.wikipedia.org/wiki/Institute_of_Medicine'},
+                          {'anchor': u'R. A. Fisher Lecturer',
+                           'category_ls': [u'award'],
+                           'href': u'http://nisla05.niss.org/copss/PastAwardsFisher.pdf'},
+                          {'anchor': u'Samuel S. Wilks Award',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Wilks_Memorial_Award'},
+                          {'anchor': u'Wolf Prize in Physics',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Wolf_Prize_in_Physics'},
+                          {'anchor': u'Rollo Davidson Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Rollo_Davidson_Prize'},
+                          {'anchor': u'Guy Medal in Bronze',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Guy_Medal#Bronze_Medallists'},
+                          {'anchor': u'Guy Medal in Silver',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Guy_Medal#Silver_Medallists'},
+                          {'anchor': u'IMS Lecture Awards',
+                           'category_ls': [u'award'],
+                           'href': u'http://www.imstat.org/awards/lectures.htm'},
+                          {'anchor': u'F. N. David Award',
+                           'category_ls': [u'award'],
+                           'href': u'http://nisla05.niss.org/copss/PastAwardsFNDavid.pdf'},
+                          {'anchor': u'Guy Medal in Gold',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Guy_Medal#Gold_Medallists'},
+                          {'anchor': u'The Royal Society',
+                           'category_ls': [u'society'],
+                           'href': u'http://en.wikipedia.org/wiki/Royal_Society'},
+                          {'anchor': u'Lo&egrave;ve Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Lo%C3%A8ve_Prize'},
+                          {'anchor': u'MacArthur Fellow',
+                           'category_ls': [u'fellow'],
+                           'href': u'http://en.wikipedia.org/wiki/MacArthur_Fellows_Program'},
+                          {'anchor': u'Medal of Freedom',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Medal_of_Freedom'},
+                          {'anchor': u'British Academy',
+                           'category_ls': [u'academy'],
+                           'href': u'http://en.wikipedia.org/wiki/British_Academy'},
+                          {'anchor': u'Chauvenet Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Chauvenet_Prize'},
+                          {'anchor': u'Medal for Merit',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Medal_for_Merit'},
+                          {'anchor': u'Neyman Lecturer',
+                           'category_ls': [u'lecture'],
+                           'href': u'http://imstat.org/awards/lectures_winners.htm'},
+                          {'anchor': u'Birkhoff Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/George_David_Birkhoff_Prize'},
+                          {'anchor': u'Rietz Lecturer',
+                           'category_ls': [u'lecture'],
+                           'href': u'http://www.imstat.org/awards/lectures_winners.htm#RietzLectures'},
+                          {'anchor': u'IMS President',
+                           'category_ls': [],
+                           'href': u'http://en.wikipedia.org/wiki/List_of_presidents_of_the_Institute_of_Mathematical_Statistics'},
+                          {'anchor': u'Wald Lecturer',
+                           'category_ls': [u'lecture'],
+                           'href': u'http://www.imstat.org/awards/lectures_winners.htm'},
+                          {'anchor': u'Copley Medal',
+                           'category_ls': [u'award'],
+                           'href': u'http://en.wikipedia.org/wiki/Copley_Medal'},
+                          {'anchor': u'Israel Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Israel_Prize'},
+                          {'anchor': u'Steele Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Leroy_P._Steele_Prize'},
+                          {'anchor': u'Kyoto Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Kyoto_Prize'},
+                          {'anchor': u'Abel Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://en.wikipedia.org/wiki/Abel_Prize'},
+                          {'anchor': u'Doob Prize',
+                           'category_ls': [u'prize'],
+                           'href': u'http://www.ams.org/profession/prizes-awards/ams-prizes/doob-prize'},
+                          {'anchor': u'IMS Fellow',
+                           'category_ls': [u'fellow'],
+                           'href': u'http://www.imstat.org/awards/honored_fellows.htm'},
+                          {'anchor': u'Knighted',
+                           'category_ls': [],
+                           'href': u'http://en.wikipedia.org/wiki/Orders,_decorations,_and_medals_of_the_United_Kingdom'}]
 
 
 ### tool for breaking long lines nicely
@@ -641,8 +870,6 @@ def display_data(passd):
 
 
 table_template = '''
-        <!-- begin segm container -->
-        <div  >
         <!-- begin segm content -->
         <div>
         <!-- text content -->
@@ -655,12 +882,9 @@ table_template = '''
         <!-- end segm content -->
         </div>
         <!-- end segm container -->    
-        </section>
         <!-- end segm container ===================== -->
         '''
 dl_template = '''
-        <!-- begin segm container -->
-        <div  >
         <!-- begin segm content -->
         <div>
         <!-- text content -->
@@ -673,7 +897,6 @@ dl_template = '''
         <!-- end segm content -->
         </div>
         <!-- end segm container -->    
-        </section>
         <!-- end segm container ===================== -->
         '''
         #<dt>1930</dt>
@@ -713,6 +936,7 @@ def make_biblio_rows(b):
     return '<dt></dt><dd>' + link2html(b)+ '</dd>\n'
 
 def make_bio_rows(b): 
+    #pprint(b)
     title = b.get('title','').strip()
     if title == 'Untitled': title = ''
     author = b.get('author','').strip()
@@ -1130,16 +1354,17 @@ def educ_html(person):
         rows = ''
         for d in educ:
             if d['category'] == 'degree':
+                # pprint (d)
                 d['text'] = d.get('type','')  + ', ' + d.get('school','')  + ' '  ## could hyperlink here
                 for link in d.get('link_ls',[]):
                     link = enhance_link(link)
-                    d['text'] += link2html(link)
+                    d['text'] += "(" + link2html(link) + ")"
                 rows += make_row(d)
                 if d.get('thesis_title','').strip():
                     e = {}
                     e['year'] = ''
                     #e['text'] = '<em>Thesis:  </em>' + 
-                    e['text'] = '&quot;' + d['thesis_title'] + '&quot'
+                    e['text'] = '&quot;' + d['thesis_title'] + '&quot;'
                     rows += make_row(e)
             else: 
                 rows += make_row(d)
@@ -1176,6 +1401,10 @@ def bio_html(person):
         rows = ''
         bios.sort(year_cmp)
         for b in bios:
+            ## Let's check what's going on with wilks__samuel_s where one of the bios comes back as None
+            if b: 
+                # print "BIOROW:"
+                # pprint (b)
                 rows += make_bio_rows(b)
         p += heading + dl_template.replace('$rows$',rows)
     return p
@@ -1319,8 +1548,25 @@ def getf(d,k):
     if len(dd) > 0: return dd[0]
     else: return ''
 
+def make_basic_bio_html(d):
+    html = ''
+
+    if d.has_key('ims_id'):
+        html += '\n<p><b>IMS Id:</b>&thinsp;'+ d['ims_id'] + '&thinsp;</p>'
+
+    if d.has_key('alt_ims_id'):
+        html += '\n<p><b>Alt. IMS Id:</b>&thinsp;'+ d['alt_ims_id'] + '&thinsp;</p>'
+
+    if d.has_key('alt_name'):
+        html += '\n<p><b>Also known as:</b>&thinsp;'+ d['alt_name'] + '&thinsp;</p>'
+
+    if d.has_key('birth_place'):
+        html += '\n<p><b>Place of birth:</b>&thinsp;'+ d['birth_place'] + '&thinsp;</p>'
+
+    return html
+
 def make_dates_html(d):
-    templ = '<p id="lifespan">DOB&thinsp;&ndash;&thinsp;DOD</p>'
+    templ = '<p class="lifespan">DOB&thinsp;&ndash;&thinsp;DOD</p>'
     if d.has_key('DOB'):
         templ = templ.replace('DOB', show_date( d['DOB'] ) )
     else:
@@ -1348,21 +1594,30 @@ def top_links_html(d):
     for link in d.get('link_ls',[]) + d.get('Homepage',[]):
         link = enhance_link(link)
         if link.get('status','') == 'top':
-            html += link2html(link)
+            html += link2html(link) + "<br>"
     return html
 
+# I've added a fallback mechanism in case, in case there is no comma.
 def first_first(name):
-    last,first = name.split(',',1)
-    return first.strip() + ' ' + last.strip()
+    # print "NAME: " + name
+    ret = ''
+    try:
+        last,first = name.split(',',1)
+        ret = first.strip() + ' ' + last.strip()
+    except:
+        ret = name
+    return ret
 
 def add_html(d):
+    # pprint (d)
     d['heading_html'] = unicode('<h2>' + first_first(d['complete_name']) + '</h2>','utf-8')
+    d['basic_bio_html'] = make_basic_bio_html(d)
     d['photo_html'] = make_images_html(d)
     d['dates_html']  = make_dates_html(d)
     d['dates_plain_html']  = make_dates_plain_html(d)
     d['top_links_html'] = top_links_html(d)
 
-    print "Name: "+d['heading_html']
+    # print "Name: "+d['heading_html']
     
     content = '' 
     content += educ_html(d)
@@ -1374,7 +1629,7 @@ def add_html(d):
     # content += biblio_html(d)
     #content += source_data_html(d)
     d['body_html'] = content
-    d['html'] = d['photo_html'] + d['heading_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
+    d['html'] = d['photo_html'] + d['heading_html'] + d['basic_bio_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
     return d
 
 
@@ -1521,7 +1776,6 @@ def missing_emails():
 def make_one(filename):
     html = ""
     data = text_json.read_latex(filename)
-    global_vars['link_ls'] = data['link_ls']
     global_vars['books'] = data['books']
     records = [ add_html(d) for d in data['records'] ]
     tot = len(records)
@@ -1531,9 +1785,9 @@ def make_one(filename):
         name = d['complete_name']
         content += d['html']
         content += '<hr><br><br>'
-    html = content
-    # print html
-    return html
+        html = content
+        # print html
+        return html
 
 if __name__ == '__main__':
     make_all()

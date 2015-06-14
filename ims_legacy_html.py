@@ -1,8 +1,16 @@
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, realpath
 import ims_legacy
 
-onlyfiles = [ f for f in listdir('texfiles') if isfile(join('texfiles',f)) ]
+# import bibtex
+# import display_function
+
+# import latex_accents
+# import re
+
+# from pprint import pprint
+
+onlyfiles = [ f for f in listdir('texfiles') if isfile(join('texfiles',f)) and not ( f.rfind(".tex") == 0) ]
 
 def make_all():
     for f in onlyfiles:
