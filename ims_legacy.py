@@ -1551,11 +1551,12 @@ def getf(d,k):
 def make_basic_bio_html(d):
     html = ''
 
+    # Let's store the IMS ids as *comments* in the HTML, since I don't think the end user really wants to see them
     if d.has_key('ims_id'):
-        html += '\n<p><b>IMS Id:</b>&thinsp;'+ d['ims_id'] + '&thinsp;</p>'
+        html += '\n<!--<p><b>IMS Id:</b>&thinsp;'+ d['ims_id'] + '&thinsp;</p>-->'
 
     if d.has_key('alt_ims_id'):
-        html += '\n<p><b>Alt. IMS Id:</b>&thinsp;'+ d['alt_ims_id'] + '&thinsp;</p>'
+        html += '\n<!--<p><b>Alt. IMS Id:</b>&thinsp;'+ d['alt_ims_id'] + '&thinsp;</p>-->'
 
     if d.has_key('alt_name'):
         html += '\n<p><b>Also known as:</b>&thinsp;'+ d['alt_name'] + '&thinsp;</p>'
@@ -1629,7 +1630,7 @@ def add_html(d):
     # content += biblio_html(d)
     #content += source_data_html(d)
     d['body_html'] = content
-    d['html'] = d['photo_html'] + d['heading_html'] + d['basic_bio_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
+    d['html'] = d['heading_html'] + d['photo_html'] + d['basic_bio_html'] + d['dates_html']  + d['top_links_html'] + d['body_html']
     return d
 
 

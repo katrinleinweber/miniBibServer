@@ -13,6 +13,80 @@ import display_function
 
 from pprint import pprint
 
+
+# establish a few helpful functions
+
+def match_member_bibitems_into_imsbooks(item):
+    if item.has_key('crossref'):
+        return filter(lambda book: book['id'] == item['crossref'], imsbooks)[0]
+
+def make_ref_for_record(r):
+    #pprint (r)
+    author = ''
+    editor = ''
+    crossref=''
+    title = r.get('title','').strip()
+    if title == 'Untitled': title = ''
+    if r.has_key('author'):
+        author = r.get('author','').strip()
+        if author == 'Anonymous':
+            author = ''
+    if r.has_key('editor'):
+        editor = r.get('editor','').strip()
+        if editor == 'Anonymous':
+            editor = ''
+    if r.has_key('crossref'):
+        crossref = r.get('crossref','').strip()
+    howpub  = r.get('howpublished','')
+    year = r.get('year','')
+    if year == 'year?': year = 'Undated'
+    ref = ''
+    if title:
+        if not title[-1] in '?.!': title += '.'
+        ref += '<t>' + title + '</t> '
+    if author: ref += '<au>' + author + '</au>. '
+    if editor: ref += '<ed>' + editor + '</ed>. '
+    if crossref: ref += '<inc>' + crossref + '</inc>. '
+    ref += howpub
+
+    #
+    # Need to deal with enhancements for books somehow
+    # but commenting this out for now until book processing
+    # is complete.
+    #
+    """
+    book_link_ls = []
+    books = global_vars['books']
+    for bkey in books.keys():
+        if ref.find(bkey) >= 0:
+            ref = ref.replace(bkey,books[bkey]['ref'])
+            book_link_ls = books[bkey].get('link_ls',[])
+    """
+
+    return ref
+
+def populate_bib_d (line,thebib):
+    d = {}
+    id = line[line.find("{")+1:line.rfind("}")]
+    for bib in thebib:
+        if (bib['id'] == id):
+            if bib.has_key('author'):
+                d['author'] = latex_accents.replace_latex_accents(bib['author'])
+            if bib.has_key('editor'):
+                d['editor'] = latex_accents.replace_latex_accents(bib['editor'])
+            if bib.has_key('crossref'):
+                d['editor'] = bib['crossref']
+            d['title'] = re.sub("{|}","",latex_accents.replace_latex_accents(bib['title']))
+            d['bibtype'] = bib['bibtype']
+            d['topline'] = bib['bibtype'] + " " + bib['id']
+            d['year'] = bib['year']
+            d['howpublished'] = bib['howpublished']
+            d['ref'] = bib['ref']
+            d['id'] = bib['id']
+            return d
+
+
+
 ## Set up a global variable containing a list of the available books for cross-referencing
 with open("imsBooks.bib", "r") as b:
         # bibdata part [optional]
@@ -23,9 +97,10 @@ with open("imsBooks.bib", "r") as b:
             bib[u'id'] = bib.pop('citekey')
             bib[u'howpublished'] = display_function.howpublished_tagged(allbooks[0])
             bib[u'top_line'] = bib['bibtype'] + " " + bib['id']
-            bib[u'ref'] = bibtex.make_ref_for_record(bib)
+            bib[u'ref'] = make_ref_for_record(bib)
             # replace accents and remove brackets
             imsbooks.append({k:re.sub("[{}]", '',latex_accents.replace_latex_accents(v)) for k, v in bib.items()})
+
 
 """
   the read_latex function reads in a single .tex file and outputs
@@ -57,6 +132,8 @@ def read_latex(filename):
     career_list = []
     educ_list = []
     degree_list = []
+
+    image_list = []
     link_list = []
 
     biography_list = []
@@ -92,7 +169,7 @@ def read_latex(filename):
     r4 = re.compile(r'{([^}]*)}{([^}]*)}<([^>]*)>\[(.*)\]$')
 
     #run reg exp to capture the listed lines
-    R = re.compile(r'\\(Name|ID|AltID|AltName|DOB|DOD|BirthPlace|Profile|Homepage|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography|Archive|InMemoriam|Memoir|Obituary|OralHistory|ArtExhibition|Autobiography|DVD|DeathNotice|CollectedWorks|SelectedWorks|Symposium|Endowment|Festschrift){')
+    R = re.compile(r'\\(Name|ID|AltID|AltName|DOB|DOD|BirthPlace|Image|Profile|Homepage|Education|Degree|Position|Honor|HonoraryDegree|Service|Member|Biography|Archive|InMemoriam|Memoir|Obituary|OralHistory|ArtExhibition|Autobiography|DVD|DeathNotice|CollectedWorks|SelectedWorks|Symposium|Endowment|Festschrift){')
 
     with open(filename, "r") as f:
         # bibdata part [optional]
@@ -254,6 +331,15 @@ def read_latex(filename):
                         d['link_ls'] = [{"href":match.group(4)}]
                     educ_list.append(d)
 
+                if g == "Image":
+                    d = {}
+                    text = line[line.find("{"):line.rfind("}")+1]
+                    #print text
+                    match = p2.match(text)
+                    d['href'] = match.group(1)
+                    d['src'] = match.group(2)
+                    image_list.append(d)
+
                 if g == "Profile":
                     d = {}
                     text = line[line.find("{"):line.rfind("}")+1]
@@ -334,6 +420,7 @@ def read_latex(filename):
         person['Education'] = educ_list
         person['Degree'] = degree_list
 
+        person['Image'] = image_list
         person['link_ls'] = link_list
 
         person['Biography']        = biography_list
@@ -390,72 +477,3 @@ def read_latex(filename):
 
     return data
 
-# helper
-def match_member_bibitems_into_imsbooks(item):
-    if item.has_key('crossref'):
-        return filter(lambda book: book['id'] == item['crossref'], imsbooks)[0]
-
-def make_ref_for_record(r):
-    #pprint (r)
-    author = ''
-    editor = ''
-    crossref=''
-    title = r.get('title','').strip()
-    if title == 'Untitled': title = ''
-    if r.has_key('author'):
-        author = r.get('author','').strip()
-        if author == 'Anonymous':
-            author = ''
-    if r.has_key('editor'):
-        editor = r.get('editor','').strip()
-        if editor == 'Anonymous':
-            editor = ''
-    if r.has_key('crossref'):
-        crossref = r.get('crossref','').strip()
-    howpub  = r.get('howpublished','')
-    year = r.get('year','')
-    if year == 'year?': year = 'Undated'
-    ref = ''
-    if title:
-        if not title[-1] in '?.!': title += '.'
-        ref += '<t>' + title + '</t> '
-    if author: ref += '<au>' + author + '</au>. '
-    if editor: ref += '<ed>' + editor + '</ed>. '
-    if crossref: ref += '<inc>' + crossref + '</inc>. '
-    ref += howpub
-
-    #
-    # Need to deal with enhancements for books somehow
-    # but commenting this out for now until book processing
-    # is complete.
-    #
-    """
-    book_link_ls = []
-    books = global_vars['books']
-    for bkey in books.keys():
-        if ref.find(bkey) >= 0:
-            ref = ref.replace(bkey,books[bkey]['ref'])
-            book_link_ls = books[bkey].get('link_ls',[])
-    """
-
-    return ref
-
-def populate_bib_d (line,thebib):
-    d = {}
-    id = line[line.find("{")+1:line.rfind("}")]
-    for bib in thebib:
-        if (bib['id'] == id):
-            if bib.has_key('author'):
-                d['author'] = latex_accents.replace_latex_accents(bib['author'])
-            if bib.has_key('editor'):
-                d['editor'] = latex_accents.replace_latex_accents(bib['editor'])
-            if bib.has_key('crossref'):
-                d['editor'] = bib['crossref']
-            d['title'] = re.sub("{|}","",latex_accents.replace_latex_accents(bib['title']))
-            d['bibtype'] = bib['bibtype']
-            d['topline'] = bib['bibtype'] + " " + bib['id']
-            d['year'] = bib['year']
-            d['howpublished'] = bib['howpublished']
-            d['ref'] = bib['ref']
-            d['id'] = bib['id']
-            return d

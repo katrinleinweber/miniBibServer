@@ -194,6 +194,7 @@ bio_cat_plurals = '''
     Biography       Biographies
     Symposium       Symposia
     Archive         Archives
+    Autobiography   Autobiographies
     Art_Exhibition  Art_Exhibitions
     Collected_Works Collected_Works
     Selected_Works  Selected_Works
@@ -413,6 +414,7 @@ def read_ims_legacy(f='ims_legacy'):
         d['public_record_txt'] =  break_txt(pubrecord,80)
         secs = x.split('\n:')
         toplines = secs[0].strip()
+        # print "\"" + toplines + "\""
         d['id'], toplines  = toplines.split(None,1)
         try: name,toplines = toplines.split('\n',1)
         except: 
@@ -458,7 +460,7 @@ def read_ims_legacy(f='ims_legacy'):
     # for r in data['records']:
     #     print "{} is {}".format(count, r['id'])
     #     count = count + 1
-    # pprint ( data['records'][31] )
+    # pprint ( data['records'][1] )
     # pprint ( data['records'][1069] )
     # pprint ( data['records'][1073] )
     # pprint ( data['records'][391] )
@@ -1239,7 +1241,14 @@ def life_latex(person):
             contact += '\\Homepage{' + h['href'] + '}\n'
 
     for e in person.get('Email',[]):
-        contact += '\\Email{' + e.strip() + '}\n'
+        ## We won't print that here.
+        # contact += '\\Email{' + e.strip() + '}\n'
+        ## To help maintain privacy, rather than saving email to these files,
+        ## we instead append it to a separate private file
+        if ims_id:
+            directory=open("email_directory.txt", "a")
+            directory.write(("{0}\t{1}\n").format(ims_id, e.strip()))
+            directory.close()
 
     ret = heading + rows
   
@@ -1247,6 +1256,16 @@ def life_latex(person):
         ret = ret + "\n\n" + lifespan
     if not contact=='':
         ret = ret + "\n\n" + contact
+
+    imagerows = ''
+    for e in person.get('Image',[]):
+        if e.has_key('src'):
+            imagerows += '\\Image{' + e['href'] + '}{' + e['src'] + '}\n'
+        else:
+            imagerows += '\\Image{' + e['href'] + '}\n'
+
+    if not imagerows=='':
+        ret = ret + "\n\n" + imagerows
 
     return ret 
 
@@ -1313,6 +1332,8 @@ def bio_latex(person):
             rows += 'year={' + b['year'] + '},\n'
             rows += 'author={' + sanitize_latex(b['author']) + '},\n'
             rows += 'title={' + sanitize_bibtex(sanitize_latex(b['title'])) + '},\n'
+
+            # print " +" + b['id']
 
             # we need to read the howpublished field and refactor the entries
             rows += read_howpublished(b['howpublished'])
@@ -1578,6 +1599,12 @@ def make_all():
     indexheader+="%%   bob_user     http://bob_server.com/cv.tex\n\n"
     index.write(indexheader)
     index.close()
+
+    # Similarly, an "email database" called "email_directory.txt"
+    # This is intended to be read into a spreadsheet as TSV
+    directory=open("email_directory.txt", "w")
+    # directory.write(directoryheader)
+    directory.close()
     
     out_dir = global_vars['published_files_directory'] 
     infile = open('./celebratio_cv_template.html')

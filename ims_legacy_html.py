@@ -2,6 +2,8 @@ from os import listdir
 from os.path import isfile, join, realpath
 import ims_legacy
 
+import sys
+
 # import bibtex
 # import display_function
 
@@ -10,7 +12,10 @@ import ims_legacy
 
 # from pprint import pprint
 
-onlyfiles = [ f for f in listdir('texfiles') if isfile(join('texfiles',f)) and not ( f.rfind(".tex") == 0) ]
+def ensure_tex_file (f):
+    return ( isfile(join('texfiles',f)) and (not ( f.find(".tex") == -1)) )
+
+onlyfiles = filter (ensure_tex_file, [ f for f in listdir('texfiles') ])
 
 def make_all():
     for f in onlyfiles:
