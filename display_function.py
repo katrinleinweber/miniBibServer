@@ -11,10 +11,10 @@ def make_links(r):
         links += [link]
     if r.has_key('doi'):
         link = {}
-        link['href'] = 'http://dx.doi.org/' + r['doi']
+        link['href'] = 'https://doi.org/' + r['doi']
         links += [link]
     if r.has_key('url'):
-        if not r['url'] == 'http://dx.doi.org/' + r.get('doi',''):
+        if not r['url'] == 'https://doi.org/' + r.get('doi',''):
             link = {}
             link['href'] = r['url']
             links += [link]
@@ -51,9 +51,9 @@ def link2html(link):
 	    elif url.find('http://www.ams.org/mathscinet-getitem?mr=') >= 0:
 		    anchor = 'MR'
 		    title = 'MathSciNet MR' + url.split('http://www.ams.org/mathscinet-getitem?mr=',1)[1]
-	    elif url.find('http://dx.doi.org/') >= 0:
+	    elif url.find('https://doi.org/') >= 0:
 		    anchor = 'DOI'
-		    title = 'DOI: ' + url.split('http://dx.doi.org/',1)[1]
+		    title = 'DOI: ' + url.split('https://doi.org/',1)[1]
 	    elif url.find('www.ams.org/journal-getitem') >= 0:
 		    anchor = 'AMS'
 		    title = url
@@ -84,9 +84,9 @@ def link2html(link):
 	    elif url.find('ejpecp') >= 0:
 		    anchor = 'ejpecp: ' + url.split('.')[-1]
 		    title = url
-	    elif url.find('http://dx.doi.org/') >= 0:
+	    elif url.find('https://doi.org/') >= 0:
 		    anchor = 'DOI'
-		    title = 'DOI: ' + url.split('http://dx.doi.org/',1)[1]
+		    title = 'DOI: ' + url.split('https://doi.org/',1)[1]
 	    elif url.split('.')[-1] in 'html htm HTML HTM'.split():
 		    anchor = 'html'
 		    title = url
