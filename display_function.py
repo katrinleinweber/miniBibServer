@@ -14,7 +14,7 @@ def make_links(r):
         link['href'] = 'https://doi.org/' + r['doi']
         links += [link]
     if r.has_key('url'):
-        if not r['url'] == 'https://doi.org/' + r.get('doi',''):
+        if not r['url'] == 'http://dx.doi.org/' + r.get('doi',''):
             link = {}
             link['href'] = r['url']
             links += [link]
@@ -51,7 +51,7 @@ def link2html(link):
 	    elif url.find('http://www.ams.org/mathscinet-getitem?mr=') >= 0:
 		    anchor = 'MR'
 		    title = 'MathSciNet MR' + url.split('http://www.ams.org/mathscinet-getitem?mr=',1)[1]
-	    elif url.find('https://doi.org/') >= 0:
+	    elif url.find('http://dx.doi.org/') >= 0:
 		    anchor = 'DOI'
 		    title = 'DOI: ' + url.split('https://doi.org/',1)[1]
 	    elif url.find('www.ams.org/journal-getitem') >= 0:
